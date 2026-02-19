@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:18 # Specifichiamo la 18 così siamo sicuri
+    container_name: gothik-db-new
+    restart: always
+    environment:
+      POSTGRES_USER: gothik_user
+      POSTGRES_PASSWORD: gothik_password
+      POSTGRES_DB: gothik_store
+    ports:
+      - "5432:5432"
+    volumes:
+      # Modificato per rispettare la nuova struttura di Postgres 18+
+      - postgres_data_new:/var/lib/postgresql 
+
+volumes:
+  postgres_data_new:
