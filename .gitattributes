@@ -1,0 +1,4 @@
+* text=auto
+*.prisma text
+*.tsx text
+*.ts text
