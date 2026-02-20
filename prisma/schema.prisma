@@ -1,21 +1,9 @@
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  // url rimane rimosso perché lo gestisce l'adapter
-}
-
-// Qui definiamo la tabella per i tuoi prodotti Gothik
-model Product {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  price       Float
-  imageUrl    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 }
 
 // --- ENUMERAZIONI ---
@@ -72,6 +60,8 @@ model Product {
   discount    Float    @default(0)
   sizes       String[] 
   images      String[] 
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   
   categoryId  Int
   category    Category @relation(fields: [categoryId], references: [id])
