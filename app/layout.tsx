@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-// Importeremo i componenti una volta creati
-// import Navbar from "@/components/layout/Navbar";
-// import Footer from "@/components/layout/Footer";
+
+// 1. Importiamo il tuo componente Navbar reale
+import NavbarComponent from "@/components/NavBarComponent";
+
+// 2. CONFIGURAZIONE FONT AWESOME (Cruciale per la stabilità visiva)
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,27 +32,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it">
-      {" "}
-      {/* Cambiato in italiano */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-gray-100`}
       >
         <div className="flex flex-col min-h-screen">
-          {/* Navbar provvisoria - la sposteremo in un componente */}
-          <header className="border-b border-purple-900/30 bg-black/50 backdrop-blur-md sticky top-0 z-50">
-            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-              <span className="text-xl font-bold tracking-tighter text-purple-500">
-                GOTHIK STORE
-              </span>
-              {/* Qui andranno i link di navigazione e carrello */}
-            </div>
-          </header>
+          {/* 3. Sostituiamo l'header statico con il tuo componente interattivo */}
+          <NavbarComponent />
 
           {/* Il "cuore" delle tue pagine */}
-          <main className="flex-grow">{children}</main>
+          {/* Ho aggiunto un po' di padding top per evitare che il contenuto finisca sotto la Navbar sticky */}
+          <main className="flex-grow pt-4">{children}</main>
 
           {/* Footer provvisorio */}
-          <footer className="border-t border-purple-900/30 py-8 text-center text-gray-500">
+          <footer className="border-t border-purple-900/30 py-8 text-center text-gray-500 bg-zinc-950">
             <p>© 2026 Gothik Store - Acquisti sicuri e protetti</p>
           </footer>
         </div>
