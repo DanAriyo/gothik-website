@@ -4,6 +4,7 @@ import "./globals.css";
 
 // 1. Importiamo il tuo componente Navbar reale
 import NavbarComponent from "@/components/NavBarComponent";
+import FooterComponent from "@/components/FooterComponent";
 
 // 2. CONFIGURAZIONE FONT AWESOME (Cruciale per la stabilità visiva)
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -43,10 +44,8 @@ export default function RootLayout({
           {/* Ho aggiunto un po' di padding top per evitare che il contenuto finisca sotto la Navbar sticky */}
           <main className="flex-grow pt-4">{children}</main>
 
-          {/* Footer provvisorio */}
-          <footer className="border-t border-purple-900/30 py-8 text-center text-gray-500 bg-zinc-950">
-            <p>© 2026 Gothik Store - Acquisti sicuri e protetti</p>
-          </footer>
+          {/* 4. Footer sempre presente */}
+          <FooterComponent />
         </div>
       </body>
     </html>
