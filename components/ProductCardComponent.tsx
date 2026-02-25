@@ -1,10 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import CloudinaryImage from "./CloudinaryImage";
-import Image from "next/image";
 
-// Definiamo un'interfaccia chiara per le Props
 interface ProductCardProps {
   id: number | string;
   name: string;
@@ -20,46 +20,56 @@ export default function ProductCardComponent({
   imageUrls,
   altName,
 }: ProductCardProps) {
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("Prodotto aggiunto:", id);
+  };
+
   return (
-    <div className="group bg-zinc-900 border border-purple-900/30 rounded-xl p-4 hover:border-purple-500 transition-all duration-300 flex flex-col h-full hover:shadow-[0_0_15px_rgba(168,85,247,0.1)]">
-      {/* Container Immagine con Aspect Ratio fisso */}
-      <div className="relative w-full h-64 overflow-hidden rounded-lg bg-zinc-800">
-        <CloudinaryImage
-          src={
-            imageUrls == null || imageUrls.length === 0
-              ? "no-image_qo394q"
-              : imageUrls[0]
-          }
-          alt={altName}
-          fill
-          sizes="(max-width: 768px) 100vw, 25vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
-        />
-      </div>
+    <div className="flex flex-col h-full overflow-hidden transition-all duration-300">
+      {/* AREA IMMAGINE (80% dell'altezza della card tramite aspect-ratio o flex-grow) */}
+      <div className="group relative aspect-[4/5] w-full overflow-hidden bg-zinc-900">
+        <Link href={`/product/${id}`} className="block h-full w-full">
+          <CloudinaryImage
+            src={
+              imageUrls && imageUrls.length > 0
+                ? imageUrls[0]
+                : "no-image_qo394q"
+            }
+            alt={altName}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            className="object-cover transition-transform duration-1000 group-hover:scale-110"
+          />
+          {/* Overlay scuro isolato all'immagine */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-500" />
+        </Link>
 
-      {/* Info Prodotto */}
-      <div className="mt-4 flex flex-col flex-grow">
-        <h3 className="text-white font-bold text-lg line-clamp-1">{name}</h3>
-        <p className="text-purple-400 font-bold mt-1 text-xl italic">
-          {price.toFixed(2)} €
-        </p>
-
-        {/* Spingiamo i bottoni sempre in fondo per allinearli tra le varie card */}
-        <div className="flex justify-between items-center mt-auto pt-4 gap-2">
-          <Link
-            href={`/product/${id}`}
-            className="flex-grow text-center text-xs font-bold uppercase tracking-wider bg-zinc-800 hover:bg-purple-600 text-white px-4 py-2.5 rounded-lg transition-all active:scale-95"
-          >
-            Dettagli
-          </Link>
-
+        {/* TASTO AGGIUNGI (Appare solo all'hover sull'immagine) */}
+        <div className="absolute inset-x-0 bottom-4 px-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out pointer-events-none group-hover:pointer-events-auto">
           <button
-            className="bg-purple-600 hover:bg-purple-500 text-white p-2.5 rounded-lg transition-all active:scale-95 shadow-lg shadow-purple-900/20"
-            aria-label="Aggiungi al carrello"
+            onClick={handleAddToCart}
+            className="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-lg shadow-2xl flex items-center justify-center gap-2 active:scale-95 transition-all"
           >
-            <FontAwesomeIcon icon={faPlus} className="w-5 h-5" />
+            <FontAwesomeIcon icon={faPlus} className="text-sm" />
+            <span className="uppercase text-[10px] tracking-[0.2em]">
+              Aggiungi
+            </span>
           </button>
         </div>
+      </div>
+
+      {/* AREA INFO (Il restante spazio) */}
+      <div className="flex flex-col justify-start items-start py-4 px-2 text-left">
+        <Link href={`/product/${id}`} className="w-full">
+          <h3 className="text-black font-medium text-xs uppercase tracking-widest line-clamp-1 hover:text-purple-400 transition-colors">
+            {name}
+          </h3>
+        </Link>
+        <p className="text-black font-medium text-xs uppercase tracking-widest mt-1">
+          {price.toFixed(2)} €
+        </p>
       </div>
     </div>
   );
