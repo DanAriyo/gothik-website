@@ -121,10 +121,12 @@ export default function NavBarComponent() {
           </Popover>
         </div>
         {/* CENTRO: Links Desktop (nascosti su mobile) */}
-        <div className=" md:flex items-center gap-8 text-sm font-medium text-zinc-400">
-          <p className="md:text-3xl font-black uppercase tracking-tighter">
-            Gothik<span className="text-purple-600"> - </span>Store
-          </p>
+        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
+          <Link href="/" className="group">
+            <p className="md:text-3xl font-black uppercase tracking-tighter transition-colors duration-300 group-hover:text-zinc-200">
+              Gothik<span className="text-purple-600"> - </span>Store
+            </p>
+          </Link>
         </div>
 
         {/* LATO DESTRO: Icone Azione */}
