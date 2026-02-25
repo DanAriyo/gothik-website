@@ -27,7 +27,7 @@ export default function ProductCardComponent({
         <CloudinaryImage
           src={
             imageUrls == null || imageUrls.length === 0
-              ? "/gothik-logo.svg"
+              ? "no-image_qo394q"
               : imageUrls[0]
           }
           alt={altName}

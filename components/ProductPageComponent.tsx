@@ -41,7 +41,7 @@ export default function ProductPageComponent({
       {/* SEZIONE IMMAGINI (Galleria) */}
       <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-zinc-900 border border-purple-900/20">
         <CloudinaryImage
-          src={product.images[currentImgIndex] || "/gothik-logo.svg"}
+          src={product.images[currentImgIndex] || "no-image_qo394q"}
           alt={product.name}
           fill
           className="object-cover"
