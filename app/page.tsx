@@ -6,12 +6,9 @@ export default async function Home() {
 
   return (
     <div className="p-10 font-sans">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {products.map((p) => (
-          <div
-            key={p.id}
-            className="p-4 border rounded-xl shadow-lg bg-zinc-900 text-white"
-          >
+          <div key={p.id} className="p-1 bg-white text-black">
             <ProductCardComponent
               id={p.id}
               name={p.name}
