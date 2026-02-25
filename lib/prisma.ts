@@ -1,20 +1,24 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 
-// 1. Definiamo una funzione che crea una nuova istanza di Prisma
+// 1. Definiamo la funzione che crea l'istanza con l'adapter
 const prismaClientSingleton = () => {
-  return new PrismaClient()
-}
+  // Il pool di connessioni gestisce la comunicazione fisica con Postgres
+  const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+  const adapter = new PrismaPg(pool);
+  
+  return new PrismaClient({ adapter });
+};
 
-// 2. Prepariamo un tipo per TypeScript per riconoscere il nostro singleton
-declare global {
-  var prisma: undefined | ReturnType<typeof prismaClientSingleton>
-}
+// 2. Implementiamo il Singleton per Next.js
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
 
-// 3. Se esiste già un'istanza globale, usiamo quella. Altrimenti ne creiamo una nuova.
-const prisma = globalThis.prisma ?? prismaClientSingleton()
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClientSingleton | undefined;
+};
 
-export default prisma
+// Se esiste già un'istanza globale (in sviluppo), usa quella, altrimenti creala
+export const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
 
-// 4. Se siamo in modalità "Sviluppo", salviamo l'istanza globalmente.
-// Questo impedisce a Next.js di creare nuove connessioni ogni volta che salvi un file.
-if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;

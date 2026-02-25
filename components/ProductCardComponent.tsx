@@ -8,7 +8,7 @@ interface ProductCardProps {
   id: number | string;
   name: string;
   price: number;
-  imageUrl: string | null;
+  imageUrls: string[] | null;
   altName: string;
 }
 
@@ -16,7 +16,7 @@ export default function ProductCardComponent({
   id,
   name,
   price,
-  imageUrl,
+  imageUrls,
   altName,
 }: ProductCardProps) {
   return (
@@ -24,7 +24,11 @@ export default function ProductCardComponent({
       {/* Container Immagine con Aspect Ratio fisso */}
       <div className="relative w-full h-64 overflow-hidden rounded-lg bg-zinc-800">
         <Image
-          src={imageUrl == null ? "/gothik-logo.svg" : imageUrl}
+          src={
+            imageUrls == null || imageUrls.length === 0
+              ? "/gothik-logo.svg"
+              : imageUrls[0]
+          }
           alt={altName}
           fill
           sizes="(max-width: 768px) 100vw, 25vw"
