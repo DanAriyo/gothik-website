@@ -16,7 +16,7 @@ export default function NavBarComponent() {
 
   return (
     <nav className="bg-black border-b border-purple-900/50 sticky top-0 z-50 text-white">
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div className="mx-auto px-4 h-16 flex items-center justify-between">
         {/* LATO SINISTRO: Logo */}
         <Link href="/" className="flex items-center">
           <Image
@@ -31,18 +31,9 @@ export default function NavBarComponent() {
 
         {/* CENTRO: Links Desktop (nascosti su mobile) */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
-          <Link href="/shop" className="hover:text-purple-400 transition">
-            Shop
-          </Link>
-          <Link
-            href="/new-arrivals"
-            className="hover:text-purple-400 transition"
-          >
-            Novità
-          </Link>
-          <Link href="/about" className="hover:text-purple-400 transition">
-            Dark World
-          </Link>
+          <p className="text-3xl font-black uppercase tracking-tighter">
+            Gothik<span className="text-purple-600"> - </span>Store
+          </p>
         </div>
 
         {/* LATO DESTRO: Icone Azione */}
