@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
   faCartPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import CloudinaryImage from "./CloudinaryImage";
 
 // Definiamo il tipo in base al tuo modello Prisma
 interface Product {
@@ -40,7 +40,7 @@ export default function ProductPageComponent({
     <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-12 text-white">
       {/* SEZIONE IMMAGINI (Galleria) */}
       <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-zinc-900 border border-purple-900/20">
-        <Image
+        <CloudinaryImage
           src={product.images[currentImgIndex] || "/gothik-logo.svg"}
           alt={product.name}
           fill

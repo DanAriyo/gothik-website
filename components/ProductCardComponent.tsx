@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import CloudinaryImage from "./CloudinaryImage";
 
 // Definiamo un'interfaccia chiara per le Props
 interface ProductCardProps {
@@ -23,7 +23,7 @@ export default function ProductCardComponent({
     <div className="group bg-zinc-900 border border-purple-900/30 rounded-xl p-4 hover:border-purple-500 transition-all duration-300 flex flex-col h-full hover:shadow-[0_0_15px_rgba(168,85,247,0.1)]">
       {/* Container Immagine con Aspect Ratio fisso */}
       <div className="relative w-full h-64 overflow-hidden rounded-lg bg-zinc-800">
-        <Image
+        <CloudinaryImage
           src={
             imageUrls == null || imageUrls.length === 0
               ? "/gothik-logo.svg"
