@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import CloudinaryImage from "./CloudinaryImage";
+import Image from "next/image";
 
 // Definiamo un'interfaccia chiara per le Props
 interface ProductCardProps {
@@ -33,7 +34,6 @@ export default function ProductCardComponent({
           fill
           sizes="(max-width: 768px) 100vw, 25vw"
           className="object-cover transition-transform duration-500 group-hover:scale-110"
-          priority={false}
         />
       </div>
 
