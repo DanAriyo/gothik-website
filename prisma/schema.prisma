@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 // --- ENUMERAZIONI ---
@@ -20,40 +21,64 @@ enum OrderStatus {
   CANCELLED
 }
 
-// --- ACCOUNT & PROFILI ---
-model Account {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String   // Sicurezza: gestiremo l'hash nel codice
-  role      Role     @default(CUSTOMER)
-  createdAt DateTime @default(now())
+// --- AUTH & USER ---
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?   
+  role          Role      @default(CUSTOMER)
+  createdAt     DateTime  @default(now())
+  isBlocked     Boolean   @default(false)
 
-  customer  Customer?
+  // Relazioni Auth.js
+  accounts      Account[]
+  sessions      Session[]
+
+  // Relazioni E-commerce
+  cart          Cart?
+  orders        Order[]
+  reviews       Review[]
 }
 
-model Customer {
-  id        Int      @id @default(autoincrement())
-  firstName String
-  lastName  String
-  isBlocked Boolean  @default(false) 
-  
-  accountId Int      @unique
-  account   Account  @relation(fields: [accountId], references: [id])
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
 
-  cart      Cart?
-  orders    Order[]
-  reviews   Review[]
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 // --- CATALOGO ---
 model Category {
-  id       Int       @id @default(autoincrement())
+  id       String    @id @default(cuid())
   name     String    @unique
   products Product[]
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(cuid())
   name        String
   description String?
   price       Float
@@ -63,7 +88,7 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   
-  categoryId  Int
+  categoryId  String
   category    Category @relation(fields: [categoryId], references: [id])
 
   cartItems   CartItem[]
@@ -73,66 +98,66 @@ model Product {
 
 // --- CARRELLO ---
 model Cart {
-  id         Int        @id @default(autoincrement())
-  customerId Int        @unique
-  customer   Customer   @relation(fields: [customerId], references: [id])
-  updatedAt  DateTime   @updatedAt
+  id         String   @id @default(cuid())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  updatedAt  DateTime @updatedAt
 
   items      CartItem[]
 }
 
 model CartItem {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   quantity  Int      @default(1)
   size      String   
 
-  cartId    Int
-  cart      Cart     @relation(fields: [cartId], references: [id])
-  productId Int
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
   product   Product  @relation(fields: [productId], references: [id])
 }
 
 // --- ORDINE (Storicizzazione) ---
 model Order {
-  id              Int         @id @default(autoincrement())
+  id              String      @id @default(cuid())
   createdAt       DateTime    @default(now())
   status          OrderStatus @default(PENDING)
   shippingAddress String      
   totalAmount     Float
 
-  customerId      Int
-  customer        Customer    @relation(fields: [customerId], references: [id])
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
 
   items           OrderItem[]
   reviews         Review[]
 }
 
 model OrderItem {
-  id        Int     @id @default(autoincrement())
+  id        String   @id @default(cuid())
   quantity  Int
-  price     Float   // Sicurezza: prezzo fissato all'acquisto
-  discount  Float   
+  price     Float    // Prezzo fissato al momento dell'acquisto
+  discount  Float    
   size      String  
 
-  orderId   Int
-  order     Order   @relation(fields: [orderId], references: [id])
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
 }
 
-// --- RECENSIONE (Relazione Ternaria) ---
+// --- RECENSIONE ---
 model Review {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   rating    Int      
   comment   String?
   createdAt DateTime @default(now())
 
-  customerId Int
-  customer   Customer @relation(fields: [customerId], references: [id])
-  productId  Int
-  product    Product  @relation(fields: [productId], references: [id])
-  orderId    Int
-  order      Order    @relation(fields: [orderId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
 
-  @@unique([customerId, productId, orderId])
+  @@unique([userId, productId, orderId])
 }
