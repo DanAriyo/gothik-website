@@ -12,10 +12,10 @@ export default async function Page({
   const resolvedParams = await params;
 
   // 2. Ora possiamo accedere all'id in sicurezza
-  const productId = parseInt(resolvedParams.id, 10);
+  const productId = resolvedParams.id;
 
   // Sicurezza: controllo se l'ID è un numero valido
-  if (isNaN(productId)) {
+  if (productId === undefined) {
     notFound();
   }
 

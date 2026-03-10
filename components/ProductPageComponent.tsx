@@ -10,7 +10,7 @@ import {
 import CloudinaryImage from "./CloudinaryImage";
 
 interface Product {
-  id: number;
+  id: number | string;
   name: string;
   price: number;
   description: string | null;
