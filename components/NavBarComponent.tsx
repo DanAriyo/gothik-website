@@ -133,7 +133,7 @@ export default function NavBarComponent() {
         <div className="flex items-center gap-5">
           {/* User Icon - Nascosta su mobile molto piccolo per pulizia */}
           <Link
-            href="api/auth/signin"
+            href="/api/auth/signin"
             className="hidden sm:block hover:text-purple-500 transition-colors duration-300"
           >
             <FontAwesomeIcon icon={faUser} />
