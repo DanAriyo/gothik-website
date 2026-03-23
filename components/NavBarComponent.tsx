@@ -1,4 +1,5 @@
 "use client";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartArrowDown,
@@ -6,8 +7,12 @@ import {
   faUser,
   faXmark,
   faSkull,
+  faUserShield,
+  faHistory,
+  faGear,
+  faArrowRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -16,9 +21,20 @@ import {
   PopoverPanel,
   Transition,
 } from "@headlessui/react";
-import { Fragment } from "react";
+import { signIn, signOut } from "next-auth/react";
 
-export default function NavBarComponent() {
+// Definiamo i tipi per le props che arrivano dal Layout
+interface NavBarProps {
+  isAdmin: boolean;
+  isAuthenticated: boolean;
+  session: any;
+}
+
+export default function NavBarComponent({
+  isAdmin,
+  isAuthenticated,
+  session,
+}: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -41,7 +57,6 @@ export default function NavBarComponent() {
                   }
                 }}
               >
-                {/* Il Pulsante deve essere dentro Popover */}
                 <PopoverButton
                   id="logo-popover-btn"
                   className="flex items-center outline-none focus:ring-0"
@@ -58,7 +73,6 @@ export default function NavBarComponent() {
                   />
                 </PopoverButton>
 
-                {/* La Transition e il Panel devono essere dentro Popover */}
                 <Transition
                   as={Fragment}
                   enter="transition ease-out duration-300"
@@ -70,7 +84,6 @@ export default function NavBarComponent() {
                 >
                   <PopoverPanel className="fixed left-0 top-0 z-[60] h-screen w-full sm:w-1/3 bg-black/95 backdrop-blur-2xl border-r border-purple-900/40 shadow-[10px_0_30px_rgba(0,0,0,0.5)] outline-none">
                     <div className="flex flex-col h-full p-8 relative">
-                      {/* Bottone X per chiudere */}
                       <button
                         onClick={() => close()}
                         className="absolute top-6 right-6 text-zinc-500 hover:text-purple-500 transition-colors p-2"
@@ -78,7 +91,6 @@ export default function NavBarComponent() {
                         <FontAwesomeIcon icon={faXmark} size="xl" />
                       </button>
 
-                      {/* Contenuto Sidebar */}
                       <div className="mb-12">
                         <Image
                           src="/gothik-logo-dark.svg"
@@ -105,7 +117,7 @@ export default function NavBarComponent() {
                             scopri la nostra filosofia oscura
                           </p>
                         </Link>
-                        {/* ... Altri Link ... */}
+                        {/* Aggiungi altri link qui se necessario */}
                       </nav>
 
                       <div className="pt-8 border-t border-purple-900/20">
@@ -120,7 +132,8 @@ export default function NavBarComponent() {
             )}
           </Popover>
         </div>
-        {/* CENTRO: Links Desktop (nascosti su mobile) */}
+
+        {/* CENTRO: Nome Store */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
           <Link href="/" className="group">
             <p className="md:text-3xl font-black uppercase tracking-tighter transition-colors duration-300 group-hover:text-zinc-200">
@@ -129,15 +142,110 @@ export default function NavBarComponent() {
           </Link>
         </div>
 
-        {/* LATO DESTRO: Icone Azione */}
+        {/* LATO DESTRO: Icone Azione (Profilo e Carrello) */}
         <div className="flex items-center gap-5">
-          {/* User Icon - Nascosta su mobile molto piccolo per pulizia */}
-          <Link
-            href="/api/auth/signin"
-            className="hidden sm:block hover:text-purple-500 transition-colors duration-300"
-          >
-            <FontAwesomeIcon icon={faUser} />
-          </Link>
+          {/* USER DROPDOWN POPOVER */}
+          <Popover className="hover:text-purple-500 transition relative">
+            {({ open }) => (
+              <>
+                <PopoverButton className="flex items-center outline-none hover:text-purple-500 transition-colors duration-300 focus:ring-0">
+                  {isAuthenticated && session?.user?.image ? (
+                    <Image
+                      src={session.user.image}
+                      alt="Profilo"
+                      width={28}
+                      height={28}
+                      className="rounded-full border border-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.4)]"
+                    />
+                  ) : (
+                    <FontAwesomeIcon icon={faUser} className="text-lg" />
+                  )}
+                </PopoverButton>
+
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-200"
+                  enterFrom="opacity-0 translate-y-1"
+                  enterTo="opacity-100 translate-y-0"
+                  leave="transition ease-in duration-150"
+                  leaveFrom="opacity-100 translate-y-0"
+                  leaveTo="opacity-0 translate-y-1"
+                >
+                  <PopoverPanel className="absolute right-0 z-50 mt-4 w-64 origin-top-right rounded-xl bg-black/95 backdrop-blur-xl border border-purple-900/50 shadow-2xl ring-1 ring-purple-500/20 outline-none">
+                    <div className="p-4">
+                      {!isAuthenticated ? (
+                        /* STATO: NON LOGGATO */
+                        <div className="text-center py-2">
+                          <p className="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mb-4">
+                            Oscuro Viandante
+                          </p>
+                          <button
+                            onClick={() => signIn("google")}
+                            className="w-full flex items-center justify-center gap-3 bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-purple-600 hover:text-white transition-all duration-300"
+                          >
+                            <FontAwesomeIcon icon={faArrowRightToBracket} />
+                            Inizia il Culto
+                          </button>
+                        </div>
+                      ) : (
+                        /* STATO: LOGGATO */
+                        <div className="space-y-1">
+                          <div className="pb-3 mb-2 border-b border-purple-900/30">
+                            <p className="text-[10px] text-purple-500 uppercase font-black tracking-widest">
+                              Anima Eletta
+                            </p>
+                            <p className="text-sm font-bold truncate text-zinc-200">
+                              {session?.user?.name}
+                            </p>
+                          </div>
+
+                          {isAdmin && (
+                            <Link
+                              href="/admin"
+                              className="flex items-center gap-3 p-2 text-sm text-purple-400 hover:bg-purple-900/20 rounded-lg transition font-bold"
+                            >
+                              <FontAwesomeIcon
+                                icon={faUserShield}
+                                className="w-4"
+                              />
+                              Dashboard Admin
+                            </Link>
+                          )}
+
+                          <Link
+                            href="/orders"
+                            className="flex items-center gap-3 p-2 text-sm text-zinc-400 hover:bg-white/5 hover:text-white rounded-lg transition"
+                          >
+                            <FontAwesomeIcon icon={faHistory} className="w-4" />
+                            I miei ordini
+                          </Link>
+
+                          <Link
+                            href="/profile"
+                            className="flex items-center gap-3 p-2 text-sm text-zinc-400 hover:bg-white/5 hover:text-white rounded-lg transition"
+                          >
+                            <FontAwesomeIcon icon={faGear} className="w-4" />
+                            Impostazioni
+                          </Link>
+
+                          <button
+                            onClick={() => signOut()}
+                            className="w-full mt-2 flex items-center gap-3 p-2 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition border-t border-purple-900/20 pt-3"
+                          >
+                            <FontAwesomeIcon
+                              icon={faArrowRightToBracket}
+                              className="rotate-180 w-4"
+                            />
+                            Eclissati
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </PopoverPanel>
+                </Transition>
+              </>
+            )}
+          </Popover>
 
           {/* Cart Icon */}
           <Link
@@ -145,8 +253,7 @@ export default function NavBarComponent() {
             className="hover:text-purple-500 transition relative"
           >
             <FontAwesomeIcon icon={faCartArrowDown} />
-            {/* Badge opzionale per il numero di oggetti */}
-            <span className="absolute -top-2 -right-2 bg-purple-600 text-[10px] rounded-full px-1.5 py-0.5">
+            <span className="absolute -top-2 -right-2 bg-purple-600 text-[10px] rounded-full px-1.5 py-0.5 font-bold">
               0
             </span>
           </Link>
