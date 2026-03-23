@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { auth } from "@/auth";
 
 // 1. Importiamo il tuo componente Navbar reale
 import NavbarComponent from "@/components/NavBarComponent";
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   description: "Il tuo store sicuro per uno stile alternativo e ricercato",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

@@ -21,6 +21,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // @ts-ignore
         session.user.role = user.role; 
         session.user.id = user.id;
+        session.user.role = user.role;  
+        console.log("Sessione aggiornata con ruolo e id:", session.user);
       }
       return session;
     },
