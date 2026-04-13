@@ -1,15 +1,26 @@
-export default async function AddProductPage() {
-  return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Aggiungi Nuovo Prodotto</h1>
-      <p className="text-zinc-500 mb-6">
-        Qui potrai inserire un nuovo prodotto nel catalogo.
-      </p>
+// app/admin/products/add-product/page.tsx
+import { prisma } from "@/lib/prisma";
+import AddProductForm from "./add-product-form/page";
 
-      {/* FORM DI AGGIUNTA PRODOTTO */}
-      <div>
-        <h1>Form di Aggiunta Prodotto</h1>
+export default async function AddProductPage() {
+  // Recuperiamo le categorie dal DB per il menu a tendina
+  const categories = await prisma.category.findMany({
+    orderBy: { name: "asc" },
+  });
+
+  return (
+    <div className="max-w-4xl mx-auto p-6">
+      <div className="mb-8">
+        <h1 className="text-3xl font-black uppercase tracking-tighter text-white">
+          Consacra <span className="text-purple-600">Nuovo Articolo</span>
+        </h1>
+        <p className="text-zinc-500">
+          Compila i campi per evocare il prodotto nel catalogo.
+        </p>
       </div>
+
+      {/* Passiamo le categorie al form Client */}
+      <AddProductForm categories={categories} />
     </div>
   );
 }
