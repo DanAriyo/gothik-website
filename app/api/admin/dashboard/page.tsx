@@ -59,6 +59,16 @@ export default async function AdminDashboard() {
               label="Vedi Tutti"
               icon={faBoxOpen}
             />
+            <AdminLink
+              href="/admin/categories"
+              label="Categorie"
+              icon={faBoxOpen}
+            />
+            <AdminLink
+              href="/admin/categories/add-category"
+              label="Nuova Categoria"
+              icon={faPlus}
+            />
           </div>
         </div>
 
