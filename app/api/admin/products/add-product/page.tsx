@@ -12,11 +12,8 @@ export default async function AddProductPage() {
     <div className="max-w-4xl mx-auto p-6">
       <div className="mb-8">
         <h1 className="text-3xl font-black uppercase tracking-tighter text-white">
-          Consacra <span className="text-purple-600">Nuovo Articolo</span>
+          <span className="text-purple-600">Nuovo Articolo</span>
         </h1>
-        <p className="text-zinc-500">
-          Compila i campi per evocare il prodotto nel catalogo.
-        </p>
       </div>
 
       {/* Passiamo le categorie al form Client */}

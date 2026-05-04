@@ -15,6 +15,10 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
     );
   };
 
+  const removeImage = (publicId: string) => {
+    setImages((prev) => prev.filter((img) => img !== publicId));
+  };
+
   return (
     <form
       action={createProductAction}
@@ -49,6 +53,20 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
               </option>
             ))}
           </select>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="text-xs uppercase font-bold text-zinc-500">
+            Descrizione
+          </label>
+          <textarea
+            name="description"
+            id="description"
+            rows={5} // Definisce l'altezza iniziale
+            placeholder="Descrivi il prodotto in modo accattivante..."
+            className="w-full bg-black border border-zinc-800 p-3 rounded focus:border-purple-500 outline-none text-white resize-y min-h-[120px] transition-colors"
+            required
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -87,13 +105,17 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
                 key={size}
                 type="button"
                 onClick={() => toggleSize(size)}
-                className={`px-3 py-1 rounded text-xs font-bold border ${selectedSizes.includes(size) ? "bg-purple-600 border-purple-500" : "bg-zinc-800 border-zinc-700"}`}
+                className={`px-3 py-1 rounded text-xs font-bold border transition-all duration-200 ${
+                  selectedSizes.includes(size)
+                    ? "bg-purple-600 border-purple-500 text-white shadow-[0_0_10px_rgba(168,85,247,0.4)]"
+                    : "bg-black border-zinc-800 text-zinc-500 hover:border-purple-500"
+                }`}
               >
                 {size}
               </button>
             ))}
           </div>
-          {/* Campi nascosti per inviare gli array alla Server Action */}
+          {/* Campi nascosti serializzati per la Server Action */}
           <input
             type="hidden"
             name="sizes"
@@ -104,44 +126,64 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
       </div>
 
       {/* SEZIONE MEDIA */}
-      <div className="space-y-4">
+      <div className="space-y-4 mt-6">
         <label className="text-xs uppercase font-bold text-zinc-500">
-          Immagini Cloudinary
+          Immagini Cloudinary (Multiple) *
         </label>
+
         <CldUploadWidget
-          uploadPreset="tuo_preset"
-          onSuccess={(res: any) =>
-            setImages((prev) => [...prev, res.info.public_id])
-          }
+          uploadPreset="tuo_preset" // ⚠️ Assicurati di aver creato un "Unsigned Preset" su Cloudinary
+          onSuccess={(res: any) => {
+            setImages((prev) => [...prev, res.info.public_id]);
+          }}
         >
           {({ open }) => (
             <button
               type="button"
               onClick={() => open()}
-              className="w-full h-32 border-2 border-dashed border-zinc-700 rounded-xl hover:border-purple-500 transition flex flex-col items-center justify-center"
+              className="w-full h-32 border-2 border-dashed border-zinc-800 rounded-xl hover:border-purple-500 hover:bg-purple-900/5 transition-all flex flex-col items-center justify-center group"
             >
-              <span className="text-zinc-500 text-sm">Carica Foto</span>
-              <span className="text-[10px] text-purple-400 mt-1">
-                {images.length} caricate
+              <span className="text-zinc-500 group-hover:text-purple-400 transition">
+                Evoca Immagini Oscure
+              </span>
+              <span className="text-[10px] text-zinc-600 mt-1">
+                {images.length === 0
+                  ? "Nessun file caricato"
+                  : `${images.length} file pronti`}
               </span>
             </button>
           )}
         </CldUploadWidget>
 
+        {/* Griglia Anteprime */}
         <div className="grid grid-cols-3 gap-2">
           {images.map((img) => (
             <div
               key={img}
-              className="h-20 bg-zinc-800 rounded border border-purple-900/30 overflow-hidden relative text-[8px] p-1 break-all"
+              className="h-24 bg-black rounded border border-purple-900/30 overflow-hidden relative group"
             >
-              {img}
+              <div className="p-2 text-[8px] text-zinc-500 break-all leading-tight opacity-50">
+                {img}
+              </div>
+
+              {/* Overlay Rimuovi (Più visibile al passaggio del mouse) */}
+              <button
+                type="button"
+                onClick={() => removeImage(img)}
+                className="absolute inset-0 bg-red-900/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-200"
+              >
+                <span className="text-[10px] font-black uppercase tracking-tighter bg-red-600 px-2 py-1 rounded">
+                  Rimuovi
+                </span>
+              </button>
             </div>
           ))}
         </div>
 
         <button
           type="submit"
-          className="w-full bg-purple-600 hover:bg-purple-700 text-white font-black py-4 rounded-xl shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all"
+          disabled={images.length === 0}
+          className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-zinc-900 disabled:text-zinc-700 disabled:border-zinc-800 disabled:cursor-not-allowed text-white font-black py-4 rounded-xl shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all mt-6 border border-purple-500/50"
         >
           PUBBLICA NEL CATALOGO
         </button>
