@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { auth } from "@/auth"; // 1. Importiamo la funzione di autenticazione
-
+import "@fortawesome/fontawesome-svg-core/styles.css"; // Importa lo stile di Font Awesome7
+import "./globals.css";
 // Importiamo i tuoi componenti
 import NavbarComponent from "@/components/NavBarComponent";
 import FooterComponent from "@/components/FooterComponent";
