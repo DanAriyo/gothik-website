@@ -55,7 +55,7 @@ export default async function AdminDashboard() {
               icon={faPlus}
             />
             <AdminLink
-              href="/api/admin/products/all-products"
+              href="/api/admin/products/"
               label="Vedi Tutti"
               icon={faBoxOpen}
             />
@@ -76,7 +76,7 @@ export default async function AdminDashboard() {
           <h2 className="text-xl font-bold mb-6">Operazioni Clienti</h2>
           <div className="grid grid-cols-2 gap-4">
             <AdminLink
-              href="/admin/ordini"
+              href="/api/admin/ordini"
               label="Ordini"
               icon={faCartShopping}
             />
