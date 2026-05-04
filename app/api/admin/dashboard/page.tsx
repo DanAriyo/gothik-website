@@ -55,19 +55,19 @@ export default async function AdminDashboard() {
               icon={faPlus}
             />
             <AdminLink
-              href="/admin/products/all-products"
+              href="/api/admin/products/all-products"
               label="Vedi Tutti"
               icon={faBoxOpen}
             />
             <AdminLink
-              href="/admin/categories"
-              label="Categorie"
-              icon={faBoxOpen}
-            />
-            <AdminLink
-              href="/admin/categories/add-category"
+              href="/api/admin/categories/add-category"
               label="Nuova Categoria"
               icon={faPlus}
+            />
+            <AdminLink
+              href="/api/admin/categories"
+              label="Categorie"
+              icon={faBoxOpen}
             />
           </div>
         </div>
