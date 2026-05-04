@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { CldUploadWidget } from "next-cloudinary";
+import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { createProductAction } from "@/lib/actions/productActions";
 
 export default function AddProductForm({ categories }: { categories: any[] }) {
@@ -132,7 +132,10 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
         </label>
 
         <CldUploadWidget
-          uploadPreset="tuo_preset" // ⚠️ Assicurati di aver creato un "Unsigned Preset" su Cloudinary
+          uploadPreset="gothik_store_preset"
+          options={{
+            cloudName: "dc8irqxrf",
+          }}
           onSuccess={(res: any) => {
             setImages((prev) => [...prev, res.info.public_id]);
           }}
@@ -163,7 +166,15 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
               className="h-24 bg-black rounded border border-purple-900/30 overflow-hidden relative group"
             >
               <div className="p-2 text-[8px] text-zinc-500 break-all leading-tight opacity-50">
-                {img}
+                {/* SOSTITUISCI IL TESTO CON L'IMMAGINE REALE */}
+                <CldImage
+                  width="200"
+                  height="200"
+                  src={img}
+                  alt="Anteprima"
+                  crop="fill"
+                  className="object-cover w-full h-full opacity-80 group-hover:opacity-40 transition-opacity"
+                />
               </div>
 
               {/* Overlay Rimuovi (Più visibile al passaggio del mouse) */}
