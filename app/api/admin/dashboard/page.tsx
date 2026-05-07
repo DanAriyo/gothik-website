@@ -105,7 +105,7 @@ function AdminLink({ href, label, icon }: any) {
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 bg-zinc-800 hover:bg-purple-900/40 transition p-4 rounded-xl border border-white/5 group"
+      className="flex items-center gap-3 bg-zinc-600 hover:bg-purple-900/40 transition p-4 rounded-xl border border-white/5 group"
     >
       <FontAwesomeIcon
         icon={icon}
