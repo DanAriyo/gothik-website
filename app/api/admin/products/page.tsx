@@ -1,14 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { CldImage } from "next-cloudinary";
+import ProductsTableComponent from "../../../../components/ProductsTableComponent";
 
 export default async function AdminProductsPage() {
+  // Query eseguita sul server
   const products = await prisma.product.findMany({
     include: {
       category: true,
     },
     orderBy: {
-      createdAt: "desc", // I più recenti in alto
+      createdAt: "desc",
     },
   });
 
@@ -24,7 +25,7 @@ export default async function AdminProductsPage() {
           </p>
         </div>
         <Link
-          href="/admin/products/add"
+          href="/api/admin/products/add"
           className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg transition-all shadow-[0_0_15px_rgba(168,85,247,0.4)]"
         >
           + NUOVO PRODOTTO
@@ -32,60 +33,8 @@ export default async function AdminProductsPage() {
       </div>
 
       <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/30 backdrop-blur-md">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-zinc-900 text-zinc-500 text-xs uppercase tracking-widest border-b border-zinc-800">
-              <th className="p-4">Prodotto</th>
-              <th className="p-4">Categoria</th>
-              <th className="p-4">Prezzo</th>
-              <th className="p-4">Sconto</th>
-              <th className="p-4 text-right">Azioni</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-800">
-            {products.map((product) => (
-              <tr
-                key={product.id}
-                className="hover:bg-purple-900/5 transition-colors group"
-              >
-                <td className="p-4 flex items-center gap-4">
-                  <p className="font-medium">{product.name}</p>
-                </td>
-                <td className="p-4 text-sm">
-                  <span className="px-2 py-1 rounded-md bg-zinc-800 border border-zinc-700">
-                    {product.category.name}
-                  </span>
-                </td>
-                <td className="p-4 font-mono text-white">
-                  {Number(product.price).toFixed(2)}€
-                </td>
-                <td className="p-4">
-                  {product.discount > 0 ? (
-                    <span className="text-red-500 font-bold">
-                      -{product.discount}%
-                    </span>
-                  ) : (
-                    <span className="text-zinc-600">-</span>
-                  )}
-                </td>
-                <td className="p-4 text-right">
-                  <Link
-                    href={`/admin/products/edit/${product.id}`}
-                    className="inline-block bg-zinc-800 hover:bg-purple-600 hover:text-white text-zinc-400 text-xs font-black py-2 px-4 rounded transition-all border border-zinc-700"
-                  >
-                    MODIFICA / DETTAGLI
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        {products.length === 0 && (
-          <div className="p-20 text-center text-zinc-600 uppercase tracking-widest text-sm">
-            L'abisso è vuoto. Non ci sono prodotti.
-          </div>
-        )}
+        {/* Passiamo i prodotti estratti dal server alla tabella client */}
+        <ProductsTableComponent products={products} />
       </div>
     </div>
   );
