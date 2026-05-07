@@ -7,7 +7,7 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
   const [images, setImages] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
 
-  const availableSizes = ["XS", "S", "M", "L", "XL", "XXL"];
+  const availableSizes = ["S", "M", "L", "XL"];
 
   const toggleSize = (size: string) => {
     setSelectedSizes((prev) =>
@@ -76,21 +76,48 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
             </label>
             <input
               name="price"
-              type="number"
-              step="0.01"
+              type="text"
               required
-              className="w-full border border-zinc-800 p-2 rounded"
+              placeholder="00,00"
+              pattern="^\d+,\d{2}$"
+              className="w-full bg-black border border-zinc-800 p-2 rounded text-white outline-none transition-all 
+               invalid:border-red-500 invalid:text-red-500 focus:border-purple-500 peer"
             />
+            <p className="mt-1 hidden peer-invalid:block text-[10px] text-red-500 uppercase font-bold">
+              Formato richiesto: 00,00 (es. 19,99)
+            </p>
           </div>
+          {/* Sconto con selezione rapida */}
           <div>
-            <label className="text-xs uppercase font-bold text-zinc-500">
+            <label className="text-xs uppercase font-bold text-zinc-500 block mb-2">
               Sconto (%)
             </label>
+            <div className="flex flex-wrap gap-2">
+              {[0, 5, 10, 15, 20, 30, 50].map((val) => (
+                <button
+                  key={val}
+                  type="button"
+                  onClick={() => {
+                    // Se hai uno stato React 'setDiscount', usalo qui
+                    const input = document.getElementById(
+                      "discount-input",
+                    ) as HTMLInputElement;
+                    if (input) input.value = val.toString();
+
+                    // Logica per gestire lo stile 'attivo' se necessario
+                  }}
+                  className="px-3 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs font-bold hover:border-purple-500 focus:bg-purple-600 focus:text-white transition-all"
+                >
+                  {val === 0 ? "No" : `${val}%`}
+                </button>
+              ))}
+            </div>
+            {/* Campo nascosto che verrà inviato al server */}
             <input
+              type="hidden"
+              id="discount-input"
               name="discount"
-              type="number"
               defaultValue="0"
-              className="w-full border border-zinc-800 p-2 rounded"
             />
           </div>
         </div>

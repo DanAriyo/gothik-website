@@ -35,7 +35,7 @@ export default function AddCategoryPage() {
 
           <div className="flex gap-4 pt-4">
             <Link
-              href="/admin/products/add-product"
+              href="/api/admin/products/add-product"
               className="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white text-center font-bold py-4 rounded-xl transition-all border border-zinc-700"
             >
               ANNULLA
