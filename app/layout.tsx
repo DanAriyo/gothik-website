@@ -9,6 +9,7 @@ import FooterComponent from "@/components/FooterComponent";
 
 // CONFIGURAZIONE FONT AWESOME
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { prisma } from "@/lib/db";
 config.autoAddCss = false;
 
 const geistSans = Geist({
@@ -41,6 +42,11 @@ export default async function RootLayout({
   // Controlliamo il ruolo (assicurati che ADMIN sia scritto esattamente come nel DB)
   const isAdmin = session?.user?.role === "ADMIN";
 
+  // Recuperiamo le categorie dal server
+  const categories = await prisma.category.findMany({
+    orderBy: { name: "asc" },
+  });
+
   return (
     <html lang="it">
       <body
@@ -53,6 +59,7 @@ export default async function RootLayout({
             isAdmin={isAdmin}
             isAuthenticated={isAuthenticated}
             session={session}
+            categories={categories}
           />
 
           <main className="flex-grow pt-4">{children}</main>

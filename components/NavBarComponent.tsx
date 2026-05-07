@@ -28,12 +28,14 @@ interface NavBarProps {
   isAdmin: boolean;
   isAuthenticated: boolean;
   session: any;
+  categories: { id: string; name: string }[];
 }
 
 export default function NavBarComponent({
   isAdmin,
   isAuthenticated,
   session,
+  categories,
 }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -104,23 +106,57 @@ export default function NavBarComponent({
                         </p>
                       </div>
 
-                      <nav className="space-y-8 flex-1">
-                        <Link
-                          href="/chi-siamo"
-                          onClick={() => close()}
-                          className="group block"
-                        >
-                          <span className="text-2xl font-bold uppercase tracking-tighter group-hover:text-purple-400 transition">
-                            Il Nostro Culto
-                          </span>
-                          <p className="text-xs text-zinc-500 lowercase">
-                            scopri la nostra filosofia oscura
+                      {/* CONTENUTO NAVIGAZIONE CON SCROLLBAR PERSONALIZZATA */}
+                      <nav className="flex-1 overflow-y-auto pr-4 space-y-12 custom-scrollbar">
+                        {/* 1. SEZIONE BRAND */}
+                        <div>
+                          <Link
+                            href="/chi-siamo"
+                            onClick={() => close()}
+                            className="group block"
+                          >
+                            <span className="text-2xl font-bold uppercase tracking-tighter group-hover:text-purple-400 transition duration-300">
+                              Il Nostro Culto
+                            </span>
+                            <p className="text-xs text-zinc-500 lowercase">
+                              scopri la nostra filosofia oscura
+                            </p>
+                          </Link>
+                        </div>
+
+                        {/* 2. SEZIONE SETTORI (CATEGORIE) */}
+                        <div className="space-y-6">
+                          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 border-b border-purple-900/20 pb-2">
+                            Settori dell'Arsenale
                           </p>
-                        </Link>
-                        {/* Aggiungi altri link qui se necessario */}
+
+                          <div className="flex flex-col gap-5">
+                            {categories && categories.length > 0 ? (
+                              categories.map((cat) => (
+                                <Link
+                                  key={cat.id}
+                                  href={`/category/${cat.id}`}
+                                  onClick={() => close()}
+                                  className="group flex items-center justify-between transition-all"
+                                >
+                                  <span className="text-lg font-medium text-zinc-400 group-hover:text-white group-hover:translate-x-2 transition-all duration-300">
+                                    {cat.name}
+                                  </span>
+                                  <span className="opacity-0 group-hover:opacity-100 transition-opacity text-purple-600 font-mono text-xs">
+                                    // visualizza
+                                  </span>
+                                </Link>
+                              ))
+                            ) : (
+                              <p className="text-xs italic text-zinc-700">
+                                Nessun settore ancora evocato...
+                              </p>
+                            )}
+                          </div>
+                        </div>
                       </nav>
 
-                      <div className="pt-8 border-t border-purple-900/20">
+                      <div className="pt-8 border-t border-purple-900/20 mt-auto">
                         <p className="text-[10px] text-zinc-600 uppercase tracking-widest">
                           © 2026 Gothik Store
                         </p>
@@ -132,7 +168,7 @@ export default function NavBarComponent({
             )}
           </Popover>
         </div>
-
+        {/* ... resto del codice precedente ... */}
         {/* CENTRO: Nome Store */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
           <Link href="/" className="group">
