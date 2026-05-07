@@ -1,4 +1,6 @@
-"use client"; // <--- Fondamentale per far funzionare onClick
+"use client";
+
+import { useRouter } from "next/navigation"; // Importa il router
 
 interface CategoryCardProps {
   category: {
@@ -9,13 +11,15 @@ interface CategoryCardProps {
 }
 
 export default function CategoryCard({ category }: CategoryCardProps) {
+  const router = useRouter(); // Inizializza il router
+
   const handleEdit = () => {
-    console.log("Modifica categoria:", category.id);
-    // In futuro: router.push(`/admin/categories/edit/${category.id}`)
+    // Reindirizza alla pagina di modifica usando l'ID della categoria
+    router.push(`/api/admin/categories/edit/${category.id}`);
   };
 
   const handleDelete = () => {
-    alert("Funzione di eliminazione da implementare!");
+    console.log("Elimina:", category.id);
   };
 
   return (
@@ -46,7 +50,6 @@ export default function CategoryCard({ category }: CategoryCardProps) {
           onClick={handleDelete}
           className="px-3 bg-zinc-900 hover:bg-red-900/40 text-zinc-600 hover:text-red-500 py-2 rounded-lg transition-all border border-zinc-800 hover:border-red-900/50"
         >
-          {/* Icona cestino */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

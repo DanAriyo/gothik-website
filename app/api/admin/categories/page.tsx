@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import CategoryCard from "./CategoryCard"; // Importiamo il componente client
+import CategoryCard from "../../../../components/CategoryCardComponent"; // Importiamo il componente client
 
 export default async function CategoriesPage() {
   const categories = await prisma.category.findMany({
