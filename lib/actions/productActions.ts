@@ -1,6 +1,7 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 
 
@@ -44,5 +45,33 @@ export async function createProductAction(formData: FormData) {
   }
 
   // Il redirect va FUORI dal try/catch
+  redirect("/admin/products");
+}
+
+export async function updateProductAction(id: string, formData: FormData) {
+  const name = formData.get("name") as string;
+  const categoryId = formData.get("categoryId") as string;
+  const rawPrice = formData.get("price") as string;
+  const discount = parseInt(formData.get("discount") as string);
+  const description = formData.get("description") as string;
+
+  // Pulizia prezzo per il database (virgola -> punto)
+  const cleanPrice = parseFloat(rawPrice.replace(",", "."));
+
+  if (isNaN(cleanPrice)) throw new Error("Prezzo non valido");
+
+  await prisma.product.update({
+    where: { id },
+    data: {
+      name,
+      categoryId,
+      price: cleanPrice,
+      discount,
+      description,
+    },
+  });
+
+  revalidatePath("/admin/products");
+
   redirect("/admin/products");
 }

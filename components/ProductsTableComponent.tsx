@@ -95,7 +95,7 @@ export default function ProductsTableComponent({
                 </td>
                 <td className="p-4 text-right align-middle">
                   <Link
-                    href={`/admin/products/edit/${product.id}`}
+                    href={`/api/admin/products/edit/${product.id}`}
                     className="inline-block bg-zinc-800 hover:bg-purple-600 hover:text-white text-zinc-400 text-[10px] font-black py-2 px-4 rounded transition-all border border-zinc-700"
                   >
                     MODIFICA
