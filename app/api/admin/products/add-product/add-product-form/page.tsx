@@ -6,7 +6,8 @@ import { createProductAction } from "@/lib/actions/productActions";
 export default function AddProductForm({ categories }: { categories: any[] }) {
   const [images, setImages] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-
+  const [rawPrice, setRawPrice] = useState("");
+  const [discount, setDiscount] = useState(0);
   const availableSizes = ["S", "M", "L", "XL"];
 
   const toggleSize = (size: string) => {
@@ -17,6 +18,18 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
 
   const removeImage = (publicId: string) => {
     setImages((prev) => prev.filter((img) => img !== publicId));
+  };
+
+  // Calcolo del prezzo finale
+  const calculateFinalPrice = () => {
+    const priceNum = parseFloat(rawPrice.replace(",", "."));
+    if (isNaN(priceNum)) return "0,00";
+
+    const final = priceNum - (priceNum * discount) / 100;
+    return final.toLocaleString("it-IT", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   };
 
   return (
@@ -69,57 +82,71 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="text-xs uppercase font-bold text-zinc-500">
-              Prezzo (€) *
-            </label>
-            <input
-              name="price"
-              type="text"
-              required
-              placeholder="00,00"
-              pattern="^\d+,\d{2}$"
-              className="w-full bg-black border border-zinc-800 p-2 rounded text-white outline-none transition-all 
-               invalid:border-red-500 invalid:text-red-500 focus:border-purple-500 peer"
-            />
-            <p className="mt-1 hidden peer-invalid:block text-[10px] text-red-500 uppercase font-bold">
-              Formato richiesto: 00,00 (es. 19,99)
-            </p>
-          </div>
-          {/* Sconto con selezione rapida */}
-          <div>
-            <label className="text-xs uppercase font-bold text-zinc-500 block mb-2">
-              Sconto (%)
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {[0, 5, 10, 15, 20, 30, 50].map((val) => (
-                <button
-                  key={val}
-                  type="button"
-                  onClick={() => {
-                    // Se hai uno stato React 'setDiscount', usalo qui
-                    const input = document.getElementById(
-                      "discount-input",
-                    ) as HTMLInputElement;
-                    if (input) input.value = val.toString();
-
-                    // Logica per gestire lo stile 'attivo' se necessario
-                  }}
-                  className="px-3 py-1 bg-zinc-900 border border-zinc-800 rounded text-xs font-bold hover:border-purple-500 focus:bg-purple-600 focus:text-white transition-all"
-                >
-                  {val === 0 ? "No" : `${val}%`}
-                </button>
-              ))}
+        <div className="space-y-6 bg-black/40 p-6 rounded-xl border border-zinc-800/50">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* INPUT PREZZO */}
+            <div>
+              <label className="text-xs uppercase font-bold text-zinc-500 mb-2 block">
+                Prezzo Originale (€) *
+              </label>
+              <input
+                name="price"
+                type="text"
+                required
+                placeholder="00,00"
+                value={rawPrice}
+                onChange={(e) => setRawPrice(e.target.value)}
+                pattern="^\d+([,.]\d{2})?$"
+                className="w-full bg-zinc-900 border border-zinc-800 p-3 rounded-lg text-white outline-none focus:border-purple-500 transition-all peer"
+              />
+              <p className="mt-1 hidden peer-invalid:block text-[9px] text-red-500 font-black">
+                FORMATO RICHIESTO: 00,00
+              </p>
             </div>
-            {/* Campo nascosto che verrà inviato al server */}
-            <input
-              type="hidden"
-              id="discount-input"
-              name="discount"
-              defaultValue="0"
-            />
+
+            {/* SELEZIONE SCONTO */}
+            <div>
+              <label className="text-xs uppercase font-bold text-zinc-500 mb-2 block">
+                Applica Sconto
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {[0, 10, 20, 30, 50].map((val) => (
+                  <button
+                    key={val}
+                    type="button"
+                    onClick={() => setDiscount(val)}
+                    className={`flex-1 py-2 rounded-lg text-[10px] font-black border transition-all ${
+                      discount === val
+                        ? "bg-purple-600 border-purple-500 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)]"
+                        : "bg-zinc-900 border-zinc-800 text-zinc-500 hover:border-purple-500"
+                    }`}
+                  >
+                    {val === 0 ? "NO" : `${val}%`}
+                  </button>
+                ))}
+              </div>
+              <input type="hidden" name="discount" value={discount} />
+            </div>
           </div>
+
+          {/* VISUALIZZAZIONE RISULTATO FINALE */}
+          {rawPrice && (
+            <div className="pt-4 border-t border-zinc-800 flex justify-between items-center">
+              <span className="text-xs uppercase font-bold text-zinc-500">
+                Prezzo Finale a catalogo:
+              </span>
+              <div className="text-right">
+                {discount > 0 && (
+                  <span className="text-xs line-through text-zinc-600 mr-2">
+                    {rawPrice}€
+                  </span>
+                )}
+                <span className="text-2xl font-black text-purple-400 tracking-tighter">
+                  {calculateFinalPrice()}€
+                </span>
+              </div>
+            </div>
+          )}
         </div>
 
         <div>
