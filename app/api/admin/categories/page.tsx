@@ -19,7 +19,7 @@ export default async function CategoriesPage() {
           </h1>
         </div>
         <Link
-          href="/admin/categories/add"
+          href="/api/admin/categories/add"
           className="bg-zinc-900 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-xl transition-all border border-purple-900/30"
         >
           + NUOVA CATEGORIA
