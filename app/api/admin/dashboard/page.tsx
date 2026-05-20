@@ -22,9 +22,8 @@ export default async function AdminDashboard() {
       {/* HEADER CENTRATO CON GLOW */}
       <div className="text-center mb-12 w-full">
         <h1 className="text-3xl font-black uppercase tracking-[0.2em] text-white text-center inline-block">
-          Pannello{" "}
           <span className="text-purple-500 shadow-purple-500/20 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]">
-            Arsenale
+            DASHBOARD
           </span>
         </h1>
         <p className="text-zinc-600 font-mono text-xs mt-3">
@@ -58,22 +57,22 @@ export default async function AdminDashboard() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <AdminLink
-              href="/admin/products/add-product"
+              href="/api/admin/products/add-product"
               label="Nuovo Prodotto"
               icon={faPlus}
             />
             <AdminLink
-              href="/admin/products"
+              href="/api/admin/products"
               label="Vedi Tutti i Prodotti"
               icon={faBoxOpen}
             />
             <AdminLink
-              href="/admin/categories/add-category"
+              href="/api/admin/categories/add-category"
               label="Nuova Categoria"
               icon={faPlus}
             />
             <AdminLink
-              href="/admin/categories"
+              href="/api/admin/categories"
               label="Gestisci Categorie"
               icon={faTags}
             />
@@ -103,7 +102,7 @@ export default async function AdminDashboard() {
           </div>
 
           <Link
-            href="/admin/utenti"
+            href="/api/admin/users"
             className="w-full bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white text-center font-black py-4 rounded-lg transition-all duration-300 uppercase text-xs tracking-[0.2em] border border-zinc-800 block"
           >
             Lista Amministratori
