@@ -12,50 +12,56 @@ export default function CategoryEditComponent({
   const updateWithId = updateCategoryAction.bind(null, category.id);
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 p-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-black text-white uppercase tracking-widest">
-          Rimodella <span className="text-purple-500">Settore</span>
+    <div className="max-w-2xl mx-auto p-8 text-zinc-300">
+      {/* HEADER CENTRATO CON GLOW */}
+      <div className="text-center mb-12 w-full">
+        <h1 className="text-3xl font-black uppercase tracking-[0.2em] text-white text-center inline-block">
+          Rimodella{" "}
+          <span className="text-purple-500 shadow-purple-500/20 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]">
+            Settore
+          </span>
         </h1>
-        <p className="text-zinc-500 text-sm mt-2">
-          Stai modificando l'essenza della categoria:{" "}
-          <span className="text-zinc-300 italic">{category.name}</span>
+        <p className="text-zinc-600 font-mono text-xs mt-3">
+          Stai modificando l'essenza originale di:{" "}
+          <span className="text-purple-400 italic">"{category.name}"</span>
         </p>
       </div>
 
+      {/* FORM TOTAL BLACK GEOMETRICO */}
       <form
         action={updateWithId}
-        className="bg-zinc-900/50 p-8 rounded-2xl border border-purple-900/20 shadow-xl"
+        className="bg-zinc-950 p-8 rounded-xl border border-zinc-900 shadow-[0_0_50px_rgba(0,0,0,0.8)] space-y-6"
       >
-        <div className="space-y-6">
-          <div>
-            <label className="text-xs uppercase font-bold text-zinc-500 mb-2 block">
-              Nuovo Nome Categoria
-            </label>
-            <input
-              name="name"
-              type="text"
-              defaultValue={category.name}
-              required
-              className="w-full bg-black border border-zinc-800 p-3 rounded-xl focus:border-purple-500 outline-none text-white transition-all shadow-inner"
-            />
-          </div>
+        {/* NOME CATEGORIA */}
+        <div className="space-y-2">
+          <label className="text-[10px] uppercase font-black tracking-widest text-zinc-500 block">
+            Nuovo Nome Categoria *
+          </label>
+          <input
+            name="name"
+            type="text"
+            required
+            defaultValue={category.name}
+            placeholder="Es. CALZATURE OSCURE, ACCESSORI RITUALISTICI..."
+            className="w-full bg-black border border-zinc-800 focus:border-purple-600 p-3 rounded text-sm text-white outline-none transition-all duration-300 placeholder:text-zinc-800"
+          />
+        </div>
 
-          <div className="flex gap-4 pt-4">
-            <Link
-              href="/api/admin/categories"
-              className="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white text-center font-bold py-4 rounded-xl transition-all border border-zinc-700"
-            >
-              ABBANDONA
-            </Link>
+        {/* PULSANTI DI AZIONE MINIMALI COMPATTI */}
+        <div className="pt-4 border-t border-zinc-900 flex gap-3">
+          <Link
+            href="/api/admin/dashboard"
+            className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white text-center font-black py-4 rounded-lg transition-all duration-300 uppercase text-xs tracking-[0.2em] border border-zinc-800 flex items-center justify-center"
+          >
+            Annulla
+          </Link>
 
-            <button
-              type="submit"
-              className="flex-[2] bg-purple-600 hover:bg-purple-700 text-white font-black py-4 rounded-xl shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all border border-purple-500/50"
-            >
-              SALVA MUTAZIONE
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="flex-[2] bg-purple-600 hover:bg-purple-700 text-white font-black py-4 rounded-lg shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:shadow-[0_0_35px_rgba(168,85,247,0.4)] transition-all duration-300 uppercase text-xs tracking-[0.2em] border border-purple-500/30 active:scale-[0.98]"
+          >
+            Salva Mutazione
+          </button>
         </div>
       </form>
     </div>

@@ -10,7 +10,7 @@ export default async function AddProductPage() {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <div className="mb-8">
+      <div className="mb-8 text-center">
         <h1 className="text-3xl font-black uppercase tracking-tighter text-white">
           <span className="text-purple-600">Nuovo Articolo</span>
         </h1>
