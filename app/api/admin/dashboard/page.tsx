@@ -26,20 +26,17 @@ export default async function AdminDashboard() {
             DASHBOARD
           </span>
         </h1>
-        <p className="text-zinc-600 font-mono text-xs mt-3">
-          Controllo globale e catalogo cimeli oscuri
-        </p>
       </div>
 
       {/* STATS GRID (Look geometrico total-black con bordi finissimi) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <StatCard title="Custodi (Utenti)" value={userCount} icon={faUsers} />
+        <StatCard title="Utenti" value={userCount} icon={faUsers} />
         <StatCard
-          title="Manufatti in Catalogo"
+          title="Prodotti in Catalogo"
           value={productCount}
           icon={faBoxOpen}
         />
-        <StatCard title="Settori Evocati" value={categoryCount} icon={faTags} />
+        <StatCard title="Categorie" value={categoryCount} icon={faTags} />
       </div>
 
       {/* QUICK ACTIONS SECTIONS (Struttura a 12 colonne speculare ai form) */}

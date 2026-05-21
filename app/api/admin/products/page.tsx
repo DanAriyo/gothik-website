@@ -18,11 +18,8 @@ export default async function AdminProductsPage() {
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-3xl font-black text-white uppercase tracking-tighter">
-            Gestione <span className="text-purple-500">Arsenale</span>
+            Gestione <span className="text-purple-500">Catalogo</span>
           </h1>
-          <p className="text-zinc-500 text-sm">
-            Lista completa degli articoli nel catalogo oscuro.
-          </p>
         </div>
         <Link
           href="/api/admin/products/add-product"

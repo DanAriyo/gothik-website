@@ -12,6 +12,7 @@ export default async function Home() {
             <ProductCardComponent
               id={p.id}
               name={p.name}
+              discount={p.discount}
               price={p.price}
               imageUrls={p.images}
               altName={"rotto"}

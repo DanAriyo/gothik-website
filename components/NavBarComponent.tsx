@@ -111,23 +111,20 @@ export default function NavBarComponent({
                         {/* 1. SEZIONE BRAND */}
                         <div>
                           <Link
-                            href="/chi-siamo"
+                            href="/about-us"
                             onClick={() => close()}
                             className="group block"
                           >
                             <span className="text-2xl font-bold uppercase tracking-tighter group-hover:text-purple-400 transition duration-300">
-                              Il Nostro Culto
+                              About Us
                             </span>
-                            <p className="text-xs text-zinc-500 lowercase">
-                              scopri la nostra filosofia oscura
-                            </p>
                           </Link>
                         </div>
 
                         {/* 2. SEZIONE SETTORI (CATEGORIE) */}
                         <div className="space-y-6">
                           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 border-b border-purple-900/20 pb-2">
-                            Settori dell'Arsenale
+                            Categorie
                           </p>
 
                           <div className="flex flex-col gap-5">
@@ -142,14 +139,11 @@ export default function NavBarComponent({
                                   <span className="text-lg font-medium text-zinc-400 group-hover:text-white group-hover:translate-x-2 transition-all duration-300">
                                     {cat.name}
                                   </span>
-                                  <span className="opacity-0 group-hover:opacity-100 transition-opacity text-purple-600 font-mono text-xs">
-                                    // visualizza
-                                  </span>
                                 </Link>
                               ))
                             ) : (
                               <p className="text-xs italic text-zinc-700">
-                                Nessun settore ancora evocato...
+                                Nessuna categoria disponibile al momento.
                               </p>
                             )}
                           </div>
@@ -168,7 +162,6 @@ export default function NavBarComponent({
             )}
           </Popover>
         </div>
-        {/* ... resto del codice precedente ... */}
         {/* CENTRO: Nome Store */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
           <Link href="/" className="group">
@@ -213,23 +206,20 @@ export default function NavBarComponent({
                         /* STATO: NON LOGGATO */
                         <div className="text-center py-2">
                           <p className="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mb-4">
-                            Oscuro Viandante
+                            Accedi
                           </p>
                           <button
                             onClick={() => signIn("google")}
                             className="w-full flex items-center justify-center gap-3 bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-purple-600 hover:text-white transition-all duration-300"
                           >
                             <FontAwesomeIcon icon={faArrowRightToBracket} />
-                            Inizia il Culto
+                            Login
                           </button>
                         </div>
                       ) : (
                         /* STATO: LOGGATO */
                         <div className="space-y-1">
                           <div className="pb-3 mb-2 border-b border-purple-900/30">
-                            <p className="text-[10px] text-purple-500 uppercase font-black tracking-widest">
-                              Anima Eletta
-                            </p>
                             <p className="text-sm font-bold truncate text-zinc-200">
                               {session?.user?.name}
                             </p>
@@ -272,7 +262,7 @@ export default function NavBarComponent({
                               icon={faArrowRightToBracket}
                               className="rotate-180 w-4"
                             />
-                            Eclissati
+                            Logout
                           </button>
                         </div>
                       )}
