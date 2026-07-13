@@ -3,6 +3,8 @@ import { routes } from "@/lib/routes";
 import Link from "next/link";
 import CategoryCard from "../../../components/admin/categories/CategoryCardComponent";
 
+
+
 export default async function CategoriesPage() {
   const categories = await prisma.category.findMany({
     orderBy: { name: "asc" },
@@ -28,7 +30,7 @@ export default async function CategoriesPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categories.map((category) => (
+        {categories.map((category: { id: string; name: string; _count: { products: number; }; }) => (
           // Passiamo i dati al componente client
           <CategoryCard key={category.id} category={category} />
         ))}
