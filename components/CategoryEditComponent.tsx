@@ -50,7 +50,7 @@ export default function CategoryEditComponent({
         {/* PULSANTI DI AZIONE MINIMALI COMPATTI */}
         <div className="pt-4 border-t border-zinc-900 flex gap-3">
           <Link
-            href="/api/admin/dashboard"
+            href="/admin/dashboard"
             className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white text-center font-black py-4 rounded-lg transition-all duration-300 uppercase text-xs tracking-[0.2em] border border-zinc-800 flex items-center justify-center"
           >
             Annulla

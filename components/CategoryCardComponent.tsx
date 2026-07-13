@@ -15,7 +15,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
 
   const handleEdit = () => {
     // Reindirizza alla pagina di modifica usando l'ID della categoria
-    router.push(`/api/admin/categories/edit/${category.id}`);
+    router.push(`/admin/categories/edit/${category.id}`);
   };
 
   const handleDelete = () => {

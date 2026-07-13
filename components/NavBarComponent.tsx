@@ -227,7 +227,7 @@ export default function NavBarComponent({
 
                           {isAdmin && (
                             <Link
-                              href="/api/admin/dashboard"
+                              href="/admin/dashboard"
                               className="flex items-center gap-3 p-2 text-sm text-purple-400 hover:bg-purple-900/20 rounded-lg transition font-bold"
                             >
                               <FontAwesomeIcon

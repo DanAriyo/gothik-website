@@ -45,7 +45,7 @@ export async function createProductAction(formData: FormData) {
   }
 
   // Il redirect va FUORI dal try/catch
-  redirect("/api/admin/products");
+  redirect("/admin/products");
 }
 
 export async function updateProductAction(id: string, formData: FormData) {
@@ -71,7 +71,7 @@ export async function updateProductAction(id: string, formData: FormData) {
     },
   });
 
-  revalidatePath("/api/admin/products");
+  revalidatePath("/admin/products");
 
-  redirect("/api/admin/products");
+  redirect("/admin/products");
 }

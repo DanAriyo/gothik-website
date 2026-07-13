@@ -316,7 +316,7 @@ export default function ProductEditComponent({
           {/* BOTTONI DI AZIONE (Ancorati in fondo) */}
           <div className="pt-4 border-t border-zinc-900 lg:border-t-0 lg:pt-0 flex flex-col sm:flex-row gap-3">
             <Link
-              href="/api/admin/products"
+              href="/admin/products"
               className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white font-black py-4 rounded-lg transition-all duration-300 uppercase text-center text-xs tracking-[0.2em] border border-zinc-800"
             >
               Annulla
