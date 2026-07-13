@@ -1,10 +1,18 @@
 // app/auth/signin/page.tsx
-import { signIn } from "@/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { auth, signIn } from "@/auth";
+import { routes } from "@/lib/routes";
+import { redirect } from "next/navigation";
 
-export default function SignInPage() {
+export default async function SignInPage() {
+
+  const session = await auth();
+  if (session?.user) {
+    redirect(routes.home);
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white text-white px-4">
       <div className="w-full max-w-md space-y-8 p-10 rounded-2xl bg-zinc-950 border border-purple-900/20 shadow-[0_0_50px_rgba(168,85,247,0.05)]">
@@ -22,7 +30,7 @@ export default function SignInPage() {
           <form
             action={async () => {
               "use server";
-              await signIn("google", { redirectTo: "/" });
+              await signIn("google", { redirectTo: routes.home });
             }}
           >
             <button

@@ -15,7 +15,7 @@ export default async function Home() {
               discount={p.discount}
               price={p.price}
               imageUrls={p.images}
-              altName={"rotto"}
+              altName={"Non disponibile"}
             />
           </div>
         ))}

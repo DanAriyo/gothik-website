@@ -1,8 +1,17 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import ProductsTableComponent from "../../../components/ProductsTableComponent";
+import ProductsTableComponent from "../../../components/admin/products/ProductsTableComponent";
+import { auth } from "@/auth";
+import { routes } from "@/lib/routes";
+import { redirect } from "next/navigation";
 
 export default async function AdminProductsPage() {
+
+  const session = await auth();
+  if (session?.user?.role !== "ADMIN") {
+    redirect(routes.home);
+  }
+  
   // Query eseguita sul server
   const products = await prisma.product.findMany({
     include: {
@@ -22,7 +31,7 @@ export default async function AdminProductsPage() {
           </h1>
         </div>
         <Link
-          href="/admin/products/add-product"
+          href={routes.admin.products.add}
           className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg transition-all shadow-[0_0_15px_rgba(168,85,247,0.4)]"
         >
           + NUOVO PRODOTTO

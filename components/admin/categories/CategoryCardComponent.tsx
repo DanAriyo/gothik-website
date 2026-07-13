@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation"; // Importa il router
+import { routes } from "@/lib/routes";
 
 interface CategoryCardProps {
   category: {
@@ -15,7 +16,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
 
   const handleEdit = () => {
     // Reindirizza alla pagina di modifica usando l'ID della categoria
-    router.push(`/admin/categories/edit/${category.id}`);
+    router.push(routes.admin.categories.edit(category.id));
   };
 
   const handleDelete = () => {

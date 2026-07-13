@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import ProductEditComponent from "@/components/ProductEditComponent";
+import ProductEditComponent from "@/components/admin/products/ProductEditComponent";
 
 export default async function EditProductPage({
   params,

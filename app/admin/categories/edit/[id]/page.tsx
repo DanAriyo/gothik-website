@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import CategoryEditComponent from "@/components/CategoryEditComponent";
+import CategoryEditComponent from "@/components/admin/categories/CategoryEditComponent";
 
 export default async function EditCategoryPage({
   params,

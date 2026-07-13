@@ -1,6 +1,10 @@
-import { prisma } from "@/lib/prisma";
+// src/app/admin/page.tsx
+import { auth } from "@/auth";
+import { prisma } from "@/lib/db";
+import { routes } from "@/lib/routes";
+import { redirect } from "next/navigation";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { StatCard, AdminLink } from "@/components/admin/DashboardCards";
 import {
   faUsers,
   faBoxOpen,
@@ -9,7 +13,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default async function AdminDashboard() {
-  // 🛡️ Recupero dati dal DB in parallelo (Solo dati rilevanti per la modalità Catalogo Showcase)
+  // 1. 🛡️ CONTROLLO DI SICUREZZA RIGIDO LATO SERVER
+  const session = await auth();
+  if (session?.user?.role !== "ADMIN") {
+    redirect(routes.home);
+  }
+
+  // 2. 📦 RECUPERO DATI IN PARALLELO
   const [userCount, productCount, categoryCount] = await Promise.all([
     prisma.user.count(),
     prisma.product.count(),
@@ -17,7 +27,6 @@ export default async function AdminDashboard() {
   ]);
 
   return (
-    // Rimpiazza la linea del div principale con questa:
     <div className="max-w-5xl mx-auto p-8 pb-24 text-zinc-300 min-h-full bg-black">
       {/* HEADER CENTRATO CON GLOW */}
       <div className="text-center mb-12 w-full">
@@ -28,20 +37,17 @@ export default async function AdminDashboard() {
         </h1>
       </div>
 
-      {/* STATS GRID (Look geometrico total-black con bordi finissimi) */}
+      {/* STATS GRID */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <StatCard title="Utenti" value={userCount} icon={faUsers} />
-        <StatCard
-          title="Prodotti in Catalogo"
-          value={productCount}
-          icon={faBoxOpen}
-        />
+        <StatCard title="Prodotti in Catalogo" value={productCount} icon={faBoxOpen} />
         <StatCard title="Categorie" value={categoryCount} icon={faTags} />
       </div>
 
-      {/* QUICK ACTIONS SECTIONS (Struttura a 12 colonne speculare ai form) */}
+      {/* QUICK ACTIONS SECTIONS */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* SEZIONE COMPRENSIVA GESTIONE (Occupa 7 slot su 12) */}
+        
+        {/* SEZIONE COMPRENSIVA GESTIONE */}
         <div className="lg:col-span-7 bg-zinc-950 p-8 rounded-xl border border-zinc-900 shadow-[0_0_50px_rgba(0,0,0,0.8)] space-y-6">
           <div>
             <h2 className="text-[10px] uppercase font-black tracking-widest text-zinc-500 block mb-1">
@@ -54,29 +60,29 @@ export default async function AdminDashboard() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <AdminLink
-              href="/admin/products/add-product"
+              href={routes.admin.products.add}
               label="Nuovo Prodotto"
               icon={faPlus}
             />
             <AdminLink
-              href="/admin/products"
+              href={routes.admin.products.index}
               label="Vedi Tutti i Prodotti"
               icon={faBoxOpen}
             />
             <AdminLink
-              href="/admin/categories/add-category"
+              href={routes.admin.categories.add}
               label="Nuova Categoria"
               icon={faPlus}
             />
             <AdminLink
-              href="/admin/categories"
+              href={routes.admin.categories.index}
               label="Gestisci Categorie"
               icon={faTags}
             />
           </div>
         </div>
 
-        {/* SEZIONE INFORMATIVA / MONITORAGGIO UTENTI (Occupa 5 slot su 12) */}
+        {/* SEZIONE INFORMATIVA / MONITORAGGIO UTENTI */}
         <div className="lg:col-span-5 bg-zinc-950 p-8 rounded-xl border border-zinc-900 shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col justify-between space-y-6">
           <div>
             <h2 className="text-[10px] uppercase font-black tracking-widest text-zinc-500 block mb-1">
@@ -99,7 +105,7 @@ export default async function AdminDashboard() {
           </div>
 
           <Link
-            href="/admin/users"
+            href={routes.admin.users}
             className="w-full bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white text-center font-black py-4 rounded-lg transition-all duration-300 uppercase text-xs tracking-[0.2em] border border-zinc-800 block"
           >
             Lista Amministratori
@@ -107,44 +113,5 @@ export default async function AdminDashboard() {
         </div>
       </div>
     </div>
-  );
-}
-
-// 🔮 Sotto-componenti interni ri-stilizzati per il tema dark luxury
-
-function StatCard({ title, value, icon }: any) {
-  return (
-    <div className="bg-zinc-950 p-6 rounded-xl border border-zinc-900 flex items-center justify-between shadow-lg">
-      <div>
-        <p className="text-[10px] uppercase font-black tracking-widest text-zinc-500">
-          {title}
-        </p>
-        <p className="text-3xl font-black mt-2 text-white font-mono tracking-tighter">
-          {value}
-        </p>
-      </div>
-      <div className="w-10 h-10 bg-black border border-zinc-800 rounded flex items-center justify-center text-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.05)]">
-        <FontAwesomeIcon icon={icon} className="text-sm" />
-      </div>
-    </div>
-  );
-}
-
-function AdminLink({ href, label, icon }: any) {
-  return (
-    <Link
-      href={href}
-      className="flex items-center gap-4 bg-black border border-zinc-800 hover:border-purple-600 p-4 rounded transition-all duration-300 group shadow-inner"
-    >
-      <div className="w-8 h-8 rounded bg-zinc-900/50 border border-zinc-800 group-hover:border-purple-900 flex items-center justify-center transition-colors">
-        <FontAwesomeIcon
-          icon={icon}
-          className="text-zinc-500 group-hover:text-purple-400 group-hover:scale-110 transition text-xs"
-        />
-      </div>
-      <span className="font-bold text-xs uppercase tracking-wider text-zinc-400 group-hover:text-white transition-colors">
-        {label}
-      </span>
-    </Link>
   );
 }
