@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:18 # Specifichiamo la 18 così siamo sicuri
+    image: postgres:18-alpine # Specifichiamo la 18 così siamo sicuri
     container_name: gothik-db-new
     restart: always
     environment:
@@ -11,7 +11,7 @@ services:
       - "5432:5432"
     volumes:
       # Modificato per rispettare la nuova struttura di Postgres 18+
-      - postgres_data_new:/var/lib/postgresql 
+      - postgres_data_new:/var/lib/postgresql/data 
 
 volumes:
   postgres_data_new:
