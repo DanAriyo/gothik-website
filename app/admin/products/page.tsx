@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import ProductsTableComponent from "../../../../components/ProductsTableComponent";
+import ProductsTableComponent from "../../../components/ProductsTableComponent";
 
 export default async function AdminProductsPage() {
   // Query eseguita sul server
