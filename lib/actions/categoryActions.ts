@@ -20,7 +20,7 @@ export async function createCategoryAction(formData: FormData) {
   // Puliamo la cache della pagina prodotti (dove probabilmente c'è il dropdown)
   revalidatePath("/admin/products/add-product");
   // Redirigiamo l'utente (opzionale)
-  redirect("/api/admin/products/add-product");
+  redirect("/admin/products/add-product");
 }
 
 export async function updateCategoryAction(id: string, formData: FormData) {
@@ -36,7 +36,7 @@ export async function updateCategoryAction(id: string, formData: FormData) {
   });
 
   // Puliamo la cache per vedere subito i cambiamenti
-  revalidatePath("/api/admin/categories");
+  revalidatePath("/admin/categories");
   // Riportiamo l'admin alla lista delle categorie
-  redirect("/api/admin/categories");
+  redirect("/admin/categories");
 }

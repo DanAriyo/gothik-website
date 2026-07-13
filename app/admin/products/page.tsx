@@ -22,7 +22,7 @@ export default async function AdminProductsPage() {
           </h1>
         </div>
         <Link
-          href="/api/admin/products/add-product"
+          href="/admin/products/add-product"
           className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-lg transition-all shadow-[0_0_15px_rgba(168,85,247,0.4)]"
         >
           + NUOVO PRODOTTO

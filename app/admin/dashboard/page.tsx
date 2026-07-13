@@ -54,22 +54,22 @@ export default async function AdminDashboard() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <AdminLink
-              href="/api/admin/products/add-product"
+              href="/admin/products/add-product"
               label="Nuovo Prodotto"
               icon={faPlus}
             />
             <AdminLink
-              href="/api/admin/products"
+              href="/admin/products"
               label="Vedi Tutti i Prodotti"
               icon={faBoxOpen}
             />
             <AdminLink
-              href="/api/admin/categories/add-category"
+              href="/admin/categories/add-category"
               label="Nuova Categoria"
               icon={faPlus}
             />
             <AdminLink
-              href="/api/admin/categories"
+              href="/admin/categories"
               label="Gestisci Categorie"
               icon={faTags}
             />
@@ -99,7 +99,7 @@ export default async function AdminDashboard() {
           </div>
 
           <Link
-            href="/api/admin/users"
+            href="/admin/users"
             className="w-full bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white text-center font-black py-4 rounded-lg transition-all duration-300 uppercase text-xs tracking-[0.2em] border border-zinc-800 block"
           >
             Lista Amministratori
