@@ -1,19 +1,27 @@
 // prisma/seed.ts
-import { PrismaClient } from "@prisma/client";
+import "dotenv/config";
+import { Pool } from "pg";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client"; 
 
-const prisma = new PrismaClient();
+// 1. Configurazione del Pool di connessione al database PostgreSQL locale
+const connectionString = `${process.env.DATABASE_URL}`;
+const pool = new Pool({ connectionString });
+const adapter = new PrismaPg(pool);
+
+// 2. Inizializzazione sicura del client con l'adapter richiesto da Prisma v7
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log("🌌 Inizio purificazione e popolamento database...");
+  console.log("🌌 Inizio purificazione e popolamento database (Prisma v7)...");
 
-  // 1. Pulizia precauzionale per evitare duplicati e conflitti di chiavi esterne
-  // Eliminiamo prima i prodotti e poi le categorie per rispettare i vincoli di integrità
+  // Eliminazione precauzionale (prima prodotti, poi categorie) per i vincoli di foreign key
   await prisma.product.deleteMany({});
   await prisma.category.deleteMany({});
 
   console.log("🧹 Database purificato. Evocazione delle nuove entità...");
 
-  // 2. Creazione delle Categorie di Base
+  // Creazione Categorie
   const topwearCategory = await prisma.category.create({
     data: { name: "Topwear" },
   });
@@ -24,17 +32,14 @@ async function main() {
 
   console.log("📁 Categorie 'Topwear' e 'Jeans' create con successo.");
 
-  // 3. Creazione dei Prodotti associati alle categorie e alle immagini di Cloudinary
-  
-  // --- CATEGORIA: TOPWEAR ---
+  // Creazione Prodotti (Topwear)
   await prisma.product.create({
     data: {
       name: "T-Shirt Gothic Oversize",
       description: "T-shirt dal taglio rilassato con dettagli esoterici stampati a contrasto.",
       price: 39.99,
-      discount: 10.0, // Float
+      discount: 10.0,
       sizes: ["S", "M", "L", "XL"],
-      // ☁️ Primo vestito: i tuoi primi due ID richiesti
       images: ["iykcyman9fbdgzhhjmc3", "v8vjxriya9wih4zggo6s"], 
       categoryId: topwearCategory.id,
     },
@@ -47,13 +52,12 @@ async function main() {
       price: 79.90,
       discount: 0.0,
       sizes: ["M", "L", "XL"],
-      // ☁️ Secondo vestito: i tuoi successivi due ID richiesti
       images: ["htono5ziwx5exxnvnnxr", "yejrtj1ohoo2j99ad3rn"],
       categoryId: topwearCategory.id,
     },
   });
 
-  // --- CATEGORIA: JEANS ---
+  // Creazione Prodotti (Jeans)
   await prisma.product.create({
     data: {
       name: "Jeans Cargo Black Obsidian",
@@ -61,7 +65,6 @@ async function main() {
       price: 89.90,
       discount: 15.0,
       sizes: ["S", "M", "L"],
-      // ☁️ Terzo vestito: selezione dei tuoi ID rimanenti
       images: ["gothik-bike-3_esyvaj", "s97yqoadlk7jsukestaj"],
       categoryId: jeansCategory.id,
     },
@@ -74,7 +77,6 @@ async function main() {
       price: 69.90,
       discount: 0.0,
       sizes: ["M", "L"],
-      // ☁️ Quarto vestito: selezione dei tuoi ID rimanenti
       images: ["y52aeyfhywpxkmnhmmzx", "gtmoxbu0zumh169u2fej"],
       categoryId: jeansCategory.id,
     },
@@ -85,10 +87,13 @@ async function main() {
 
 main()
   .then(async () => {
+    // 🛡️ Sicurezza: Disconnessione pulita di Prisma e rilascio del pool di Postgres
     await prisma.$disconnect();
+    await pool.end();
   })
   .catch(async (e) => {
     console.error("❌ Errore durante il seeding:", e);
     await prisma.$disconnect();
+    await pool.end();
     process.exit(1);
   });
