@@ -1,3 +1,4 @@
+// components/ProductPageComponent.tsx
 "use client";
 
 import { useState } from "react";
@@ -5,11 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import CloudinaryImage from "./CloudinaryImage";
 
 interface Product {
-  id: number | string;
+  id: string;
   name: string;
   price: number;
   description: string | null;
@@ -33,9 +35,9 @@ export default function ProductPageComponent({
     : product.price;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-16 text-white mt-10">
+    <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-16 text-zinc-100 mt-10">
       {/* SEZIONE IMMAGINI (Galleria) */}
-      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-zinc-900 border border-purple-900/20 shadow-2xl">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-zinc-900 border border-purple-900/20 shadow-[0_0_50px_rgba(168,85,247,0.05)]">
         <CloudinaryImage
           src={product.images[currentImgIndex] || "no-image_qo394q"}
           alt={product.name}
@@ -52,7 +54,8 @@ export default function ProductPageComponent({
                     (prev - 1 + product.images.length) % product.images.length,
                 )
               }
-              className="bg-black/40 backdrop-blur-md p-3 rounded-full hover:bg-purple-600 transition-colors"
+              className="bg-black/60 backdrop-blur-md p-3 rounded-full hover:bg-purple-600 text-white transition-colors focus:ring-2 focus:ring-purple-500 outline-none"
+              aria-label="Immagine precedente"
             >
               <FontAwesomeIcon icon={faChevronLeft} />
             </button>
@@ -60,7 +63,8 @@ export default function ProductPageComponent({
               onClick={() =>
                 setCurrentImgIndex((prev) => (prev + 1) % product.images.length)
               }
-              className="bg-black/40 backdrop-blur-md p-3 rounded-full hover:bg-purple-600 transition-colors"
+              className="bg-black/60 backdrop-blur-md p-3 rounded-full hover:bg-purple-600 text-white transition-colors focus:ring-2 focus:ring-purple-500 outline-none"
+              aria-label="Immagine successiva"
             >
               <FontAwesomeIcon icon={faChevronRight} />
             </button>
@@ -69,49 +73,50 @@ export default function ProductPageComponent({
       </div>
 
       {/* SEZIONE INFO */}
-      <div className="flex flex-col justify-start items-start gap-10">
-        {/* BLOCCO TESTATA (Stile ProductCard) */}
-        <div className="flex flex-col gap-2">
-          <h1 className="text-black font-medium text-2xl uppercase tracking-widest line-clamp-1 hover:text-purple-400 transition-colors">
+      <div className="flex flex-col justify-between items-start gap-8">
+        <div className="w-full space-y-6">
+          <h1 className="text-black font-bold text-3xl uppercase tracking-widest hover:text-purple-400 transition-colors">
             {product.name}
           </h1>
-          <div className="flex items-center gap-4">
-            <span className="text-black font-medium text-xs uppercase tracking-[0.3em]">
+
+          <div className="flex items-baseline gap-4">
+            <span className="text-purple-400 font-black text-2xl tracking-widest">
               {finalPrice.toFixed(2)} €
             </span>
             {hasDiscount && (
-              <span className="text-black line-through text-2xl uppercase tracking-widest">
+              <span className="text-zinc-500 line-through text-sm tracking-widest">
                 {product.price.toFixed(2)} €
               </span>
             )}
           </div>
+
+          <div className="max-w-md border-t border-purple-900/20 pt-6">
+            <p className="text-zinc-400 font-light text-sm leading-relaxed tracking-wide">
+              {product.description ||
+                "Nessuna descrizione disponibile per questo manufatto."}
+            </p>
+          </div>
         </div>
 
-        {/* DESCRIZIONE */}
-        <div className="max-w-md">
-          <p className="text-black font-medium tracking-widest hover:text-purple-400 transition-colors">
-            {product.description ||
-              "nessuna descrizione disponibile per questo artefatto."}
-          </p>
-        </div>
-
-        {/* SELEZIONE TAGLIA E AZIONE */}
-        <div className="w-full flex flex-col gap-8 mt-4">
+        {/* SELEZIONE TAGLIA E AZIONE DI ACQUISTO */}
+        <div className="w-full space-y-8">
           <div className="flex flex-col gap-3">
             <label className="text-[10px] font-black text-purple-500 uppercase tracking-[0.4em]">
               Seleziona Taglia
             </label>
-            <select
-              value={selectedSize}
-              onChange={(e) => setSelectedSize(e.target.value)}
-              className="bg-transparent border-b border-zinc-800 py-3 text-sm text-black focus:border-purple-500 outline-none appearance-none cursor-pointer transition-colors"
-            >
-              {product.sizes.map((s) => (
-                <option key={s} value={s} className="bg-white text-black">
-                  {s}
-                </option>
-              ))}
-            </select>
+            <div className="relative">
+              <select
+                value={selectedSize}
+                onChange={(e) => setSelectedSize(e.target.value)}
+                className="w-full bg-zinc-950 border border-purple-900/30 rounded-lg py-3 px-4 text-sm text-zinc-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none appearance-none cursor-pointer transition-all"
+              >
+                {product.sizes.map((s) => (
+                  <option key={s} value={s} className="bg-zinc-950 text-zinc-200">
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
       </div>

@@ -1,12 +1,20 @@
 import { prisma } from "@/lib/prisma";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import ProductEditComponent from "@/components/admin/products/ProductEditComponent";
+import { auth } from "@/auth";
+import { routes } from "@/lib/routes";
 
 export default async function EditProductPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+
+  const session = await auth();
+  if (session?.user?.role !== "ADMIN") {
+    redirect(routes.home);
+  }
+  
   // 1. Unwrapping dei parametri
   const { id } = await params;
 

@@ -1,10 +1,16 @@
 "use server";
 
+import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma"; // Assicurati che il percorso sia corretto
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createCategoryAction(formData: FormData) {
+
+  const session = await auth();
+  if (session?.user?.role !== "ADMIN") {
+    throw new Error("Non autorizzato");
+  }
   const name = formData.get("name") as string;
 
   if (!name) {
@@ -24,6 +30,12 @@ export async function createCategoryAction(formData: FormData) {
 }
 
 export async function updateCategoryAction(id: string, formData: FormData) {
+
+  const session = await auth();
+  if (session?.user?.role !== "ADMIN") {
+    throw new Error("Non autorizzato");
+  }
+  
   const name = formData.get("name") as string;
 
   if (!name || name.trim() === "") {

@@ -1,31 +1,41 @@
-import { prisma } from "@/lib/prisma";
+// app/product/[id]/page.tsx
+import { prisma } from "@/lib/prisma"; 
 import { notFound } from "next/navigation";
-import ProductPageComponent from "@/components/ProductPageComponent";
+import ProductPageComponent from "@/components/ProductPageComponent"; 
 
-// Rendiamo la funzione correttamente async (lo era già, ma ora gestiamo la promise)
 export default async function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  // 1. Unwrapping della Promise (fondamentale!)
-  const resolvedParams = await params;
+  // 1. Unwrapping della Promise (fondamentale)
+  const resolvedParams = await params; 
+  const productId = resolvedParams.id; 
 
-  // 2. Ora possiamo accedere all'id in sicurezza
-  const productId = resolvedParams.id;
-
-  // Sicurezza: controllo se l'ID è un numero valido
-  if (productId === undefined) {
+  if (!productId) {
     notFound();
   }
 
+  // 2. Recupero del prodotto
   const product = await prisma.product.findUnique({
     where: { id: productId },
   });
 
   if (!product) {
-    notFound();
+    notFound(); 
   }
 
-  return <ProductPageComponent product={product} />;
+  // 3. 🛡️ SANITIZZAZIONE E CONVERSIONE SICURA DEI TIPI
+  // Evitiamo che campi nulli o indefiniti mandino in crash il client
+  const safeProduct = {
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    description: product.description ?? null, // Trasforma undefined in null
+    sizes: product.sizes || [], // Se non ci sono taglie, passa un array vuoto
+    images: product.images || [], // Se nullo, passa un array vuoto per evitare crash su .length
+    discount: product.discount ?? 0, // Default a 0 se non c'è sconto
+  };
+
+  return <ProductPageComponent product={safeProduct} />;
 }

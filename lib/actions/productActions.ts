@@ -49,6 +49,12 @@ export async function createProductAction(formData: FormData) {
 }
 
 export async function updateProductAction(id: string, formData: FormData) {
+
+  const session = await auth();
+  if (!session || session.user.role !== "ADMIN") {
+    throw new Error("Accesso negato: non hai i permessi per creare prodotti.");
+  }
+  
   const name = formData.get("name") as string;
   const categoryId = formData.get("categoryId") as string;
   const rawPrice = formData.get("price") as string;

@@ -1,7 +1,6 @@
 // app/auth/signin/page.tsx
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { auth, signIn } from "@/auth";
 import { routes } from "@/lib/routes";
 import { redirect } from "next/navigation";
