@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
-  faCartPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import CloudinaryImage from "./CloudinaryImage";
 
@@ -90,7 +89,7 @@ export default function ProductPageComponent({
 
         {/* DESCRIZIONE */}
         <div className="max-w-md">
-          <p className="text-black font-medium text-2xl uppercase tracking-widest line-clamp-1 hover:text-purple-400 transition-colors">
+          <p className="text-black font-medium tracking-widest hover:text-purple-400 transition-colors">
             {product.description ||
               "nessuna descrizione disponibile per questo artefatto."}
           </p>
@@ -114,11 +113,6 @@ export default function ProductPageComponent({
               ))}
             </select>
           </div>
-
-          <button className="w-full bg-white text-black py-5 rounded-lg font-black uppercase text-xs tracking-[0.2em] hover:bg-purple-600 hover:text-white transition-all active:scale-95 shadow-xl">
-            <FontAwesomeIcon icon={faCartPlus} className="mr-3" />
-            Aggiungi al Carrello
-          </button>
         </div>
       </div>
     </div>

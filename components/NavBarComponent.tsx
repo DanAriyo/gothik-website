@@ -2,11 +2,9 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCartArrowDown,
   faBars,
   faUser,
   faXmark,
-  faSkull,
   faUserShield,
   faHistory,
   faGear,
@@ -272,17 +270,6 @@ export default function NavBarComponent({
               </>
             )}
           </Popover>
-
-          {/* Cart Icon */}
-          <Link
-            href="/cart"
-            className="hover:text-purple-500 transition relative"
-          >
-            <FontAwesomeIcon icon={faCartArrowDown} />
-            <span className="absolute -top-2 -right-2 bg-purple-600 text-[10px] rounded-full px-1.5 py-0.5 font-bold">
-              0
-            </span>
-          </Link>
 
           {/* Toggle Menu Mobile */}
           <button
