@@ -5,7 +5,8 @@ const ADMIN_BASE = "/admin";
 
 export const routes = {
   // Rotte Pubbliche
-  home: "/",
+  landing: "/",
+  home: "/home",
   about: "/about-us",
   cart: "/cart",
   profile: "/profile",
