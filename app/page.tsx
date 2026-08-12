@@ -15,7 +15,7 @@ export default function LandingPage() {
   const heroBackgroundImageId = "s97yqoadlk7jsukestaj";
 
   return (
-    <div className="relative min-h-screen bg-black text-white flex flex-col justify-between p-6 pt-24 sm:p-12 sm:pt-28 overflow-hidden">
+    <div className="relative min-h-screen bg-white text-white flex flex-col justify-between p-6 pt-24 sm:p-12 sm:pt-28 overflow-hidden">
       {/* BACKGROUND DECORATIVO CON GLOW VIOLA */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-900/10 blur-[150px] rounded-full pointer-events-none" />
 
