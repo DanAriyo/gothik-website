@@ -131,11 +131,11 @@ export default function NavBarComponent({
                               categories.map((cat) => (
                                 <Link
                                   key={cat.id}
-                                  href={`/category/${cat.id}`}
+                                  href={`/home?category=${cat.id}`}
                                   onClick={() => close()}
                                   className="group flex items-center justify-between transition-all"
                                 >
-                                  <span className="text-lg font-medium text-zinc-400 group-hover:text-white group-hover:translate-x-2 transition-all duration-300">
+                                  <span className="text-lg font-medium text-zinc-400 group-hover:text-white group-hover:translate-x-2 transition-all duration-300 uppercase tracking-wider">
                                     {cat.name}
                                   </span>
                                 </Link>
