@@ -1,3 +1,5 @@
+"use client";
+
 import {
   faInstagram,
   faTiktok,
@@ -7,6 +9,7 @@ import { faSkull } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function FooterComponent() {
   return (

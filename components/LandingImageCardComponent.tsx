@@ -15,7 +15,7 @@ export default function LandingImageCardComponent({
   return (
     <div className="flex flex-col h-full overflow-hidden transition-all duration-300">
       {/* AREA IMMAGINE (Resta identica, ottima struttura) */}
-      <div className="group relative aspect-[4/5] w-full overflow-hidden bg-zinc-900 rounded-lg">
+      <div className="group relative aspect-[2/3] w-full overflow-hidden bg-zinc-900 rounded-lg">
         <CloudinaryImage
           src={imageId || "no-image_qo394q"}
           alt={altText}

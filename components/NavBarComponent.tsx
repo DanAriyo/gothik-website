@@ -20,6 +20,7 @@ import {
   Transition,
 } from "@headlessui/react";
 import { signIn, signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 // Definiamo i tipi per le props che arrivano dal Layout
 interface NavBarProps {
