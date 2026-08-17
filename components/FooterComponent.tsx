@@ -13,20 +13,11 @@ import { usePathname } from "next/navigation";
 
 export default function FooterComponent() {
   return (
-    <footer className="border-t border-purple-900/30 bg-zinc-950 text-gray-400">
+    <footer className="border-t border-purple-900/30 bg-zinc-300 text-red-700">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-center">
           {/* Colonna 1: Tutto a SINISTRA */}
-          <div className="flex items-center gap-2 text-white font-bold text-xl tracking-tighter justify-start">
-            <Link href="/">
-              <Image
-                src="/gothik-logo-dark.svg"
-                alt="Gothik Store Logo"
-                width={30}
-                height={30}
-                className="object-contain"
-              />
-            </Link>
+          <div className="flex items-center gap-2 text-red-700 font-bold text-xl tracking-tighter justify-start">
             Gothik Store
           </div>
 

@@ -21,6 +21,7 @@ import {
 } from "@headlessui/react";
 import { signIn, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import CloudinaryImage from "./CloudinaryImage";
 
 // Definiamo i tipi per le props che arrivano dal Layout
 interface NavBarProps {
@@ -39,7 +40,7 @@ export default function NavBarComponent({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-black border-b border-purple-900/50 sticky top-0 z-50 text-white">
+    <nav className="bg-zinc-400 border-b border-purple-900/50 sticky top-0 z-50 text-white">
       <div className="mx-auto px-4 h-16 flex items-center justify-between">
         {/* LATO SINISTRO: Logo con Sidebar Popover */}
         <div className="flex items-center">
@@ -62,16 +63,7 @@ export default function NavBarComponent({
                   id="logo-popover-btn"
                   className="flex items-center outline-none focus:ring-0"
                 >
-                  <Image
-                    src="/gothik-logo-dark.svg"
-                    alt="Gothik Store Logo"
-                    width={50}
-                    height={50}
-                    className={`object-contain transition-transform duration-300 ${
-                      open ? "scale-110" : "hover:scale-110"
-                    }`}
-                    priority
-                  />
+                  <FontAwesomeIcon icon={faBars} />
                 </PopoverButton>
 
                 <Transition
@@ -83,26 +75,23 @@ export default function NavBarComponent({
                   leaveFrom="opacity-100 translate-x-0"
                   leaveTo="opacity-0 -translate-x-full"
                 >
-                  <PopoverPanel className="fixed left-0 top-0 z-[60] h-screen w-full sm:w-1/3 bg-black/95 backdrop-blur-2xl border-r border-purple-900/40 shadow-[10px_0_30px_rgba(0,0,0,0.5)] outline-none">
+                  <PopoverPanel className="fixed left-0 top-0 z-[60] h-screen w-full sm:w-1/3 bg-zinc-400 backdrop-blur-2xl border-r border-purple-900/40 shadow-[10px_0_30px_rgba(0,0,0,0.5)] outline-none">
                     <div className="flex flex-col h-full p-8 relative">
                       <button
                         onClick={() => close()}
-                        className="absolute top-6 right-6 text-zinc-500 hover:text-purple-500 transition-colors p-2"
+                        className="absolute top-6 right-6 text-red-700 hover:text-red-900 transition-colors p-2"
                       >
                         <FontAwesomeIcon icon={faXmark} size="xl" />
                       </button>
 
                       <div className="mb-12">
-                        <Image
-                          src="/gothik-logo-dark.svg"
-                          alt="Logo"
-                          width={60}
-                          height={60}
-                          className="mb-4"
+                        <CloudinaryImage
+                          src="copy_of_img_0149_e8ap8v"
+                          alt="Gothik Store"
+                          width={100}
+                          height={40}
+                          className=""
                         />
-                        <p className="text-xs font-black uppercase tracking-[0.3em] text-purple-500">
-                          Gothik Archive
-                        </p>
                       </div>
 
                       {/* CONTENUTO NAVIGAZIONE CON SCROLLBAR PERSONALIZZATA */}
@@ -114,7 +103,7 @@ export default function NavBarComponent({
                             onClick={() => close()}
                             className="group block"
                           >
-                            <span className="text-2xl font-bold uppercase tracking-tighter group-hover:text-purple-400 transition duration-300">
+                            <span className="text-xl text-red-700 font-bold uppercase tracking-tighter group-hover:text-red-900 transition duration-300">
                               About Us
                             </span>
                           </Link>
@@ -135,7 +124,7 @@ export default function NavBarComponent({
                                   onClick={() => close()}
                                   className="group flex items-center justify-between transition-all"
                                 >
-                                  <span className="text-lg font-medium text-zinc-400 group-hover:text-white group-hover:translate-x-2 transition-all duration-300 uppercase tracking-wider">
+                                  <span className="text-lg font-medium text-red-700 group-hover:text-white group-hover:translate-x-2 transition-all duration-300 uppercase tracking-wider">
                                     {cat.name}
                                   </span>
                                 </Link>
@@ -164,9 +153,13 @@ export default function NavBarComponent({
         {/* CENTRO: Nome Store */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
           <Link href="/" className="group">
-            <p className="md:text-3xl font-black uppercase tracking-tighter transition-colors duration-300 group-hover:text-zinc-200">
-              Gothik<span className="text-purple-600"> - </span>Store
-            </p>
+            <CloudinaryImage
+              src="copy_of_img_0149_e8ap8v"
+              alt="Gothik Store"
+              width={100}
+              height={40}
+              className=""
+            />
           </Link>
         </div>
 

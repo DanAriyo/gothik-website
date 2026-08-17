@@ -36,7 +36,7 @@ export default function LandingPage() {
       <div className="z-10 text-center py-6 flex flex-col items-center gap-4">
         <Link
           href="/home"
-          className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-zinc-300 hover:text-purple-400 border-b border-zinc-700 hover:border-purple-500 pb-1 transition-all duration-300 focus:ring-2 focus:ring-purple-500 outline-none cursor-pointer drop-shadow-md"
+          className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-red-500 hover:text-red-700 border-b border-zinc-700 hover:border-purple-500 pb-1 transition-all duration-300 focus:ring-2 focus:ring-purple-500 outline-none cursor-pointer drop-shadow-md"
         >
           Esplora la collezione completa
         </Link>

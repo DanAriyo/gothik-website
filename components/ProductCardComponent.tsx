@@ -36,9 +36,9 @@ export default function ProductCardComponent({
   const finalPrice = hasDiscount ? price - (price * discount) / 100 : price;
 
   return (
-    <div className="flex flex-col h-full overflow-hidden transition-all duration-300">
+    <div className="flex flex-col h-full overflow-hidden transition-all duration-300 ">
       {/* AREA IMMAGINE (Resta identica, ottima struttura) */}
-      <div className="group relative aspect-[4/5] w-full overflow-hidden bg-zinc-900">
+      <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-2xl">
         <Link href={`/product/${id}`} className="block h-full w-full">
           <CloudinaryImage
             src={
@@ -49,7 +49,7 @@ export default function ProductCardComponent({
             alt={altName}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            className="object-cover transition-transform duration-1000 group-hover:scale-110"
+            className="object-cover transition-transform duration-1000 group-hover:scale-110 "
           />
           {/* Overlay scuro isolato all'immagine */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-500" />
@@ -59,7 +59,7 @@ export default function ProductCardComponent({
         <div className="absolute inset-x-0 bottom-4 px-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out pointer-events-none group-hover:pointer-events-auto">
           <button
             onClick={handleAddToCart}
-            className="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-lg shadow-2xl flex items-center justify-center gap-2 active:scale-95 transition-all"
+            className="w-full bg-black text-white font-bold py-3 rounded-lg shadow-2xl flex items-center justify-center gap-2 active:scale-95 transition-all"
           >
             <FontAwesomeIcon icon={faPlus} className="text-sm" />
             <span className="uppercase text-[10px] tracking-[0.2em]">
