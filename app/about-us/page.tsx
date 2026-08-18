@@ -10,7 +10,7 @@ export default function AboutUsPage() {
         {/* INTESTAZIONE */}
         <div className="border-b border-zinc-900 pb-6 text-center sm:text-left">
           <p className="text-xs font-mono uppercase tracking-[0.3em] text-red-500 mb-2">
-            Manifesto — Made in Romagna
+            Manifesto — Made in Cesena
           </p>
           <h1 className="text-4xl sm:text-5xl font-black uppercase tracking-tight text-zinc-100">
             Gothik <span className="text-red-500">Store</span>
