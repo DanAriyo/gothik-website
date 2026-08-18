@@ -27,7 +27,7 @@ export default function LandingPage() {
                 src={section.id}
                 alt={section.alt}
                 fill
-                priority={index === 0}
+                preload={index === 0}
                 sizes="100vw"
                 className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
               />

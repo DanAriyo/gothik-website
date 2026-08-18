@@ -172,7 +172,7 @@ export default function NavBarComponent({
             <SearchBar/>
           </div>
           {/* USER DROPDOWN POPOVER */}
-          <Popover className="hover:text-purple-500 transition relative">
+          <Popover className="hover:text-red-500 transition relative">
             {({ open }) => (
               <>
                 <PopoverButton className="flex items-center outline-none hover:text-red-500 transition-colors duration-300 focus:ring-0 cursor-pointer">
@@ -182,7 +182,7 @@ export default function NavBarComponent({
                       alt="Profilo"
                       width={28}
                       height={28}
-                      className="rounded-full border border-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.4)]"
+                      className="rounded-full border border-red-500 shadow-[0_0_8px_rgba(168,85,247,0.4)]"
                     />
                   ) : (
                     <FontAwesomeIcon icon={faUser} className="text-lg" />
@@ -208,7 +208,7 @@ export default function NavBarComponent({
                           </p>
                           <button
                             onClick={() => signIn("google")}
-                            className="w-full flex items-center justify-center gap-3 bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-purple-600 hover:text-white transition-all duration-300"
+                            className="w-full flex items-center justify-center gap-3 bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-red-500 hover:text-white transition-all duration-300"
                           >
                             <FontAwesomeIcon icon={faArrowRightToBracket} />
                             Login
