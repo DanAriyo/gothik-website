@@ -1,86 +1,48 @@
 // app/page.tsx
 import Link from "next/link";
 import CloudinaryImage from "@/components/CloudinaryImage";
-import { redirect } from "next/navigation";
 import { routes } from "@/lib/routes";
 
 export default function LandingPage() {
   const lookbookSections = [
-    {
-      id: "gtmoxbu0zumh169u2fej",
-      title: "Nuova Collezione",
-      subtitle: "Autunno / Inverno 2026",
-      link: routes.home,
-    },
-    {
-      id: "gtmoxbu0zumh169u2fej",
-      title: "Capi Ritualistici",
-      subtitle: "Strutture & Volumi Oversize",
-      link: routes.home,
-    },
-    {
-      id: "s97yqoadlk7jsukestaj",
-      title: "Archivio Oscuro",
-      subtitle: "Edizione Limitata",
-      link: routes.home,
-    },
-    {
-      id: "s97yqoadlk7jsukestaj",
-      title: "Accessori & Dettagli",
-      subtitle: "Esplora la Selezione",
-      link: routes.home,
-    },
+    { id: "gtmoxbu0zumh169u2fej", alt: "Lookbook Collezione 1", link: routes.home },
+    { id: "gtmoxbu0zumh169u2fej", alt: "Lookbook Collezione 2", link: routes.home },
+    { id: "s97yqoadlk7jsukestaj", alt: "Lookbook Collezione 3", link: routes.home },
+    { id: "s97yqoadlk7jsukestaj", alt: "Lookbook Collezione 4", link: routes.home },
   ];
 
   return (
     <div className="relative w-full bg-black text-white">
-      {/* 1. SEZIONI VERTICALI FULL-SCREEN (Stile Zara/Uniqlo) */}
+      {/* 1. SEZIONI VERTICALI FULL-SCREEN TOTALMENTE CLICCABILI */}
       <main className="w-full">
         {lookbookSections.map((section, index) => (
-          <section
+          <Link
             key={index}
-            className="relative w-full h-screen flex flex-col justify-end p-8 sm:p-16 overflow-hidden border-b border-zinc-900"
+            href={section.link}
+            className="group relative block w-full h-screen overflow-hidden border-b border-zinc-900 cursor-pointer select-none"
           >
-            {/* Immagine Full-Width e Full-Height */}
+            {/* Immagine Full-Width con zoom fluido in hover */}
             <div className="absolute inset-0 z-0">
               <CloudinaryImage
                 src={section.id}
-                alt={section.title}
+                alt={section.alt}
                 fill
                 priority={index === 0}
                 sizes="100vw"
-                className="object-cover object-center"
+                className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
               />
-              {/* Overlay scuro per leggibilità */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              {/* Overlay scuro leggero che sfuma al passaggio del mouse */}
+              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
             </div>
-
-            {/* Testo + Call-to-action per ogni singola immagine */}
-            <div className="relative z-10 max-w-xl space-y-3 mb-12 sm:mb-8">
-              <p className="text-xs font-mono uppercase tracking-[0.3em] text-zinc-400">
-                {section.subtitle}
-              </p>
-              <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">
-                {section.title}
-              </h2>
-              <div>
-                <Link
-                  href={section.link}
-                  className="inline-block mt-2 text-xs font-mono font-bold uppercase tracking-[0.2em] text-zinc-300 hover:text-white border-b border-zinc-500 hover:border-white pb-1 transition-all duration-300"
-                >
-                  Esplora Capi ➔
-                </Link>
-              </div>
-            </div>
-          </section>
+          </Link>
         ))}
       </main>
 
-      {/* 2. BOTTONE FLUTTUANTE SEMPRE VISIBILE (Sticky Floating CTA) */}
+      {/* 2. BOTTONE FLUTTUANTE FISSO */}
       <div className="fixed bottom-6 inset-x-0 z-40 flex justify-center pointer-events-none px-4">
         <Link
-          href="/home"
-          className="pointer-events-auto bg-zinc-950/90 hover:bg-black text-white border border-zinc-800 hover:border-zinc-500 px-6 py-3 rounded-full text-xs font-mono font-bold uppercase tracking-[0.2em] shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95"
+          href={routes.home}
+          className="pointer-events-auto bg-zinc-950/90 hover:bg-black text-white border border-zinc-800 hover:border-zinc-500 px-6 py-3 rounded-full text-xs font-mono font-bold uppercase tracking-[0.2em] shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
         >
           Entra nello Shop
         </Link>
