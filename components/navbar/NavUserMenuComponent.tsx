@@ -57,7 +57,7 @@ export default function NavUserMenu({
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1"
           >
-            <PopoverPanel className="absolute right-0 z-50 mt-4 w-64 origin-top-right rounded-xl bg-black/95 backdrop-blur-xl border border-purple-900/50 shadow-2xl ring-1 ring-purple-500/20 outline-none">
+            <PopoverPanel className="absolute right-0 z-50 mt-4 w-64 origin-top-right rounded-xl bg-black/95 backdrop-blur-xl border border-red-900/50 shadow-2xl ring-1 ring-red-500/20 outline-none">
               <div className="p-4">
                 {!isAuthenticated ? (
                   /* STATO: NON LOGGATO */
@@ -76,7 +76,7 @@ export default function NavUserMenu({
                 ) : (
                   /* STATO: LOGGATO */
                   <div className="space-y-1">
-                    <div className="pb-3 mb-2 border-b border-purple-900/30">
+                    <div className="pb-3 mb-2 border-b border-red-900/30">
                       <p className="text-sm font-bold truncate text-zinc-200">
                         {session?.user?.name}
                       </p>
@@ -85,7 +85,7 @@ export default function NavUserMenu({
                     {isAdmin && (
                       <Link
                         href="/admin/dashboard"
-                        className="flex items-center gap-3 p-2 text-sm text-purple-400 hover:bg-purple-900/20 rounded-lg transition font-bold"
+                        className="flex items-center gap-3 p-2 text-sm text-red-400 hover:bg-red-900/20 rounded-lg transition font-bold"
                       >
                         <FontAwesomeIcon
                           icon={faUserShield}
@@ -113,7 +113,7 @@ export default function NavUserMenu({
 
                     <button
                       onClick={() => signOut()}
-                      className="w-full mt-2 flex items-center gap-3 p-2 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition border-t border-purple-900/20 pt-3"
+                      className="w-full mt-2 flex items-center gap-3 p-2 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition border-t border-red-900/20 pt-3"
                     >
                       <FontAwesomeIcon
                         icon={faArrowRightToBracket}
