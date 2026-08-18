@@ -4,6 +4,8 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import CloudinaryImage from "./CloudinaryImage";
+import { redirect } from "next/navigation";
+import { routes } from "@/lib/routes";
 
 interface ProductCardProps {
   id: number | string;
@@ -38,7 +40,7 @@ export default function ProductCardComponent({
   return (
     <div className="flex flex-col h-full overflow-hidden transition-all duration-300 ">
       {/* AREA IMMAGINE (Resta identica, ottima struttura) */}
-      <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-2xl">
+      <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-2xl">
         <Link href={`/product/${id}`} className="block h-full w-full">
           <CloudinaryImage
             src={

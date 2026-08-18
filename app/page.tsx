@@ -1,44 +1,88 @@
 // app/page.tsx
 import Link from "next/link";
-import LandingImageCardComponent from "@/components/LandingImageCardComponent";
 import CloudinaryImage from "@/components/CloudinaryImage";
+import { redirect } from "next/navigation";
+import { routes } from "@/lib/routes";
 
 export default function LandingPage() {
-  const previewImages = [
-    { id: "gtmoxbu0zumh169u2fej", alt: "Manufatto Oscuro 1" },
-    { id: "gtmoxbu0zumh169u2fej", alt: "Manufatto Oscuro 2" },
-    { id: "s97yqoadlk7jsukestaj", alt: "Manufatto Oscuro 3" },
-    { id: "s97yqoadlk7jsukestaj", alt: "Manufatto Oscuro 4" },
+  const lookbookSections = [
+    {
+      id: "gtmoxbu0zumh169u2fej",
+      title: "Nuova Collezione",
+      subtitle: "Autunno / Inverno 2026",
+      link: routes.home,
+    },
+    {
+      id: "gtmoxbu0zumh169u2fej",
+      title: "Capi Ritualistici",
+      subtitle: "Strutture & Volumi Oversize",
+      link: routes.home,
+    },
+    {
+      id: "s97yqoadlk7jsukestaj",
+      title: "Archivio Oscuro",
+      subtitle: "Edizione Limitata",
+      link: routes.home,
+    },
+    {
+      id: "s97yqoadlk7jsukestaj",
+      title: "Accessori & Dettagli",
+      subtitle: "Esplora la Selezione",
+      link: routes.home,
+    },
   ];
 
-  // ID dell'immagine d'impatto da usare come sfondo full-screen
-  const heroBackgroundImageId = "s97yqoadlk7jsukestaj";
-
   return (
-    <div className="relative min-h-screen bg-white text-white flex flex-col justify-between p-6 overflow-hidden">
-      {/* BACKGROUND DECORATIVO CON GLOW VIOLA */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-900/10 blur-[150px] rounded-full pointer-events-none" />
+    <div className="relative w-full bg-black text-white">
+      {/* 1. SEZIONI VERTICALI FULL-SCREEN (Stile Zara/Uniqlo) */}
+      <main className="w-full">
+        {lookbookSections.map((section, index) => (
+          <section
+            key={index}
+            className="relative w-full h-screen flex flex-col justify-end p-8 sm:p-16 overflow-hidden border-b border-zinc-900"
+          >
+            {/* Immagine Full-Width e Full-Height */}
+            <div className="absolute inset-0 z-0">
+              <CloudinaryImage
+                src={section.id}
+                alt={section.title}
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="object-cover object-center"
+              />
+              {/* Overlay scuro per leggibilità */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            </div>
 
-      {/* GALLERIA VISIVA */}
-      <section className="z-10 max-w-full mx-auto w-full my-auto py-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-          {previewImages.map((img, index) => (
-            <LandingImageCardComponent
-              key={index}
-              imageId={img.id}
-              altText={img.alt}
-            />
-          ))}
-        </div>
-      </section>
+            {/* Testo + Call-to-action per ogni singola immagine */}
+            <div className="relative z-10 max-w-xl space-y-3 mb-12 sm:mb-8">
+              <p className="text-xs font-mono uppercase tracking-[0.3em] text-zinc-400">
+                {section.subtitle}
+              </p>
+              <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">
+                {section.title}
+              </h2>
+              <div>
+                <Link
+                  href={section.link}
+                  className="inline-block mt-2 text-xs font-mono font-bold uppercase tracking-[0.2em] text-zinc-300 hover:text-white border-b border-zinc-500 hover:border-white pb-1 transition-all duration-300"
+                >
+                  Esplora Capi ➔
+                </Link>
+              </div>
+            </div>
+          </section>
+        ))}
+      </main>
 
-      {/* LINK D'INGRESSO ALL'ARCHIVIO */}
-      <div className="z-10 text-center py-6 flex flex-col items-center gap-4">
+      {/* 2. BOTTONE FLUTTUANTE SEMPRE VISIBILE (Sticky Floating CTA) */}
+      <div className="fixed bottom-6 inset-x-0 z-40 flex justify-center pointer-events-none px-4">
         <Link
           href="/home"
-          className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-red-500 hover:text-red-700 border-b border-zinc-700 hover:border-purple-500 pb-1 transition-all duration-300 focus:ring-2 focus:ring-purple-500 outline-none cursor-pointer drop-shadow-md"
+          className="pointer-events-auto bg-zinc-950/90 hover:bg-black text-white border border-zinc-800 hover:border-zinc-500 px-6 py-3 rounded-full text-xs font-mono font-bold uppercase tracking-[0.2em] shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95"
         >
-          Esplora la collezione completa
+          Entra nello Shop
         </Link>
       </div>
     </div>

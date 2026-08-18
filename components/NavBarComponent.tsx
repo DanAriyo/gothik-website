@@ -22,6 +22,9 @@ import {
 import { signIn, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import CloudinaryImage from "./CloudinaryImage";
+import { redirect } from "next/navigation";
+import { routes } from "@/lib/routes";
+import SearchBar from "@/components/SearchBarComponent";
 
 // Definiamo i tipi per le props che arrivano dal Layout
 interface NavBarProps {
@@ -40,7 +43,7 @@ export default function NavBarComponent({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-zinc-400 border-b border-purple-900/50 sticky top-0 z-50 text-white">
+    <nav className="bg-zinc-400 border-b border-red-5000 sticky top-0 z-50 text-white">
       <div className="mx-auto px-4 h-16 flex items-center justify-between">
         {/* LATO SINISTRO: Logo con Sidebar Popover */}
         <div className="flex items-center">
@@ -75,7 +78,7 @@ export default function NavBarComponent({
                   leaveFrom="opacity-100 translate-x-0"
                   leaveTo="opacity-0 -translate-x-full"
                 >
-                  <PopoverPanel className="fixed left-0 top-0 z-[60] h-screen w-full sm:w-1/3 bg-zinc-400 backdrop-blur-2xl border-r border-purple-900/40 shadow-[10px_0_30px_rgba(0,0,0,0.5)] outline-none">
+                  <PopoverPanel className="fixed left-0 top-0 z-[60] h-screen w-full sm:w-1/3 bg-zinc-400 backdrop-blur-2xl border-r border-red-500 shadow-[10px_0_30px_rgba(0,0,0,0.5)] outline-none">
                     <div className="flex flex-col h-full p-8 relative">
                       <button
                         onClick={() => close()}
@@ -88,8 +91,8 @@ export default function NavBarComponent({
                         <CloudinaryImage
                           src="copy_of_img_0149_e8ap8v"
                           alt="Gothik Store"
-                          width={100}
-                          height={40}
+                          width={200}
+                          height={80}
                           className=""
                         />
                       </div>
@@ -111,7 +114,7 @@ export default function NavBarComponent({
 
                         {/* 2. SEZIONE SETTORI (CATEGORIE) */}
                         <div className="space-y-6">
-                          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 border-b border-purple-900/20 pb-2">
+                          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 border-b border-red-500 pb-2">
                             Categorie
                           </p>
 
@@ -138,7 +141,7 @@ export default function NavBarComponent({
                         </div>
                       </nav>
 
-                      <div className="pt-8 border-t border-purple-900/20 mt-auto">
+                      <div className="pt-8 border-t border-red-500 mt-auto">
                         <p className="text-[10px] text-zinc-600 uppercase tracking-widest">
                           © 2026 Gothik Store
                         </p>
@@ -152,7 +155,7 @@ export default function NavBarComponent({
         </div>
         {/* CENTRO: Nome Store */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
-          <Link href="/" className="group">
+          <Link href= {routes.landing} className="group">
             <CloudinaryImage
               src="copy_of_img_0149_e8ap8v"
               alt="Gothik Store"
@@ -165,11 +168,14 @@ export default function NavBarComponent({
 
         {/* LATO DESTRO: Icone Azione (Profilo e Carrello) */}
         <div className="flex items-center gap-5">
+          <div className="flex items-center gap-4">
+            <SearchBar/>
+          </div>
           {/* USER DROPDOWN POPOVER */}
           <Popover className="hover:text-purple-500 transition relative">
             {({ open }) => (
               <>
-                <PopoverButton className="flex items-center outline-none hover:text-purple-500 transition-colors duration-300 focus:ring-0">
+                <PopoverButton className="flex items-center outline-none hover:text-red-500 transition-colors duration-300 focus:ring-0 cursor-pointer">
                   {isAuthenticated && session?.user?.image ? (
                     <Image
                       src={session.user.image}
