@@ -11,6 +11,7 @@ import {
   Transition,
 } from "@headlessui/react";
 import CloudinaryImage from "@/components/CloudinaryImage";
+import { routes } from "@/lib/routes";
 
 interface NavSidebarProps {
   categories: { id: string; name: string }[];
@@ -59,13 +60,16 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
                 </button>
 
                 <div className="mb-12">
-                  <CloudinaryImage
+                  <Link href={routes.landing} className="group">
+                    <CloudinaryImage
                     src="copy_of_img_0149_e8ap8v"
                     alt="Gothik Store"
                     width={200}
                     height={80}
                     className=""
                   />
+                  </Link>
+                  
                 </div>
 
                 {/* CONTENUTO NAVIGAZIONE CON SCROLLBAR PERSONALIZZATA */}
