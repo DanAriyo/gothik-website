@@ -58,14 +58,6 @@ export default function NavBarComponent({
             isAuthenticated={isAuthenticated}
             session={session}
           />
-
-          {/* Toggle Menu Mobile */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-purple-500 text-xl focus:outline-none"
-          >
-            <FontAwesomeIcon icon={isMenuOpen ? faXmark : faBars} />
-          </button>
         </div>
       </div>
     </nav>

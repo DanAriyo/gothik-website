@@ -5,44 +5,51 @@ import {
   faTiktok,
   faFacebook,
 } from "@fortawesome/free-brands-svg-icons";
-import { faSkull } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
 
 export default function FooterComponent() {
   return (
-    <footer className="border-t border-purple-900/30 bg-zinc-300 text-red-700">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-center">
-          {/* Colonna 1: Tutto a SINISTRA */}
-          <div className="flex items-center gap-2 text-red-700 font-bold text-xl tracking-tighter justify-start">
-            Gothik Store
-          </div>
-
-          {/* Colonna 2: Tutto al CENTRO */}
-          <div className="text-center text-sm md:text-base">
+    <footer className="border-t border-purple-900/30 bg-zinc-300 text-red-700 py-6 sm:py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Layout responsive: colonna su mobile, riga con estremi opposti da tablet/desktop */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 text-center md:text-left">
+          
+          {/* Elemento 1: Testo Copyright & Sicurezza (Sinistra su Desktop, Centro su Mobile) */}
+          <div className="text-xs sm:text-sm md:text-base order-2 md:order-1 leading-relaxed">
             <p>
               © 2026 Gothik Store — Designed for the Darkness.
-              <br className="md:hidden" />{" "}
-              {/* Va a capo solo su mobile per estetica */}
+              <span className="hidden sm:inline"> </span>
+              <br className="sm:hidden" />
               Acquisti sicuri e protetti.
             </p>
           </div>
 
-          {/* Colonna 3: Tutto a DESTRA */}
-          <div className="flex justify-center md:justify-end gap-5 text-2xl">
-            <Link href="#" className="hover:text-purple-400 transition-colors">
+          {/* Elemento 2: Social Links (Destra su Desktop, Centro su Mobile) */}
+          <div className="flex items-center justify-center gap-6 text-xl sm:text-2xl order-1 md:order-2">
+            <Link
+              href="#"
+              className="hover:text-purple-400 transition-colors duration-200"
+              aria-label="Instagram"
+            >
               <FontAwesomeIcon icon={faInstagram} />
             </Link>
-            <Link href="#" className="hover:text-purple-400 transition-colors">
+            <Link
+              href="#"
+              className="hover:text-purple-400 transition-colors duration-200"
+              aria-label="TikTok"
+            >
               <FontAwesomeIcon icon={faTiktok} />
             </Link>
-            <Link href="#" className="hover:text-purple-400 transition-colors">
+            <Link
+              href="#"
+              className="hover:text-purple-400 transition-colors duration-200"
+              aria-label="Facebook"
+            >
               <FontAwesomeIcon icon={faFacebook} />
             </Link>
           </div>
+
         </div>
       </div>
     </footer>
