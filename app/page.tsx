@@ -5,10 +5,10 @@ import { routes } from "@/lib/routes";
 
 export default function LandingPage() {
   const lookbookSections = [
-    { id: "gtmoxbu0zumh169u2fej", alt: "Lookbook Collezione 1", link: routes.home },
-    { id: "gtmoxbu0zumh169u2fej", alt: "Lookbook Collezione 2", link: routes.home },
-    { id: "s97yqoadlk7jsukestaj", alt: "Lookbook Collezione 3", link: routes.home },
-    { id: "s97yqoadlk7jsukestaj", alt: "Lookbook Collezione 4", link: routes.home },
+    { id: "gothik-3_hh4pg1", alt: "Lookbook Collezione 1", link: routes.home },
+    { id: "gothik-1_tm04vs", alt: "Lookbook Collezione 2", link: routes.home },
+    { id: "gothik-4_ajfnzi", alt: "Lookbook Collezione 3", link: routes.home },
+    { id: "gothik-2_jbp3jx", alt: "Lookbook Collezione 4", link: routes.home },
   ];
 
   return (
