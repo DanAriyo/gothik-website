@@ -1,7 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation"; // Importa il router
+import { useRouter } from "next/navigation";
 import { routes } from "@/lib/routes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faTrashCan, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 
 interface CategoryCardProps {
   category: {
@@ -12,10 +14,9 @@ interface CategoryCardProps {
 }
 
 export default function CategoryCard({ category }: CategoryCardProps) {
-  const router = useRouter(); // Inizializza il router
+  const router = useRouter();
 
   const handleEdit = () => {
-    // Reindirizza alla pagina di modifica usando l'ID della categoria
     router.push(routes.admin.categories.edit(category.id));
   };
 
@@ -24,47 +25,41 @@ export default function CategoryCard({ category }: CategoryCardProps) {
   };
 
   return (
-    <div className="group relative bg-zinc-900/40 border border-zinc-800 p-6 rounded-2xl hover:border-purple-500/50 transition-all duration-300">
-      <div className="flex justify-between items-start mb-4">
-        <div>
+    <div className="group relative bg-white border border-zinc-200 p-6 rounded-2xl shadow-sm hover:border-zinc-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between">
+      {/* INTESTAZIONE CARD & BADGE CONTEGGIO */}
+      <div>
+        <div className="flex justify-between items-start gap-3 mb-3">
           <h2
             id={category.id}
-            className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors"
+            className="text-lg font-bold text-zinc-900 group-hover:text-red-600 transition-colors leading-snug"
           >
             {category.name}
           </h2>
+          <span className="inline-flex items-center gap-1.5 bg-zinc-100 text-zinc-700 text-[11px] font-mono font-bold px-2.5 py-1 rounded-lg border border-zinc-200/80 flex-shrink-0">
+            <FontAwesomeIcon icon={faBoxArchive} className="text-zinc-400 text-[10px]" />
+            {category._count.products} {category._count.products === 1 ? "ARTICOLO" : "ARTICOLI"}
+          </span>
         </div>
-        <span className="bg-zinc-800 text-purple-400 text-[10px] font-black px-2 py-1 rounded">
-          {category._count.products} ARTICOLI
-        </span>
       </div>
 
-      <div className="flex gap-3 mt-6">
+      {/* PULSANTI DI AZIONE */}
+      <div className="flex items-center gap-2 mt-6 pt-4 border-t border-zinc-100">
         <button
+          type="button"
           onClick={handleEdit}
-          className="flex-1 bg-zinc-800 hover:bg-purple-600 text-white text-xs font-bold py-2 rounded-lg transition-all border border-zinc-700 hover:border-purple-400"
+          className="flex-1 inline-flex items-center justify-center gap-1.5 bg-zinc-900 hover:bg-red-600 text-white text-xs font-mono font-bold py-2.5 px-4 rounded-xl transition-colors duration-200 uppercase tracking-wider cursor-pointer shadow-sm"
         >
-          MODIFICA
+          <FontAwesomeIcon icon={faPenToSquare} className="text-[10px]" />
+          <span>Modifica</span>
         </button>
 
         <button
+          type="button"
           onClick={handleDelete}
-          className="px-3 bg-zinc-900 hover:bg-red-900/40 text-zinc-600 hover:text-red-500 py-2 rounded-lg transition-all border border-zinc-800 hover:border-red-900/50"
+          className="p-2.5 bg-zinc-50 hover:bg-red-50 text-zinc-400 hover:text-red-600 rounded-xl transition-colors duration-200 border border-zinc-200 hover:border-red-200 cursor-pointer"
+          aria-label={`Elimina categoria ${category.name}`}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-4 h-4"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-            />
-          </svg>
+          <FontAwesomeIcon icon={faTrashCan} className="text-xs" />
         </button>
       </div>
     </div>

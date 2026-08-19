@@ -4,49 +4,63 @@
 import { createCategoryAction } from "@/lib/actions/categoryActions";
 import { routes } from "@/lib/routes";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTag, faArrowLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function AddCategoryForm() {
   return (
-    <div className="max-w-2xl mx-auto p-8 text-zinc-300">
-      {/* HEADER CENTRATO CON GLOW */}
-      <div className="text-center mb-12 w-full">
-        <h1 className="text-3xl font-black uppercase tracking-[0.2em] text-white block">
+    <div className="max-w-xl mx-auto py-8 px-4 text-zinc-900">
+      {/* HEADER PULITO */}
+      <div className="mb-8 text-center sm:text-left">
+        <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+          <FontAwesomeIcon icon={faTag} className="text-red-600 text-xs" />
+          <p className="text-xs font-mono font-bold uppercase tracking-wider text-red-600">
+            Catalogo Prodotti
+          </p>
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-zinc-950">
           Nuova Categoria
         </h1>
+        <p className="text-xs text-zinc-500 mt-1">
+          Crea una nuova categoria per organizzare i capi all'interno dello store.
+        </p>
       </div>
 
-      {/* FORM COMPATTO CENTRATO */}
+      {/* FORM COMPATTO */}
       <form
         action={createCategoryAction}
-        className="bg-zinc-950 p-8 rounded-xl border border-zinc-900 shadow-[0_0_50px_rgba(0,0,0,0.8)] space-y-6"
+        className="bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200 shadow-sm space-y-6"
       >
         {/* NOME CATEGORIA */}
         <div className="space-y-2">
-          <label className="text-[10px] uppercase font-black tracking-widest text-zinc-500 block">
+          <label className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-600 block">
             Nome Categoria *
           </label>
           <input
             name="name"
             type="text"
             required
-            className="w-full bg-black border border-zinc-800 focus:border-purple-600 p-3 rounded text-sm text-white outline-none transition-all duration-300 placeholder:text-zinc-800"
+            placeholder="Es. Felpe, T-Shirt, Accessori"
+            className="w-full bg-zinc-50 border border-zinc-300 focus:border-red-600 focus:bg-white focus:ring-1 focus:ring-red-600 p-3.5 rounded-xl text-sm text-zinc-900 outline-none transition-all duration-200 placeholder:text-zinc-400 font-medium"
           />
         </div>
 
         {/* PULSANTI DI AZIONE */}
-        <div className="pt-4 border-t border-zinc-900 flex gap-3">
+        <div className="pt-4 border-t border-zinc-100 flex flex-col-reverse sm:flex-row gap-3">
           <Link
-            href={routes.admin.dashboard} 
-            className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white text-center font-black py-4 rounded-lg transition-all duration-300 uppercase text-xs tracking-[0.2em] border border-zinc-800 flex items-center justify-center"
+            href={routes.admin.dashboard}
+            className="flex-1 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 hover:text-zinc-900 text-center font-mono font-bold py-3.5 px-4 rounded-xl transition-colors duration-200 uppercase text-xs tracking-wider flex items-center justify-center gap-2"
           >
-            Annulla
+            <FontAwesomeIcon icon={faArrowLeft} className="text-xs" />
+            <span>Annulla</span>
           </Link>
 
           <button
             type="submit"
-            className="flex-[2] bg-purple-600 hover:bg-purple-700 text-white font-black py-4 rounded-lg shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:shadow-[0_0_35px_rgba(168,85,247,0.4)] transition-all duration-300 uppercase text-xs tracking-[0.2em] border border-purple-500/30 active:scale-[0.98]"
+            className="flex-[2] bg-zinc-900 hover:bg-red-600 text-white font-mono font-bold py-3.5 px-4 rounded-xl transition-all duration-200 uppercase text-xs tracking-wider shadow-sm flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
           >
-            Crea Categoria
+            <FontAwesomeIcon icon={faPlus} className="text-xs" />
+            <span>Crea Categoria</span>
           </button>
         </div>
       </form>

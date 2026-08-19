@@ -39,12 +39,12 @@ export function AdminLink({ href, label, icon }: AdminLinkProps) {
   return (
     <Link
       href={href}
-      className="flex items-center gap-4 bg-black border border-zinc-800 hover:border-purple-600 p-4 rounded transition-all duration-300 group shadow-inner"
+      className="flex items-center gap-4 bg-black border border-zinc-800 hover:border-red-600 p-4 rounded transition-all duration-300 group shadow-inner"
     >
-      <div className="w-8 h-8 rounded bg-zinc-900/50 border border-zinc-800 group-hover:border-purple-900 flex items-center justify-center transition-colors">
+      <div className="w-8 h-8 rounded bg-zinc-900/50 border border-zinc-800 group-hover:border-red-900 flex items-center justify-center transition-colors">
         <FontAwesomeIcon
           icon={icon}
-          className="text-zinc-500 group-hover:text-purple-400 group-hover:scale-110 transition text-xs"
+          className="text-zinc-500 group-hover:text-red-400 group-hover:scale-110 transition text-xs"
         />
       </div>
       <span className="font-bold text-xs uppercase tracking-wider text-zinc-400 group-hover:text-white transition-colors">
