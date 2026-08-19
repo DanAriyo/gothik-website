@@ -67,7 +67,7 @@ export default function NavUserMenu({
                     </p>
                     <button
                       onClick={() => signIn("google")}
-                      className="w-full flex items-center justify-center gap-3 bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-red-500 hover:text-white transition-all duration-300"
+                      className="w-full flex items-center justify-center gap-3 bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-red-500 hover:text-white transition-all duration-300 cursor-pointer"
                     >
                       <FontAwesomeIcon icon={faArrowRightToBracket} />
                       Login
