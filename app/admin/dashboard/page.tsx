@@ -31,7 +31,7 @@ export default async function AdminDashboard() {
       {/* HEADER CENTRATO CON GLOW */}
       <div className="text-center mb-12 w-full">
         <h1 className="text-3xl font-black uppercase tracking-[0.2em] text-white text-center inline-block">
-          <span className="text-purple-500 shadow-purple-500/20 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]">
+          <span className="text-red-500 shadow-red-500/20 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]">
             DASHBOARD
           </span>
         </h1>

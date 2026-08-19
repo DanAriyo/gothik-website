@@ -22,7 +22,7 @@ export function StatCard({ title, value, icon }: StatCardProps) {
           {value}
         </p>
       </div>
-      <div className="w-10 h-10 bg-black border border-zinc-800 rounded flex items-center justify-center text-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.05)]">
+      <div className="w-10 h-10 bg-black border border-zinc-800 rounded flex items-center justify-center text-red-500 shadow-[0_0_15px_rgba(168,85,247,0.05)]">
         <FontAwesomeIcon icon={icon} className="text-sm" />
       </div>
     </div>
