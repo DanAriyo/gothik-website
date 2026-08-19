@@ -23,8 +23,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gothik Store | Dark Fashion & Accessories",
-  description: "Il tuo store sicuro per uno stile alternativo e ricercato",
+  title: "Gothik",
+  icons: "gothik-logo.svg"
 };
 
 // Rendiamo il RootLayout asincrono per poter usare await auth()
