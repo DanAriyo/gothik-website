@@ -18,6 +18,7 @@ import {
   Transition,
 } from "@headlessui/react";
 import { signIn, signOut } from "next-auth/react";
+import { routes } from "@/lib/routes";
 
 interface NavUserMenuProps {
   isAdmin: boolean;
@@ -84,7 +85,7 @@ export default function NavUserMenu({
 
                     {isAdmin && (
                       <Link
-                        href="/admin/dashboard"
+                        href={routes.admin.dashboard}
                         className="flex items-center gap-3 p-2 text-sm text-red-400 hover:bg-red-900/20 rounded-lg transition font-bold"
                       >
                         <FontAwesomeIcon
@@ -95,20 +96,13 @@ export default function NavUserMenu({
                       </Link>
                     )}
 
-                    <Link
-                      href="/orders"
-                      className="flex items-center gap-3 p-2 text-sm text-zinc-400 hover:bg-white/5 hover:text-white rounded-lg transition"
-                    >
-                      <FontAwesomeIcon icon={faHistory} className="w-4" />
-                      I miei ordini
-                    </Link>
 
                     <Link
-                      href="/profile"
+                      href={routes.profile}
                       className="flex items-center gap-3 p-2 text-sm text-zinc-400 hover:bg-white/5 hover:text-white rounded-lg transition"
                     >
-                      <FontAwesomeIcon icon={faGear} className="w-4" />
-                      Impostazioni
+                      <FontAwesomeIcon icon={faUser} className="w-4" />
+                      Profilo
                     </Link>
 
                     <button
