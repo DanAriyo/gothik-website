@@ -28,25 +28,19 @@ export default function FooterComponent() {
           {/* Elemento 2: Social Links (Destra su Desktop, Centro su Mobile) */}
           <div className="flex items-center justify-center gap-6 text-xl sm:text-2xl order-1 md:order-2">
             <Link
-              href="#"
-              className="hover:text-purple-400 transition-colors duration-200"
+              href="https://www.instagram.com/gothik.brand"
+              className="hover:text-red-400 transition-colors duration-200"
               aria-label="Instagram"
             >
               <FontAwesomeIcon icon={faInstagram} />
             </Link>
-            <Link
+
+             <Link
               href="#"
-              className="hover:text-purple-400 transition-colors duration-200"
+              className="hover:text-red-400 transition-colors duration-200"
               aria-label="TikTok"
             >
               <FontAwesomeIcon icon={faTiktok} />
-            </Link>
-            <Link
-              href="#"
-              className="hover:text-purple-400 transition-colors duration-200"
-              aria-label="Facebook"
-            >
-              <FontAwesomeIcon icon={faFacebook} />
             </Link>
           </div>
 
