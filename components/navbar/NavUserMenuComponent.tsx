@@ -15,6 +15,7 @@ import {
   Popover,
   PopoverButton,
   PopoverPanel,
+  CloseButton,
   Transition,
 } from "@headlessui/react";
 import { signIn, signOut } from "next-auth/react";
@@ -66,14 +67,15 @@ export default function NavUserMenu({
                     <p className="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mb-4">
                       Accedi
                     </p>
-                    <Link
-                      //onClick={() => signIn("google")}
-                      href={routes.login}
-                      className="w-full flex items-center justify-center gap-3 bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-red-500 hover:text-white transition-all duration-300 cursor-pointer"
-                    >
-                      <FontAwesomeIcon icon={faArrowRightToBracket} />
-                      Login
-                    </Link>
+                    <CloseButton as={Fragment}>
+                      <Link
+                        href={routes.login}
+                        className="w-full flex items-center justify-center gap-3 bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-red-500 hover:text-white transition-all duration-300 cursor-pointer"
+                      >
+                        <FontAwesomeIcon icon={faArrowRightToBracket} />
+                        Login
+                      </Link>
+                    </CloseButton>
                   </div>
                 ) : (
                   /* STATO: LOGGATO */
@@ -85,30 +87,33 @@ export default function NavUserMenu({
                     </div>
 
                     {isAdmin && (
-                      <Link
-                        href={routes.admin.dashboard}
-                        className="flex items-center gap-3 p-2 text-sm text-red-400 hover:bg-red-900/20 rounded-lg transition font-bold"
-                      >
-                        <FontAwesomeIcon
-                          icon={faUserShield}
-                          className="w-4"
-                        />
-                        Dashboard Admin
-                      </Link>
+                      <CloseButton as={Fragment}>
+                        <Link
+                          href={routes.admin.dashboard}
+                          className="flex items-center gap-3 p-2 text-sm text-red-400 hover:bg-red-900/20 rounded-lg transition font-bold"
+                        >
+                          <FontAwesomeIcon
+                            icon={faUserShield}
+                            className="w-4"
+                          />
+                          Dashboard Admin
+                        </Link>
+                      </CloseButton>
                     )}
 
-
-                    <Link
-                      href={routes.profile}
-                      className="flex items-center gap-3 p-2 text-sm text-zinc-400 hover:bg-white/5 hover:text-white rounded-lg transition"
-                    >
-                      <FontAwesomeIcon icon={faUser} className="w-4" />
-                      Profilo
-                    </Link>
+                    <CloseButton as={Fragment}>
+                      <Link
+                        href={routes.profile}
+                        className="flex items-center gap-3 p-2 text-sm text-zinc-400 hover:bg-white/5 hover:text-white rounded-lg transition"
+                      >
+                        <FontAwesomeIcon icon={faUser} className="w-4" />
+                        Profilo
+                      </Link>
+                    </CloseButton>
 
                     <button
                       onClick={() => signOut()}
-                      className="w-full mt-2 flex items-center gap-3 p-2 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition border-t border-red-900/20 pt-3"
+                      className="w-full mt-2 flex items-center gap-3 p-2 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition border-t border-red-900/20 pt-3 cursor-pointer"
                     >
                       <FontAwesomeIcon
                         icon={faArrowRightToBracket}
