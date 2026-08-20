@@ -11,6 +11,7 @@ export const routes = {
   cart: "/cart",
   profile: "/profile",
   orders: "/orders",
+  login: "/auth/signin",
   categoryDetail: (id: string | number) => `/category/${id}`,
   productDetail: (id: string | number) => `/product/${id}`,
   

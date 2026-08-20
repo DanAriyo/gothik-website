@@ -66,13 +66,14 @@ export default function NavUserMenu({
                     <p className="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mb-4">
                       Accedi
                     </p>
-                    <button
-                      onClick={() => signIn("google")}
+                    <Link
+                      //onClick={() => signIn("google")}
+                      href={routes.login}
                       className="w-full flex items-center justify-center gap-3 bg-white text-black font-bold py-2 px-4 rounded-md hover:bg-red-500 hover:text-white transition-all duration-300 cursor-pointer"
                     >
                       <FontAwesomeIcon icon={faArrowRightToBracket} />
                       Login
-                    </button>
+                    </Link>
                   </div>
                 ) : (
                   /* STATO: LOGGATO */
