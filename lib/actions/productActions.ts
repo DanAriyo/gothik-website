@@ -81,3 +81,43 @@ export async function updateProductAction(id: string, formData: FormData) {
 
   redirect("/admin/products");
 }
+
+export async function deleteProductAction(productId: string) {
+  try {
+    // 🛡️ Sicurezza: Verifica che l'utente sia autenticato e sia ADMIN
+    const session = await auth();
+    if (!session || session.user.role !== "ADMIN") {
+      return { success: false, error: "Non autorizzato." };
+    }
+
+    // 1. Controlla se il prodotto è presente in ordini storici
+    const orderItemsCount = await prisma.orderItem.count({
+      where: { productId },
+    });
+
+    if (orderItemsCount > 0) {
+      // Soft Delete se presente nello storico
+      await prisma.product.update({
+        where: { id: productId },
+        data: { isArchived: true}
+      });
+    } else {
+      // Pulizia carrelli e cancellazione fisica se pulito
+      await prisma.cartItem.deleteMany({
+        where: { productId },
+      });
+
+      await prisma.product.delete({
+        where: { id: productId },
+      });
+    }
+
+    // 🛡️ Fondamentale: Aggiorna la cache di Next.js per ricaricare la tabella
+    revalidatePath("/admin/products");
+
+    return { success: true };
+  } catch (error) {
+    console.error("Errore eliminazione prodotto:", error);
+    return { success: false, error: "Errore durante l'eliminazione del prodotto." };
+  }
+}
