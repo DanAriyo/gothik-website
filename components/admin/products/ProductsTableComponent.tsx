@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faBoxOpen } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faBoxOpen, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 // Definiamo l'interfaccia per i dati che riceviamo dal server
 interface ProductWithCategory {
@@ -129,13 +129,25 @@ export default function ProductsTableComponent({
 
                   {/* AZIONI */}
                   <td className="p-4 pr-6 text-right align-middle">
-                    <Link
-                      href={`/admin/products/edit/${product.id}`}
-                      className="inline-flex items-center gap-1.5 bg-zinc-900 hover:bg-red-600 text-white text-xs font-mono font-bold py-2 px-3.5 rounded-lg transition-colors shadow-sm"
-                    >
-                      <FontAwesomeIcon icon={faPenToSquare} className="text-[10px]" />
-                      <span>Modifica</span>
-                    </Link>
+                    <div className="inline-flex items-center gap-2">
+                      <Link
+                        href={`/admin/products/edit/${product.id}`}
+                        className="inline-flex items-center justify-center bg-zinc-900 hover:bg-red-600 text-white text-xs p-2.5 rounded-lg transition-colors shadow-sm"
+                        aria-label="Modifica"
+                      >
+                        <FontAwesomeIcon icon={faPenToSquare} className="text-xs" />
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          // Logica di eliminazione da implementare
+                        }}
+                        className="inline-flex items-center justify-center bg-zinc-100 hover:bg-red-600 text-zinc-700 hover:text-white text-xs p-2.5 rounded-lg transition-colors shadow-sm border border-zinc-200 cursor-pointer"
+                        aria-label="Elimina"
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} className="text-xs" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );
