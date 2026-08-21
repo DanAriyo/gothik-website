@@ -13,7 +13,7 @@ export default async function Home({
   const { category: selectedCategoryId, search: searchQuery } = await searchParams;
 
   // 2. Costruzione dinamica della clausola WHERE di Prisma
-  const whereCondition: any = {};
+  const whereCondition: any = {isArchived: false,};
 
   if (selectedCategoryId) {
     whereCondition.categoryId = selectedCategoryId;

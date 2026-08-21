@@ -215,7 +215,6 @@ export default function ProductsTableComponent({
                 <p className="text-xs text-zinc-500 leading-relaxed">
                   Sei sicuro di voler rimuovere il prodotto{" "}
                   <strong className="text-zinc-800">"{productToDelete.name}"</strong>? 
-                  Se il prodotto è legato a ordini passati, verrà archiviato in sicurezza.
                 </p>
               </div>
             </div>
