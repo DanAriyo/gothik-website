@@ -53,20 +53,6 @@ export default async function ProfilePage() {
             </h1>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span
-              className={`inline-flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1.5 rounded-lg border ${
-                user.role === "ADMIN"
-                  ? "bg-red-50 text-red-600 border-red-200"
-                  : "bg-white text-zinc-700 border-zinc-200 shadow-sm"
-              }`}
-            >
-              {user.role === "ADMIN" && (
-                <FontAwesomeIcon icon={faShieldHalved} className="text-[11px]" />
-              )}
-              RUOLO: {user.role}
-            </span>
-          </div>
         </div>
 
         {/* CONTENITORI FORM CLIENT-SIDE */}

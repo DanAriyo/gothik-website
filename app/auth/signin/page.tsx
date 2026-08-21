@@ -19,10 +19,6 @@ export default async function SignInPage() {
         {/* HEADER */}
         <div className="text-center space-y-1">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-            <p className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-red-600">
-              Area Autenticata
-            </p>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-950 uppercase">
             Accedi allo <span className="text-red-600">Store</span>
