@@ -62,14 +62,13 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
                 <div className="mb-12">
                   <Link href={routes.landing} className="group">
                     <CloudinaryImage
-                    src="copy_of_img_0149_e8ap8v"
-                    alt="Gothik Store"
-                    width={200}
-                    height={80}
-                    className=""
-                  />
+                      src="copy_of_img_0149_e8ap8v"
+                      alt="Gothik Store"
+                      width={200}
+                      height={80}
+                      className=""
+                    />
                   </Link>
-                  
                 </div>
 
                 {/* CONTENUTO NAVIGAZIONE CON SCROLLBAR PERSONALIZZATA */}
@@ -88,11 +87,7 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
                   </div>
 
                   {/* 2. SEZIONE SETTORI (CATEGORIE) */}
-                  <div className="space-y-6">
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 border-b border-red-500 pb-2">
-                      Categorie
-                    </p>
-
+                  <div className="space-y-2">
                     <div className="flex flex-col gap-5">
                       {categories && categories.length > 0 ? (
                         categories.map((cat) => (
@@ -116,7 +111,7 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
                   </div>
                 </nav>
 
-                <div className="pt-8 border-t border-red-500 mt-auto">
+                <div className="pt-2 mt-auto">
                   <p className="text-[10px] text-zinc-600 uppercase tracking-widest">
                     © 2026 Gothik Store
                   </p>

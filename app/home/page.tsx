@@ -2,7 +2,11 @@ import { prisma } from "@/lib/db";
 import ProductCardComponent from "@/components/ProductCardComponent";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark, faFilter, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import {
+  faXmark,
+  faFilter,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default async function Home({
   searchParams,
@@ -10,10 +14,11 @@ export default async function Home({
   searchParams: Promise<{ category?: string; search?: string }>;
 }) {
   // 1. Estrazione dei parametri dall'URL
-  const { category: selectedCategoryId, search: searchQuery } = await searchParams;
+  const { category: selectedCategoryId, search: searchQuery } =
+    await searchParams;
 
   // 2. Costruzione dinamica della clausola WHERE di Prisma
-  const whereCondition: any = {isArchived: false,};
+  const whereCondition: any = { isArchived: false };
 
   if (selectedCategoryId) {
     whereCondition.categoryId = selectedCategoryId;
@@ -54,10 +59,15 @@ export default async function Home({
                 </span>
               </div>
             )}
-            {selectedCategory && searchQuery && <span className="text-zinc-600">|</span>}
+            {selectedCategory && searchQuery && (
+              <span className="text-zinc-600">|</span>
+            )}
             {searchQuery && (
               <div className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faMagnifyingGlass} className="text-red-500" />
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  className="text-red-500"
+                />
                 <span className="text-sm font-bold uppercase tracking-wider">
                   Ricerca: "{searchQuery}"
                 </span>
@@ -76,7 +86,7 @@ export default async function Home({
       )}
 
       {/* GRIGLIA PRODOTTI (Invariata) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map(
           (p: {
             id: string | number;
@@ -98,7 +108,9 @@ export default async function Home({
           ),
         )}
         {products.length === 0 && (
-          <p className="text-zinc-500">Nessun prodotto trovato con questi filtri.</p>
+          <p className="text-zinc-500">
+            Nessun prodotto trovato con questi filtri.
+          </p>
         )}
       </div>
     </div>
