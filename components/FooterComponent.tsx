@@ -14,7 +14,6 @@ export default function FooterComponent() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Layout responsive: colonna su mobile, riga con estremi opposti da tablet/desktop */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 text-center md:text-left">
-          
           {/* Elemento 1: Testo Copyright & Sicurezza (Sinistra su Desktop, Centro su Mobile) */}
           <div className="text-xs sm:text-sm md:text-base order-2 md:order-1 leading-relaxed">
             <p>
@@ -34,16 +33,7 @@ export default function FooterComponent() {
             >
               <FontAwesomeIcon icon={faInstagram} />
             </Link>
-
-             <Link
-              href="#"
-              className="hover:text-red-400 transition-colors duration-200"
-              aria-label="TikTok"
-            >
-              <FontAwesomeIcon icon={faTiktok} />
-            </Link>
           </div>
-
         </div>
       </div>
     </footer>
