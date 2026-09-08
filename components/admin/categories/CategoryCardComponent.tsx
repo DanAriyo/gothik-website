@@ -44,9 +44,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
       setIsModalOpen(false);
       router.refresh();
     } catch (error: any) {
-      alert(
-        error.message || "Si è verificato un errore durante l'eliminazione.",
-      );
+      console.error("Errore durante l'eliminazione della categoria:", error);
     } finally {
       setIsLoading(false);
     }
