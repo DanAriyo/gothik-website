@@ -52,3 +52,30 @@ export async function updateCategoryAction(id: string, formData: FormData) {
   // Riportiamo l'admin alla lista delle categorie
   redirect("/admin/categories");
 }
+
+export async function deleteCategoryAction(id: string) {
+  const session = await auth();
+  if (session?.user?.role !== "ADMIN") {
+    throw new Error("Non autorizzato");
+  }
+
+  if (!id) {
+    throw new Error("ID categoria non valido.");
+  }
+
+  // Verifichiamo se ci sono prodotti collegati a questa categoria per evitare errori di integrità
+  const productsCount = await prisma.product.count({
+    where: { categoryId: id },
+  });
+
+  if (productsCount > 0) {
+    throw new Error("Impossibile eliminare la categoria: ci sono prodotti associati.");
+  }
+
+  await prisma.category.delete({
+    where: { id },
+  });
+
+  revalidatePath("/admin/categories");
+  redirect("/admin/categories");
+}
