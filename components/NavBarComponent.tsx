@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import CloudinaryImage from "./CloudinaryImage";
 import { routes } from "@/lib/routes";
 import SearchBar from "@/components/SearchBarComponent";
@@ -23,33 +21,40 @@ export default function NavBarComponent({
   session,
   categories,
 }: NavBarProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <nav className="bg-zinc-400 border-b border-red-5000 sticky top-0 z-50 text-white">
-      <div className="mx-auto px-4 h-30 flex items-center justify-between">
+    <nav className="bg-zinc-400 border-b border-red-500 sticky top-0 z-50 text-white">
+      <div className="mx-auto px-4 h-30 flex items-center justify-between relative">
         {/* LATO SINISTRO: Logo con Sidebar Popover */}
         <div className="flex items-center">
           <NavSidebar categories={categories} />
         </div>
 
-        {/* CENTRO: Nome Store */}
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
-          <Link href={routes.landing} className="group">
+        {/* CENTRO: Nome Store (Scompare solo su mobile quando la ricerca è aperta) */}
+        <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center">
+          <Link
+            href={routes.landing}
+            className={`transition-all duration-300 ${
+              isSearchOpen
+                ? "opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto"
+                : "opacity-100"
+            }`}
+          >
             <CloudinaryImage
               src="copy_of_img_0149_e8ap8v"
               alt="Gothik Store"
-              width={200}
-              height={80}
-              className=""
+              width={160}
+              height={64}
+              className="object-contain"
             />
           </Link>
         </div>
 
-        {/* LATO DESTRO: Icone Azione (Profilo e Carrello) */}
-        <div className="flex items-center gap-5">
+        {/* LATO DESTRO: Icone Azione (Ricerca e Profilo) */}
+        <div className="flex items-center gap-5 ml-auto">
           <div className="flex items-center gap-4">
-            <SearchBar />
+            <SearchBar onSearchStateChange={setIsSearchOpen} />
           </div>
 
           {/* USER DROPDOWN POPOVER */}

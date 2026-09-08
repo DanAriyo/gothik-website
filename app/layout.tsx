@@ -24,7 +24,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Gothik",
-  icons: "gothik-logo.svg"
+  icons: "gothik-logo.svg",
 };
 
 // Rendiamo il RootLayout asincrono per poter usare await auth()
@@ -62,7 +62,7 @@ export default async function RootLayout({
             categories={categories}
           />
 
-          <main className="flex-grow pt-4">{children}</main>
+          <main className="flex-grow">{children}</main>
 
           <FooterComponent />
         </div>
