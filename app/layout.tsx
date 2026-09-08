@@ -63,8 +63,6 @@ export default async function RootLayout({
           />
 
           <main className="flex-grow">{children}</main>
-
-          <FooterComponent />
         </div>
       </body>
     </html>

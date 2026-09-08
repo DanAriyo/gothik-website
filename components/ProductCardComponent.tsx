@@ -83,18 +83,18 @@ export default function ProductCardComponent({
         <div className="flex items-center gap-2 mt-1">
           {hasDiscount ? (
             <>
-              {/* Prezzo Scontato in Rosso Oscuro/Rose */}
-              <span className="text-rose-600 font-bold text-xs uppercase tracking-widest">
+              {/* Prezzo Scontato in Verde Oscuro */}
+              <span className="text-green-600 font-bold text-xs uppercase tracking-widest">
                 {finalPrice.toFixed(2)} €
               </span>
               {/* Prezzo Vecchio Cancellato Grigio Smorzato */}
-              <span className="text-zinc-400 line-through text-[11px] font-medium tracking-widest">
+              <span className="text-red-500 line-through text-[11px] font-medium tracking-widest">
                 {price.toFixed(2)} €
               </span>
             </>
           ) : (
             // Prezzo Standard (se non c'è sconto)
-            <span className="text-black font-medium text-xs uppercase tracking-widest">
+            <span className="text-red-500 font-medium text-xs uppercase tracking-widest">
               {price.toFixed(2)} €
             </span>
           )}

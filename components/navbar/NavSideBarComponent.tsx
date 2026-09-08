@@ -12,6 +12,7 @@ import {
 } from "@headlessui/react";
 import CloudinaryImage from "@/components/CloudinaryImage";
 import { routes } from "@/lib/routes";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons/faInstagram";
 
 interface NavSidebarProps {
   categories: { id: string; name: string }[];
@@ -111,10 +112,17 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
                   </div>
                 </nav>
 
-                <div className="pt-2 mt-auto">
+                <div className="pt-2 justify-between mt-auto">
                   <p className="text-[10px] text-zinc-600 uppercase tracking-widest">
                     © 2026 Gothik Store
                   </p>
+                  <Link
+                    href="https://www.instagram.com/gothik.brand"
+                    className="hover:text-red-400 transition-colors duration-200"
+                    aria-label="Instagram"
+                  >
+                    <FontAwesomeIcon icon={faInstagram} />
+                  </Link>
                 </div>
               </div>
             </PopoverPanel>
