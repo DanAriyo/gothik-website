@@ -46,7 +46,7 @@ export default async function Home({
   ]);
 
   return (
-    <div className="p-10 font-sans">
+    <div className="md:p-10 font-sans">
       {/* 🏷️ BADGE FILTRI ATTIVI (Categoria e/o Ricerca) */}
       {(selectedCategory || searchQuery) && (
         <div className="mb-6 p-4 bg-zinc-900 text-white rounded-lg flex items-center justify-between">
