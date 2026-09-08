@@ -74,7 +74,7 @@ export default function ProductCardComponent({
       {/* AREA INFO (Aggiornata con la logica del doppio prezzo) */}
       <div className="flex flex-col justify-center items-center py-4 px-2 text-left">
         <Link href={`/product/${id}`} className="w-full">
-          <h3 className="text-black text-center font-medium text-xs uppercase tracking-widest line-clamp-1 hover:text-purple-400 transition-colors">
+          <h3 className="text-red-500 text-center font-medium text-xs uppercase tracking-widest line-clamp-1 hover:text-purple-400 transition-colors">
             {name}
           </h3>
         </Link>

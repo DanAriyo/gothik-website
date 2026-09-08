@@ -123,7 +123,10 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
                     className="text-zinc-600 hover:text-red-500 transition-colors duration-200 p-1"
                     aria-label="Instagram"
                   >
-                    <FontAwesomeIcon icon={faInstagram} className="text-sm" />
+                    <FontAwesomeIcon
+                      icon={faInstagram}
+                      className="text-lg text-red-500 hover:text-red-700 transition-colors duration-200"
+                    />
                   </Link>
                 </div>
               </div>
