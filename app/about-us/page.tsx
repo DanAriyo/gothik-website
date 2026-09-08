@@ -24,7 +24,7 @@ export default function AboutUsPage() {
           <p>
             Crediamo in una moda autentica, fatta di tagli studiati, vestibilità
             decise e materiali selezionati con cura. Ogni capo è pensato per chi
-            vive la strada eper chi non da peso all'opionione altrui, per chi ad
+            vive la strada per chi non da peso all'opionione altrui, per chi ad
             ogni difficolta si rialza a testa alta, alla strada, alla cultura,
             al mondo.
           </p>
