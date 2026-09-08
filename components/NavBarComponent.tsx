@@ -53,10 +53,6 @@ export default function NavBarComponent({
 
         {/* LATO DESTRO: Icone Azione (Ricerca e Profilo) */}
         <div className="flex items-center gap-5 ml-auto">
-          <div className="flex items-center gap-4">
-            <SearchBar onSearchStateChange={setIsSearchOpen} />
-          </div>
-
           {/* USER DROPDOWN POPOVER */}
           <NavUserMenu
             isAdmin={isAdmin}
