@@ -17,6 +17,12 @@ export async function middleware(request: NextRequest) {
 
   const isAuthenticated = !!token;
 
+  // 🔍 LOG DI DEBUG
+  console.log("--- MIDDLEWARE DEBUG ---");
+  console.log("Pathname:", pathname);
+  console.log("Is Authenticated:", isAuthenticated);
+  console.log("Token:", token);
+
   // 2. Definiamo le rotte pubbliche accessibili a chi NON è loggato
   const isLandingPage = pathname === routes.landing || pathname === routes.about;
   const isAuthRoute = pathname.startsWith(routes.auth.signIn);
@@ -30,6 +36,7 @@ export async function middleware(request: NextRequest) {
   // 3. SE L'UTENTE NON È LOGGATO
   if (!isAuthenticated) {
     if (!isLandingPage) {
+      console.log("-> Non loggato fuori dalla landing, reindirizzo a login");
       const loginUrl = new URL(routes.auth.signIn, request.url);
       return NextResponse.redirect(loginUrl);
     }
@@ -38,6 +45,7 @@ export async function middleware(request: NextRequest) {
 
   // 4. SE L'UTENTE È LOGGATO
   if (isAuthenticated && (isLandingPage || pathname.startsWith(routes.auth.signIn))) {
+    console.log("-> Loggato sulla landing/login, reindirizzo alla home");
     return NextResponse.redirect(new URL(routes.home, request.url));
   }
 
