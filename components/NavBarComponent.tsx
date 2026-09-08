@@ -25,7 +25,7 @@ export default function NavBarComponent({
 
   return (
     <nav className="bg-zinc-400 border-b border-red-500 sticky top-0 z-50 text-white">
-      <div className="mx-auto px-4 h-30 flex items-center justify-between relative">
+      <div className="mx-auto px-4 h-15 flex items-center justify-between relative">
         {/* LATO SINISTRO: Logo con Sidebar Popover */}
         <div className="flex items-center">
           <NavSidebar categories={categories} />
@@ -44,8 +44,8 @@ export default function NavBarComponent({
             <CloudinaryImage
               src="copy_of_img_0149_e8ap8v"
               alt="Gothik Store"
-              width={160}
-              height={64}
+              width={120}
+              height={40}
               className="object-contain"
             />
           </Link>
