@@ -49,10 +49,9 @@ export async function createProductAction(formData: FormData) {
 }
 
 export async function updateProductAction(id: string, formData: FormData) {
-
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") {
-    throw new Error("Accesso negato: non hai i permessi per creare prodotti.");
+    throw new Error("Accesso negato: non hai i permessi per modificare prodotti.");
   }
   
   const name = formData.get("name") as string;
@@ -60,11 +59,22 @@ export async function updateProductAction(id: string, formData: FormData) {
   const rawPrice = formData.get("price") as string;
   const discount = parseInt(formData.get("discount") as string);
   const description = formData.get("description") as string;
+  
+  // 1. Estraiamo il campo immagini inviato dal form client
+  const imagesRaw = formData.get("images") as string;
 
   // Pulizia prezzo per il database (virgola -> punto)
   const cleanPrice = parseFloat(rawPrice.replace(",", "."));
 
   if (isNaN(cleanPrice)) throw new Error("Prezzo non valido");
+
+  // 2. Convertiamo la stringa JSON in un array (o gestiamo il fallback)
+  let imagesArray: string[] = [];
+  try {
+    imagesArray = JSON.parse(imagesRaw);
+  } catch {
+    imagesArray = [];
+  }
 
   await prisma.product.update({
     where: { id },
@@ -74,11 +84,11 @@ export async function updateProductAction(id: string, formData: FormData) {
       price: cleanPrice,
       discount,
       description,
+      images: imagesArray, // 3. Includiamo l'array aggiornato delle immagini
     },
   });
 
   revalidatePath("/admin/products");
-
   redirect("/admin/products");
 }
 
