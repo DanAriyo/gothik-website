@@ -112,16 +112,18 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
                   </div>
                 </nav>
 
-                <div className="pt-2 justify-between mt-auto">
+                <div className="pt-4 mt-auto flex items-center justify-between">
                   <p className="text-[10px] text-zinc-600 uppercase tracking-widest">
                     © 2026 Gothik Store
                   </p>
                   <Link
                     href="https://www.instagram.com/gothik.brand"
-                    className="hover:text-red-400 transition-colors duration-200"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-zinc-600 hover:text-red-500 transition-colors duration-200 p-1"
                     aria-label="Instagram"
                   >
-                    <FontAwesomeIcon icon={faInstagram} />
+                    <FontAwesomeIcon icon={faInstagram} className="text-sm" />
                   </Link>
                 </div>
               </div>
