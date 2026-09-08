@@ -86,7 +86,7 @@ export default async function Home({
       )}
 
       {/* GRIGLIA PRODOTTI (Invariata) */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-3 md:gap-6 gap-1">
         {products.map(
           (p: {
             id: string | number;
