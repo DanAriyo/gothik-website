@@ -63,7 +63,8 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
                 <div className="mb-12">
                   <Link href={routes.landing} className="group">
                     <CloudinaryImage
-                      src="copy_of_img_0149_e8ap8v"
+                      src="IMG_0149_e8ap8v"
+                      background="black"
                       alt="Gothik Store"
                       width={200}
                       height={80}

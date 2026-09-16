@@ -42,7 +42,8 @@ export default function NavBarComponent({
             }`}
           >
             <CloudinaryImage
-              src="copy_of_img_0149_e8ap8v"
+              src="IMG_0149_e8ap8v"
+              background="black"
               alt="Gothik Store"
               width={120}
               height={40}
