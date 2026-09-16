@@ -52,7 +52,7 @@ export default function ProductCardComponent({
             fill
             background="black"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            className="w-full h-full object-contain transition-all duration-700 group-hover:scale-110 drop-shadow-[0_0_25px_rgba(239,68,68,0.8)] hover:drop-shadow-[0_0_40px_rgba(239,68,68,1)]"
+            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
           />
           {/* Overlay scuro isolato all'immagine */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-500" />
@@ -75,7 +75,7 @@ export default function ProductCardComponent({
       {/* AREA INFO (Aggiornata con la logica del doppio prezzo) */}
       <div className="flex flex-col justify-center items-center py-4 px-2 text-left">
         <Link href={`/product/${id}`} className="w-full">
-          <h3 className="text-red-500 text-center font-medium text-xs uppercase tracking-widest line-clamp-1 hover:text-purple-400 transition-colors">
+          <h3 className="text-red-500 text-center font-medium text-xs uppercase tracking-widest line-clamp-1 hover:text-red-700 transition-colors">
             {name}
           </h3>
         </Link>
