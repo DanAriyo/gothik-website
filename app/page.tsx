@@ -12,19 +12,23 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="relative w-full h-screen bg-black text-white overflow-hidden">
-      {/* Sotto-componente interattivo client */}
+  <div className="relative w-full h-screen bg-black text-white overflow-hidden">
+    
+    {/* 1. Il carosello riempie tutto lo schermo */}
+    <div className="absolute inset-0 w-full h-full">
       <HeroCarousel sections={lookbookSections} />
-
-      {/* Bottone statico renderizzato lato server */}
-      <div className="fixed bottom-8 inset-x-0 z-40 flex justify-center pointer-events-none px-4">
-        <Link
-          href={routes.home}
-          className="pointer-events-auto bg-zinc-950/90 hover:bg-black text-white border border-zinc-800 hover:border-red-500 px-7 py-3.5 rounded-full text-xs font-mono font-bold uppercase tracking-[0.2em] shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
-        >
-          Entra nello Shop
-        </Link>
-      </div>
     </div>
-  );
+
+    {/* 2. Il bottone posizionato in modo assoluto sopra le immagini */}
+    <div className="absolute bottom-32 inset-x-0 z-40 flex justify-center px-4 pointer-events-none">
+      <Link
+        href={routes.home}
+        className="pointer-events-auto bg-zinc-950/90 hover:bg-black text-white border border-zinc-800 hover:border-red-500 px-7 py-3.5 rounded-full text-xs font-mono font-bold uppercase tracking-[0.2em] shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer text-center"
+      >
+        Entra nello Shop
+      </Link>
+    </div>
+
+  </div>
+);
 }
