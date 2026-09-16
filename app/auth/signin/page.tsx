@@ -17,16 +17,14 @@ export default async function SignInPage() {
       <div className="w-full max-w-md bg-white p-8 sm:p-10 rounded-2xl border border-zinc-200 shadow-sm space-y-6">
         
         {/* HEADER */}
-        <div className="text-center space-y-1">
-          <div className="flex items-center justify-center gap-2 mb-2">
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-zinc-950 uppercase">
-            Accedi allo <span className="text-red-600">Store</span>
-          </h1>
-          <p className="text-xs text-zinc-500">
-            Scegli come accedere al tuo account.
-          </p>
-        </div>
+        <div className="flex justify-between items-center px-1">
+              <span className="text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider">
+                Accesso Rapido
+              </span>
+              <span className="text-[10px] font-mono font-bold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                Consigliato
+              </span>
+            </div>
 
         <div className="space-y-6">
           {/* LOGIN CON GOOGLE */}
@@ -91,13 +89,6 @@ export default async function SignInPage() {
             </button>
           </form>
         </div>
-
-        <div className="pt-4 border-t border-zinc-100 text-center">
-          <p className="text-[11px] font-mono text-zinc-400 uppercase tracking-widest leading-relaxed">
-            Riceverai un link temporaneo per accedere senza password
-          </p>
-        </div>
-
       </div>
     </div>
   );
