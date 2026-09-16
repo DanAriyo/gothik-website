@@ -40,7 +40,7 @@ export default function ProductCardComponent({
   return (
     <div className="flex flex-col h-full overflow-hidden transition-all duration-300 ">
       {/* AREA IMMAGINE (Resta identica, ottima struttura) */}
-      <div className="group relative aspect-[4/5] w-full overflow-hidden rounded-2xl">
+      <div className="group relative aspect-4/5 w-full overflow-hidden rounded-2xl">
         <Link href={`/product/${id}`} className="block h-full w-full">
           <CloudinaryImage
             src={
@@ -50,8 +50,9 @@ export default function ProductCardComponent({
             }
             alt={altName}
             fill
+            background="black"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            className="object-cover transition-transform duration-1000 group-hover:scale-110 "
+            className="w-full h-full object-contain transition-all duration-700 group-hover:scale-110 drop-shadow-[0_0_25px_rgba(239,68,68,0.8)] hover:drop-shadow-[0_0_40px_rgba(239,68,68,1)]"
           />
           {/* Overlay scuro isolato all'immagine */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-500" />

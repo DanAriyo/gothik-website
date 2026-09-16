@@ -95,7 +95,7 @@ export default async function Home({
             price: number;
             images: string[] | null;
           }) => (
-            <div key={p.id} className="p-1 bg-white text-black">
+            <div key={p.id} className="p-1 bg-black">
               <ProductCardComponent
                 id={p.id}
                 name={p.name}

@@ -62,7 +62,7 @@ export default async function RootLayout({
             categories={categories}
           />
 
-          <main className="flex-grow">{children}</main>
+          <main className="grow bg-black">{children}</main>
         </div>
       </body>
     </html>
