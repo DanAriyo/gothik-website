@@ -84,7 +84,6 @@ export default async function SignInPage() {
 
             <button
               type="submit"
-              disabled
               className="w-full flex items-center justify-center gap-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 font-mono font-bold py-3.5 px-4 rounded-xl transition-colors duration-200 uppercase text-xs tracking-wider border border-zinc-200 cursor-pointer shadow-sm mt-2"
             >
               <FontAwesomeIcon icon={faPaperPlane} className="text-xs" />

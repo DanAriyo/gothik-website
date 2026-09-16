@@ -39,7 +39,7 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
             id="logo-popover-btn"
             className="flex items-center outline-none focus:ring-0"
           >
-            <FontAwesomeIcon icon={faBars} />
+            <FontAwesomeIcon icon={faBars} className="text-red-500 hover:text-red-700 transition-colors duration-200" />
           </PopoverButton>
 
           <Transition

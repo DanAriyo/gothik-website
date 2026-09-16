@@ -11,7 +11,7 @@ import NavUserMenu from "@/components/navbar/NavUserMenuComponent";
 interface NavBarProps {
   isAdmin: boolean;
   isAuthenticated: boolean;
-  session: any;
+  session: unknown;
   categories: { id: string; name: string }[];
 }
 
