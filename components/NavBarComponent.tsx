@@ -24,7 +24,7 @@ export default function NavBarComponent({
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <nav className="bg-black border-b border-red-500 sticky top-0 z-50 text-white">
+    <nav className="bg-black sticky top-0 z-50 text-white">
       <div className="mx-auto px-4 h-20 flex items-center justify-between relative">
         {/* LATO SINISTRO: Logo con Sidebar Popover */}
         <div className="flex items-center">
@@ -42,7 +42,7 @@ export default function NavBarComponent({
             }`}
           >
             <CloudinaryImage
-              src="IMG_0149_e8ap8v"
+              src="gothik_black_logo_hsgfhv"
               background="black"
               alt="Gothik Store"
               width={120}

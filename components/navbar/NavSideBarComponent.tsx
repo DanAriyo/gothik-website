@@ -51,7 +51,7 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
             leaveFrom="opacity-100 translate-x-0"
             leaveTo="opacity-0 -translate-x-full"
           >
-            <PopoverPanel className="fixed left-0 top-0 z-[60] h-screen w-full sm:w-1/3 bg-black backdrop-blur-2xl border-r border-red-500 shadow-[10px_0_30px_rgba(0,0,0,0.5)] outline-none">
+            <PopoverPanel className="fixed left-0 top-0 z-[60] h-screen w-full sm:w-1/3 bg-black backdrop-blur-2xl shadow-[10px_0_30px_rgba(0,0,0,0.5)] outline-none">
               <div className="flex flex-col h-full p-8 relative">
                 <button
                   onClick={() => close()}
@@ -63,7 +63,7 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
                 <div className="mb-12">
                   <Link href={routes.landing} className="group">
                     <CloudinaryImage
-                      src="IMG_0149_e8ap8v"
+                      src="gothik_black_logo_hsgfhv"
                       background="black"
                       alt="Gothik Store"
                       width={200}
