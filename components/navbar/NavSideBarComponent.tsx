@@ -51,7 +51,7 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
             leaveFrom="opacity-100 translate-x-0"
             leaveTo="opacity-0 -translate-x-full"
           >
-            <PopoverPanel className="fixed left-0 top-0 z-[60] h-screen w-full sm:w-1/3 bg-zinc-400 backdrop-blur-2xl border-r border-red-500 shadow-[10px_0_30px_rgba(0,0,0,0.5)] outline-none">
+            <PopoverPanel className="fixed left-0 top-0 z-[60] h-screen w-full sm:w-1/3 bg-black backdrop-blur-2xl border-r border-red-500 shadow-[10px_0_30px_rgba(0,0,0,0.5)] outline-none">
               <div className="flex flex-col h-full p-8 relative">
                 <button
                   onClick={() => close()}
@@ -105,7 +105,7 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
                           </Link>
                         ))
                       ) : (
-                        <p className="text-xs italic text-zinc-700">
+                        <p className="text-xs italic text-red-500">
                           Nessuna categoria disponibile al momento.
                         </p>
                       )}
@@ -114,14 +114,14 @@ export default function NavSidebar({ categories }: NavSidebarProps) {
                 </nav>
 
                 <div className="pt-4 mt-auto flex items-center justify-between">
-                  <p className="text-[10px] text-zinc-600 uppercase tracking-widest">
+                  <p className="text-[10px] text-red-500 uppercase tracking-widest">
                     © 2026 Gothik Store
                   </p>
                   <Link
                     href="https://www.instagram.com/gothik.brand"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-zinc-600 hover:text-red-500 transition-colors duration-200 p-1"
+                    className="text-red-500 hover:text-red-700 transition-colors duration-200 p-1"
                     aria-label="Instagram"
                   >
                     <FontAwesomeIcon
