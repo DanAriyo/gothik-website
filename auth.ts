@@ -11,10 +11,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Usiamo le variabili che hai settato nel .env
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }), 
     Resend({
       apiKey: process.env.AUTH_RESEND_KEY,
-      from: process.env.EMAIL_FROM || "onboarding@resend.dev",
+      from: process.env.EMAIL_FROM || "noreply@gothik-store.com",
 }),
   ], 
   callbacks: {
