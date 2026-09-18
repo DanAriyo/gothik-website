@@ -215,7 +215,7 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
             options={{
               cloudName: "dc8irqxrf",
               clientAllowedFormats: ["png", "jpg", "jpeg", "webp"],
-              maxFileSize: 5000000,
+              maxFileSize: 20000000,
             }}
             onSuccess={(res: any) => {
               if (res?.info?.public_id) {
