@@ -7,7 +7,6 @@ import { EditNameForm, EditEmailForm } from "@/components/profile/ProfileFormsCo
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserCircle,
-  faShieldHalved,
   faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
 
