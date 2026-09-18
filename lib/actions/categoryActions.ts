@@ -1,12 +1,11 @@
 "use server";
 
 import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma"; // Assicurati che il percorso sia corretto
+import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createCategoryAction(formData: FormData) {
-
   const session = await auth();
   if (session?.user?.role !== "ADMIN") {
     throw new Error("Non autorizzato");
@@ -23,14 +22,11 @@ export async function createCategoryAction(formData: FormData) {
     },
   });
 
-  // Puliamo la cache della pagina prodotti (dove probabilmente c'è il dropdown)
   revalidatePath("/admin/products/add-product");
-  // Redirigiamo l'utente (opzionale)
   redirect("/admin/products/add-product");
 }
 
 export async function updateCategoryAction(id: string, formData: FormData) {
-
   const session = await auth();
   if (session?.user?.role !== "ADMIN") {
     throw new Error("Non autorizzato");
@@ -47,9 +43,7 @@ export async function updateCategoryAction(id: string, formData: FormData) {
     data: { name },
   });
 
-  // Puliamo la cache per vedere subito i cambiamenti
   revalidatePath("/admin/categories");
-  // Riportiamo l'admin alla lista delle categorie
   redirect("/admin/categories");
 }
 
@@ -63,8 +57,8 @@ export async function deleteCategoryAction(id: string) {
     throw new Error("ID categoria non valido.");
   }
 
-  // Verifichiamo se ci sono prodotti collegati a questa categoria per evitare errori di integrità
-  const productsCount = await prisma.product.count({
+  // ---> MODIFICATO: Verifichiamo sulla tabella ponte (ProductCategory) se ci sono prodotti collegati
+  const productsCount = await prisma.productCategory.count({
     where: { categoryId: id },
   });
 
