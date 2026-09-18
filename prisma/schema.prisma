@@ -71,29 +71,38 @@ model Session {
 
 // --- CATALOGO ---
 model Category {
-  id       String    @id @default(cuid())
-  name     String    @unique
-  products Product[]
+  id       String            @id @default(cuid())
+  name     String            @unique
+  products ProductCategory[]
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  price       Float
-  discount    Float    @default(0)
-  sizes       String[] 
-  images      String[] 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  isArchived  Boolean @default(false)
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  price        Float
+  discount     Float    @default(0)
+  sizes        String[] 
+  images       String[] 
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  isArchived   Boolean  @default(false)
   
-  categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id])
+  // Sostituiamo categoryId con una relazione many-to-many tramite tabella di join
+  categories   ProductCategory[]
 
-  cartItems   CartItem[]
-  orderItems  OrderItem[]
-  reviews     Review[]
+  cartItems    CartItem[]
+  orderItems   OrderItem[]
+  reviews      Review[]
+}
+
+model ProductCategory {
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
 }
 
 // --- CARRELLO ---
