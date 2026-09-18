@@ -10,30 +10,33 @@ import {
   faTrashCan, 
   faTriangleExclamation 
 } from "@fortawesome/free-solid-svg-icons";
-// Importa la action direttamente dal file centrale
 import { deleteProductAction } from "@/lib/actions/productActions";
 
-interface ProductWithCategory {
+// Aggiornato l'interfaccia per riflettere la relazione Many-to-Many delle categorie
+interface ProductWithCategories {
   id: string;
   name: string;
   price: any;
   discount: number;
   images: any;
-  category: {
-    name: string;
-  };
+  categories: {
+    category: {
+      id: string;
+      name: string;
+    };
+  }[];
 }
 
 export default function ProductsTableComponent({
   products,
 }: {
-  products: ProductWithCategory[];
+  products: ProductWithCategories[];
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [productToDelete, setProductToDelete] = useState<ProductWithCategory | null>(null);
+  const [productToDelete, setProductToDelete] = useState<ProductWithCategories | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleOpenDeleteModal = (product: ProductWithCategory) => {
+  const handleOpenDeleteModal = (product: ProductWithCategories) => {
     setProductToDelete(product);
     setIsModalOpen(true);
   };
@@ -43,7 +46,6 @@ export default function ProductsTableComponent({
     setIsModalOpen(false);
   };
 
-  // Chiamata diretta alla Server Action
   const handleConfirmDelete = async () => {
     if (!productToDelete) return;
 
@@ -72,7 +74,7 @@ export default function ProductsTableComponent({
             <thead>
               <tr className="bg-zinc-50 text-zinc-600 text-xs font-mono uppercase tracking-wider border-b border-zinc-200">
                 <th className="p-4 pl-6">Prodotto</th>
-                <th className="p-4">Categoria</th>
+                <th className="p-4">Categorie</th>
                 <th className="p-4">Prezzo</th>
                 <th className="p-4">Sconto</th>
                 <th className="p-4 pr-6 text-right">Azioni</th>
@@ -129,10 +131,22 @@ export default function ProductsTableComponent({
                       </div>
                     </td>
 
+                    {/* MOSTRA L'ELENCO DELLE CATEGORIE MULTIPLE SOTTO FORMA DI TAG */}
                     <td className="p-4 text-sm align-middle">
-                      <span className="px-2.5 py-1 rounded-lg bg-zinc-100 border border-zinc-200 text-xs font-mono font-medium text-zinc-700">
-                        {product.category.name}
-                      </span>
+                      <div className="flex flex-wrap gap-1.5 max-w-xs">
+                        {product.categories && product.categories.length > 0 ? (
+                          product.categories.map((item) => (
+                            <span
+                              key={item.category.id}
+                              className="px-2 py-0.5 rounded-md bg-zinc-100 border border-zinc-200 text-[11px] font-mono font-medium text-zinc-700"
+                            >
+                              {item.category.name}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="text-xs text-zinc-400 italic">Nessuna</span>
+                        )}
+                      </div>
                     </td>
 
                     <td className="p-4 align-middle">

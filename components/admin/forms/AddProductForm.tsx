@@ -14,6 +14,8 @@ import {
 export default function AddProductForm({ categories }: { categories: any[] }) {
   const [images, setImages] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  // ---> AGGIUNTO: State per le categorie multiple
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [rawPrice, setRawPrice] = useState("");
   const [discount, setDiscount] = useState(0);
   const availableSizes = ["S", "M", "L", "XL"];
@@ -21,6 +23,13 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
   const toggleSize = (size: string) => {
     setSelectedSizes((prev) =>
       prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size],
+    );
+  };
+
+  // ---> AGGIUNTO: Funzione per selezionare/deselezionare le categorie
+  const toggleCategory = (catId: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(catId) ? prev.filter((id) => id !== catId) : [...prev, catId]
     );
   };
 
@@ -61,28 +70,45 @@ export default function AddProductForm({ categories }: { categories: any[] }) {
           />
         </div>
 
-        {/* CATEGORIA */}
+        {/* CATEGORIE MULTIPLE (Stile Taglie) */}
         <div className="space-y-2">
           <label className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-600 block">
-            Categoria *
+            Categorie * (Seleziona una o più)
           </label>
-          <div className="relative">
-            <select
-              name="categoryId"
-              required
-              className="w-full bg-zinc-50 border border-zinc-300 focus:border-red-600 focus:bg-white focus:ring-1 focus:ring-red-600 p-3 pr-10 rounded-xl text-sm text-zinc-800 outline-none transition-all duration-200 appearance-none cursor-pointer"
-            >
-              <option value="">Seleziona Categoria</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.id} className="text-zinc-900">
+          
+          <div className="flex flex-wrap gap-2">
+            {categories.map((cat) => {
+              const isSelected = selectedCategories.includes(cat.id);
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => toggleCategory(cat.id)}
+                  className={`px-4 py-2.5 border text-xs font-mono font-bold rounded-xl transition-all duration-200 cursor-pointer ${
+                    isSelected
+                      ? "bg-red-600 border-red-600 text-white shadow-sm"
+                      : "bg-zinc-50 border-zinc-300 text-zinc-700 hover:border-zinc-400 hover:bg-zinc-100"
+                  }`}
+                >
                   {cat.name}
-                </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-zinc-500 text-xs">
-              <FontAwesomeIcon icon={faChevronDown} />
-            </div>
+                </button>
+              );
+            })}
           </div>
+
+          {/* Validazione visiva se nessuna categoria è selezionata */}
+          {selectedCategories.length === 0 && (
+            <p className="text-[11px] text-zinc-400 font-medium">
+              Seleziona almeno una categoria per il prodotto.
+            </p>
+          )}
+
+          {/* Input nascosto che passa l'array JSON alla Server Action */}
+          <input
+            type="hidden"
+            name="categoryIds"
+            value={JSON.stringify(selectedCategories)}
+          />
         </div>
 
         {/* DESCRIZIONE */}

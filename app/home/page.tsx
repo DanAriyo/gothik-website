@@ -17,11 +17,16 @@ export default async function Home({
   const { category: selectedCategoryId, search: searchQuery } =
     await searchParams;
 
-  // 2. Costruzione dinamica della clausola WHERE di Prisma
+  // 2. Costruzione dinamica della clausola WHERE di Prisma per la relazione Many-to-Many
   const whereCondition: any = { isArchived: false };
 
   if (selectedCategoryId) {
-    whereCondition.categoryId = selectedCategoryId;
+    // Filtra i prodotti che hanno almeno una categoria associata con questo ID tramite la tabella ponte
+    whereCondition.categories = {
+      some: {
+        categoryId: selectedCategoryId,
+      },
+    };
   }
 
   if (searchQuery) {
@@ -85,7 +90,7 @@ export default async function Home({
         </div>
       )}
 
-      {/* GRIGLIA PRODOTTI (Invariata) */}
+      {/* GRIGLIA PRODOTTI */}
       <div className="grid grid-cols-2 lg:grid-cols-3 md:gap-6 gap-1">
         {products.map(
           (p: {

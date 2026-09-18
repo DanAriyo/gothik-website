@@ -13,10 +13,14 @@ export default async function AdminProductsPage() {
     redirect(routes.home);
   }
 
-  // Query eseguita sul server
+  // Query aggiornata per includere la relazione Many-to-Many delle categorie
   const products = await prisma.product.findMany({
     include: {
-      category: true,
+      categories: {
+        include: {
+          category: true, // Include i dettagli della categoria attraverso la tabella ponte
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",

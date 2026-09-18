@@ -9,7 +9,6 @@ import {
   faCloudArrowUp,
   faTrashCan,
   faTag,
-  faChevronDown,
   faArrowLeft,
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
@@ -23,7 +22,7 @@ export default function ProductEditComponent({
   product,
   categories,
 }: ProductEditProps) {
-  // Inizializziamo gli stati con i dati correnti del prodotto
+  // Inizializziamo le immagini correnti
   const [images, setImages] = useState<string[]>(() => {
     if (!product.images) return [];
     if (Array.isArray(product.images)) return product.images;
@@ -34,6 +33,7 @@ export default function ProductEditComponent({
     }
   });
 
+  // Inizializziamo le taglie correnti
   const [selectedSizes, setSelectedSizes] = useState<string[]>(() => {
     if (!product.sizes) return [];
     if (Array.isArray(product.sizes)) return product.sizes;
@@ -42,6 +42,19 @@ export default function ProductEditComponent({
     } catch {
       return [];
     }
+  });
+
+  // ---> AGGIUNTO: Inizializziamo le categorie già associate al prodotto (gestendo la nuova relazione Many-to-Many o il vecchio campo singolo per retrocompatibilità)
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(() => {
+    if (product.categories && Array.isArray(product.categories)) {
+      // Se arriva dalla tabella ponte ProductCategory
+      return product.categories.map((pc: any) => pc.categoryId || pc.category?.id).filter(Boolean);
+    }
+    if (product.categoryId) {
+      // Fallback nel caso in cui arrivi ancora come ID singolo
+      return [product.categoryId];
+    }
+    return [];
   });
 
   const [rawPrice, setRawPrice] = useState(
@@ -53,6 +66,13 @@ export default function ProductEditComponent({
   const toggleSize = (size: string) => {
     setSelectedSizes((prev) =>
       prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size],
+    );
+  };
+
+  // ---> AGGIUNTO: Funzione per selezionare/deselezionare le categorie multiple
+  const toggleCategory = (catId: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(catId) ? prev.filter((id) => id !== catId) : [...prev, catId]
     );
   };
 
@@ -72,7 +92,6 @@ export default function ProductEditComponent({
     });
   };
 
-  // Uniamo l'ID del prodotto all'azione di aggiornamento del server
   const updateWithId = updateProductAction.bind(null, product.id);
 
   return (
@@ -114,29 +133,44 @@ export default function ProductEditComponent({
             />
           </div>
 
-          {/* CATEGORIA */}
+          {/* CATEGORIE MULTIPLE (Stile Taglie) */}
           <div className="space-y-2">
             <label className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-600 block">
-              Categoria *
+              Categorie * (Seleziona una o più)
             </label>
-            <div className="relative">
-              <select
-                name="categoryId"
-                required
-                defaultValue={product.categoryId}
-                className="w-full bg-zinc-50 border border-zinc-300 focus:border-red-600 focus:bg-white focus:ring-1 focus:ring-red-600 p-3 pr-10 rounded-xl text-sm text-zinc-800 outline-none transition-all duration-200 appearance-none cursor-pointer"
-              >
-                <option value="">Seleziona Categoria</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id} className="text-zinc-900">
+
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => {
+                const isSelected = selectedCategories.includes(cat.id);
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => toggleCategory(cat.id)}
+                    className={`px-4 py-2.5 border text-xs font-mono font-bold rounded-xl transition-all duration-200 cursor-pointer ${
+                      isSelected
+                        ? "bg-red-600 border-red-600 text-white shadow-sm"
+                        : "bg-zinc-50 border-zinc-300 text-zinc-700 hover:border-zinc-400 hover:bg-zinc-100"
+                    }`}
+                  >
                     {cat.name}
-                  </option>
-                ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-zinc-500 text-xs">
-                <FontAwesomeIcon icon={faChevronDown} />
-              </div>
+                  </button>
+                );
+              })}
             </div>
+
+            {selectedCategories.length === 0 && (
+              <p className="text-[11px] text-zinc-400 font-medium">
+                Seleziona almeno una categoria per il prodotto.
+              </p>
+            )}
+
+            {/* Input nascosto che passa l'array JSON alla Server Action di update */}
+            <input
+              type="hidden"
+              name="categoryIds"
+              value={JSON.stringify(selectedCategories)}
+            />
           </div>
 
           {/* DESCRIZIONE */}
@@ -270,7 +304,7 @@ export default function ProductEditComponent({
               options={{
                 cloudName: "dc8irqxrf",
                 clientAllowedFormats: ["png", "jpg", "jpeg", "webp"],
-                maxFileSize: 5000000,
+                maxFileSize: 20000000,
               }}
               onSuccess={(res: any) => {
                 if (res?.info?.public_id) {
@@ -345,7 +379,7 @@ export default function ProductEditComponent({
             </Link>
             <button
               type="submit"
-              disabled={images.length === 0}
+              disabled={images.length === 0 || selectedCategories.length === 0}
               className="flex-[2] bg-zinc-900 hover:bg-red-600 disabled:bg-zinc-200 disabled:text-zinc-400 disabled:border-zinc-200 disabled:cursor-not-allowed text-white font-mono font-bold py-3.5 px-4 rounded-xl transition-all duration-200 uppercase text-xs tracking-widest shadow-sm cursor-pointer"
             >
               Aggiorna Prodotto

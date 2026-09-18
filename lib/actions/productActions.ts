@@ -4,47 +4,57 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 
-
 export async function createProductAction(formData: FormData) {
-
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") {
     throw new Error("Accesso negato: non hai i permessi per creare prodotti.");
   }
+
   const name = formData.get("name") as string;
-  const categoryId = formData.get("categoryId") as string;
   const priceRaw = formData.get("price") as string;
   const price = parseFloat(priceRaw.replace(',', '.'));
   const discount = parseFloat(formData.get("discount") as string);
   const description = formData.get("description") as string;
   
-  // 1. Recuperiamo le stringhe grezze
+  // 1. Recuperiamo le categorie (ipotizzando che il form invii un JSON stringificato di ID o più valori)
+  const rawCategoryIds = formData.get("categoryIds") as string;
   const rawSizes = formData.get("sizes") as string;
   const rawImages = formData.get("images") as string;
 
-  // 2. Parsiamo con sicurezza (se il campo è vuoto, usiamo un array vuoto)
+  let categoryIds: string[] = [];
   let sizes: string[] = [];
   let images: string[] = [];
 
   try {
+    categoryIds = rawCategoryIds ? JSON.parse(rawCategoryIds) : [];
     sizes = rawSizes ? JSON.parse(rawSizes) : [];
     images = rawImages ? JSON.parse(rawImages) : [];
   } catch (error) {
     console.error("Errore nel parsing dei dati array:", error);
-    // Qui potresti gestire l'errore o restituire un messaggio all'utente
   }
 
   try {
-    // Spostiamo la creazione dentro un try per gestire errori DB
+    // 2. Creazione del prodotto collegandolo alle categorie tramite la tabella ponte
     await prisma.product.create({
-      data: { name, price, discount, categoryId, sizes, images, description }
+      data: {
+        name,
+        price,
+        discount,
+        description,
+        sizes,
+        images,
+        categories: {
+          create: categoryIds.map((catId) => ({
+            category: { connect: { id: catId } },
+          })),
+        },
+      },
     });
   } catch (error) {
     console.error("Errore database:", error);
     throw new Error("Errore durante il salvataggio del prodotto.");
   }
 
-  // Il redirect va FUORI dal try/catch
   redirect("/admin/products");
 }
 
@@ -55,36 +65,44 @@ export async function updateProductAction(id: string, formData: FormData) {
   }
   
   const name = formData.get("name") as string;
-  const categoryId = formData.get("categoryId") as string;
   const rawPrice = formData.get("price") as string;
   const discount = parseInt(formData.get("discount") as string);
   const description = formData.get("description") as string;
   
-  // 1. Estraiamo il campo immagini inviato dal form client
+  const rawCategoryIds = formData.get("categoryIds") as string;
   const imagesRaw = formData.get("images") as string;
 
-  // Pulizia prezzo per il database (virgola -> punto)
   const cleanPrice = parseFloat(rawPrice.replace(",", "."));
-
   if (isNaN(cleanPrice)) throw new Error("Prezzo non valido");
 
-  // 2. Convertiamo la stringa JSON in un array (o gestiamo il fallback)
+  let categoryIds: string[] = [];
   let imagesArray: string[] = [];
+  
   try {
-    imagesArray = JSON.parse(imagesRaw);
+    categoryIds = rawCategoryIds ? JSON.parse(rawCategoryIds) : [];
+    imagesArray = imagesRaw ? JSON.parse(imagesRaw) : [];
   } catch {
+    categoryIds = [];
     imagesArray = [];
   }
 
+  // Per aggiornare una relazione Many-to-Many in modo pulito:
+  // 1. Cancelliamo le vecchie associazioni nella tabella ponte
+  // 2. Creiamo le nuove associazioni
   await prisma.product.update({
     where: { id },
     data: {
       name,
-      categoryId,
       price: cleanPrice,
       discount,
       description,
-      images: imagesArray, // 3. Includiamo l'array aggiornato delle immagini
+      images: imagesArray,
+      categories: {
+        deleteMany: {}, // Rimuove i vecchi collegamenti
+        create: categoryIds.map((catId) => ({
+          category: { connect: { id: catId } },
+        })), // Inserisce i nuovi collegamenti
+      },
     },
   });
 
@@ -100,31 +118,28 @@ export async function deleteProductAction(productId: string) {
       return { success: false, error: "Non autorizzato." };
     }
 
-    // 1. Controlla se il prodotto è presente in ordini storici
     const orderItemsCount = await prisma.orderItem.count({
       where: { productId },
     });
 
     if (orderItemsCount > 0) {
-      // Soft Delete se presente nello storico
       await prisma.product.update({
         where: { id: productId },
-        data: { isArchived: true}
+        data: { isArchived: true }
       });
     } else {
-      // Pulizia carrelli e cancellazione fisica se pulito
       await prisma.cartItem.deleteMany({
         where: { productId },
       });
 
+      // Nota: Le righe nella tabella ponte (ProductCategory) verranno eliminate
+      // automaticamente se hai impostato onDelete: Cascade nel tuo schema Prisma.
       await prisma.product.delete({
         where: { id: productId },
       });
     }
 
-    // 🛡️ Fondamentale: Aggiorna la cache di Next.js per ricaricare la tabella
     revalidatePath("/admin/products");
-
     return { success: true };
   } catch (error) {
     console.error("Errore eliminazione prodotto:", error);
