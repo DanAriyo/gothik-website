@@ -36,7 +36,7 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-100/70 text-zinc-900 py-12 px-4 sm:px-8">
+    <div className="bg-black text-red-500 py-12 px-4 sm:px-8">
       <div className="max-w-3xl mx-auto space-y-8">
         
         {/* HEADER PROFILO */}
@@ -48,7 +48,7 @@ export default async function ProfilePage() {
                 Impostazioni Account
               </p>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-zinc-950 uppercase">
+            <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-red-500 uppercase">
               Il Tuo Profilo
             </h1>
           </div>

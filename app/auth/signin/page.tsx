@@ -13,7 +13,7 @@ export default async function SignInPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-black text-zinc-900 py-12 px-4 sm:px-8">
+    <div className=" flex items-center justify-center bg-black text-zinc-900 py-12 px-4 sm:px-8">
       <div className="w-full max-w-md bg-white p-8 sm:p-10 rounded-2xl border border-zinc-200 shadow-sm space-y-6">
         
         {/* HEADER */}

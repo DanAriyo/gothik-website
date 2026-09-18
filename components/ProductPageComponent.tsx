@@ -38,7 +38,7 @@ export default function ProductPageComponent({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 text-zinc-100 mt-2 sm:mt-6">
       {/* SEZIONE IMMAGINI (Galleria) - 7 colonne su desktop per maggiore impatto visivo */}
       <div className="md:col-span-7 flex flex-col gap-4">
-        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-zinc-900 border border-red-950/40 shadow-2xl">
+        <div className="relative w-full aspect-4/5 lg:aspect-auto lg:h-[60vh]">
           <CloudinaryImage
             src={product.images[currentImgIndex] || "no-image_qo394q"}
             alt={product.name}
