@@ -13,7 +13,7 @@ export default function AboutUsPage() {
           </h1>
         </div>
 
-        {/* TESTO PRESENTAZIONE BRAND */}
+        {/* TESTO PRESENTAZIONE BRAND (ITALIANO) */}
         <div className="space-y-6 text-sm sm:text-base text-zinc-300 font-sans leading-relaxed">
           <p>
             <strong>Gothik</strong> è un progetto streetwear indipendente che
@@ -24,7 +24,7 @@ export default function AboutUsPage() {
           <p>
             Crediamo in una moda autentica, fatta di tagli studiati, vestibilità
             decise e materiali selezionati con cura. Ogni capo è pensato per chi
-            vive la strada per chi non da peso all'opionione altrui, per chi ad
+            vive la strada per chi non da peso all&apos;opionione altrui, per chi ad
             ogni difficolta si rialza a testa alta, alla strada, alla cultura,
             al mondo.
           </p>
@@ -33,6 +33,30 @@ export default function AboutUsPage() {
             Non seguiamo le tendenze di massa: realizziamo collezioni a tiratura
             limitata, valorizzando le nostre radici e offrendo una prospettiva
             streetwear pura, diretta e radicata nel territorio.
+          </p>
+        </div>
+
+        {/* TESTO PRESENTAZIONE BRAND (INGLESE) */}
+        <div className="pt-8 border-t border-zinc-900 space-y-6 text-sm sm:text-base text-zinc-300 font-sans leading-relaxed">
+          <p>
+            <strong>Gothik</strong> is an independent streetwear project that
+            blends local underground culture with contemporary, essential, and
+            uncompromising design.
+          </p>
+
+          <p>
+            We believe in authentic fashion, crafted with precise cuts, bold
+            fits, and carefully selected materials. Every piece is designed for
+            those who live the streets, for those who don&apos;t care about other
+            people&apos;s opinions, for those who stand back up with their heads
+            held high against every difficulty—dedicated to the streets, the
+            culture, and the world.
+          </p>
+
+          <p>
+            We do not follow mass trends: we create limited-edition collections,
+            honoring our roots and delivering a pure, direct, and territory-driven
+            streetwear perspective.
           </p>
         </div>
 
