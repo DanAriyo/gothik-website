@@ -71,24 +71,25 @@ export async function updateProductAction(id: string, formData: FormData) {
   
   const rawCategoryIds = formData.get("categoryIds") as string;
   const imagesRaw = formData.get("images") as string;
+  const sizesRaw = formData.get("sizes") as string; // ---> AGGIUNTO: Legge le taglie dal form
 
   const cleanPrice = parseFloat(rawPrice.replace(",", "."));
   if (isNaN(cleanPrice)) throw new Error("Prezzo non valido");
 
   let categoryIds: string[] = [];
   let imagesArray: string[] = [];
+  let sizesArray: string[] = []; // ---> AGGIUNTO: Array per le taglie
   
   try {
     categoryIds = rawCategoryIds ? JSON.parse(rawCategoryIds) : [];
     imagesArray = imagesRaw ? JSON.parse(imagesRaw) : [];
+    sizesArray = sizesRaw ? JSON.parse(sizesRaw) : []; // ---> AGGIUNTO: Parsing delle taglie
   } catch {
     categoryIds = [];
     imagesArray = [];
+    sizesArray = [];
   }
 
-  // Per aggiornare una relazione Many-to-Many in modo pulito:
-  // 1. Cancelliamo le vecchie associazioni nella tabella ponte
-  // 2. Creiamo le nuove associazioni
   await prisma.product.update({
     where: { id },
     data: {
@@ -97,11 +98,12 @@ export async function updateProductAction(id: string, formData: FormData) {
       discount,
       description,
       images: imagesArray,
+      sizes: sizesArray, // ---> AGGIUNTO: Aggiorna correttamente la colonna sizes nel database
       categories: {
-        deleteMany: {}, // Rimuove i vecchi collegamenti
+        deleteMany: {},
         create: categoryIds.map((catId) => ({
           category: { connect: { id: catId } },
-        })), // Inserisce i nuovi collegamenti
+        })),
       },
     },
   });
